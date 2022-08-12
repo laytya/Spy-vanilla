@@ -1,0 +1,35 @@
+## Interface: 20400
+## Title: Spy
+## Notes: Detects and alerts you to the presence of nearby enemy players.
+## Author: Immolation
+## OptionalDeps:  Ace3, LibSharedMedia-3.0, LibBabble-Class-3.0
+## SavedVariables: SpyDB
+## SavedVariablesPerCharacter: SpyPerCharDB
+
+Libs\LibStub\LibStub.lua
+Libs\AceLibrary\AceLibrary.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\AceLocale-3.0\AceLocale-3.0.xml
+Libs\AceAddon-3.0\AceAddon-3.0.xml
+Libs\AceDB-3.0\AceDB-3.0.xml
+Libs\AceDBOptions-3.0\AceDBOptions-3.0.xml
+Libs\AceConsole-3.0\AceConsole-3.0.xml
+Libs\AceComm-3.0\AceComm-3.0.xml
+Libs\AceSerializer-3.0\AceSerializer-3.0.xml
+Libs\AceEvent-3.0\AceEvent-3.0.xml
+Libs\AceTimer-3.0\AceTimer-3.0.xml
+Libs\AceGUI-3.0\AceGUI-3.0.xml
+Libs\AceConfig-3.0\AceConfig-3.0.xml
+Libs\Astrolabe-0.2\Astrolabe-0.2.lua
+Libs\LibBabble-Class-3.0\lib.xml
+Libs\LibSharedMedia-3.0\lib.xml
+
+Spy.xml
+Locales\Spy-enUS.lua
+Spy.lua
+Fonts.lua
+Colors.lua
+Widgets.lua
+WindowOrder.lua
+MainWindow.lua
+List.lua

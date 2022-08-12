@@ -1,0 +1,34 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Button name="SpySecureActionButtonTemplate" hidden="true" virtual="true" enableMouse="true">
+		<Size>
+			<AbsDimension x="20" y="20"/>
+		</Size>
+		<HighlightTexture file="Interface\CharacterFrame\BarFill.blp" alphaMode="ADD" setAllPoints="true" hidden="true"/>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+				--this:SetAttribute("type1", "macro");
+				--this:SetAttribute("macrotext", "/targetexact nil");
+			</OnLoad>
+			<OnEnter>
+				Spy:ShowTooltip(true);
+			</OnEnter>
+			<OnLeave>
+				Spy:ShowTooltip(false);
+			</OnLeave>
+		</Scripts>
+	</Button>
+
+	<Frame name="Spy_UpdateFrame">
+		<Scripts>
+			<OnUpdate>
+				if Spy.EnabledInZone and GameTooltip:IsOwned(Minimap) and (Spy.db.profile.MinimapTracking or Spy.db.profile.MinimapDetails) then
+					Spy:TrackHumanoids();
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+
+</Ui>
