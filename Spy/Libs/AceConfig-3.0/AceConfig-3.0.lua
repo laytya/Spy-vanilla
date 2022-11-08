@@ -44,10 +44,9 @@ local pcall, error, type, pairs = pcall, error, type, pairs
 -- local AceConfig = LibStub("AceConfig-3.0")
 -- AceConfig:RegisterOptionsTable("MyAddon", myOptions, {"/myslash", "/my"})
 function AceConfig:RegisterOptionsTable(appName, options, slashcmd)
---[[	if self == AceConfig then
+	if self == AceConfig then
 		error([[Usage: RegisterOptionsTable(appName, options[, slashcmd]): 'self' - use your own 'self']], 2)
 	end
-]]
 	local ok,msg = pcall(cfgreg.RegisterOptionsTable, self, appName, options)
 	if not ok then error(msg, 2) end
 	

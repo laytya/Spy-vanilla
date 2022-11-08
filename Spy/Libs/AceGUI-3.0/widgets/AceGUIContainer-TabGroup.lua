@@ -2,7 +2,7 @@
 TabGroup Container
 Container that uses tabs on top to switch between groups.
 -------------------------------------------------------------------------------]]
-local Type, Version = "TabGroup", 35
+local Type, Version = "TabGroup", 36
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
@@ -40,7 +40,7 @@ local function UpdateTabLook(frame)
 		frame:SetAlpha(1)
 	else
 		PanelTemplates_DeselectTab(frame)
-		frame:SetAlpha(0.5)
+		frame:SetAlpha(0.8)
 	end
 end
 

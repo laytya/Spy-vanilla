@@ -35,7 +35,7 @@ if _G.ChatThrottleLib then
 		-- There's already a newer (or same) version loaded. Buh-bye.
 		return
 	elseif not _G.ChatThrottleLib.securelyHooked then
-	--	print("ChatThrottleLib: Warning: There's an ANCIENT ChatThrottleLib.lua (pre-wow 2.0, <v16) in an addon somewhere. Get the addon updated or copy in a newer ChatThrottleLib.lua (>=v16) in it!")
+		print("ChatThrottleLib: Warning: There's an ANCIENT ChatThrottleLib.lua (pre-wow 2.0, <v16) in an addon somewhere. Get the addon updated or copy in a newer ChatThrottleLib.lua (>=v16) in it!")
 		-- ATTEMPT to unhook; this'll behave badly if someone else has hooked...
 		-- ... and if someone has securehooked, they can kiss that goodbye too... >.<
 		_G.SendChatMessage = _G.ChatThrottleLib.ORIG_SendChatMessage

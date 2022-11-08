@@ -185,7 +185,7 @@ function BuildUniqueValue(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)
 	args[8] = a8
 	args[9] = a9
 	args[10] = a10
-	return tconcat(tmp, "\001", 1, tgetn(args))
+	return tconcat(args, "\001", 1, tgetn(args))
 end
 end
 

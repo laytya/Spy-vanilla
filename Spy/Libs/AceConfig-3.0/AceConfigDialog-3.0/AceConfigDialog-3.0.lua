@@ -4,12 +4,13 @@
 -- @release $Id: AceConfigDialog-3.0.lua 1139 2016-07-03 07:43:51Z nevcairiel $
 
 local LibStub = LibStub
-local MAJOR, MINOR = "AceConfigDialog-3.0", 61
+local MAJOR, MINOR = "AceConfigDialog-3.0", 65
 local AceConfigDialog, oldminor = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not AceConfigDialog then return end
 
 local AceCore = LibStub("AceCore-3.0")
+local _G = AceCore._G
 local wipe, strsplit = AceCore.wipe, AceCore.strsplit
 local safecall = AceCore.safecall
 local Dispatchers = AceCore.Dispatchers
@@ -78,6 +79,7 @@ do
 			return {}
 		end
 	end
+
 	function copy(t)
 		local c = new()
 		for k, v in pairs(t) do
@@ -86,11 +88,13 @@ do
 		tsetn(c, tgetn(t))
 		return c
 	end
+
 	function del(t)
 		--delcount = delcount + 1
 		wipe(t)
 		pool[t] = true
 	end
+
 --	function cached()
 --		local n = 0
 --		for k in pairs(pool) do
@@ -174,7 +178,8 @@ local function GetOptionsMemberValue(membername, option, options, path, appName,
 	end
 
 	--check if we need to call a functon, or if we have a literal value
-	if ( not allIsLiteral[membername] ) and ( type(member) == "function" or ((not stringIsLiteral[membername]) and type(member) == "string") ) then
+	if (not allIsLiteral[membername]) and
+		(type(member) == "function" or ((not stringIsLiteral[membername]) and type(member) == "string")) then
 		--We have a function to call
 		local info = new()
 		--traverse the options table, picking up the handler and filling the info with the path
@@ -294,8 +299,6 @@ local function compareOptions(a,b)
 	end
 	return OrderA < OrderB
 end
-
-
 
 --builds 2 tables out of an options group
 -- keySort, sorted keys
@@ -543,6 +546,7 @@ local function GetFuncName(option)
 		return "set"
 	end
 end
+
 local function confirmPopup(appName, rootframe, basepath, info, message, func, argc,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)
 	if not StaticPopupDialogs["ACECONFIGDIALOG30_CONFIRM_DIALOG"] then
 		StaticPopupDialogs["ACECONFIGDIALOG30_CONFIRM_DIALOG"] = {}
@@ -828,7 +832,8 @@ end
 
 local function ActivateSlider(widget, event, _, value)
 	local option = widget:GetUserData("option")
-	local min, max, step = option.min or (not option.softMin and 0 or nil), option.max or (not option.softMax and 100 or nil), option.step
+	local min, max, step = option.min or (not option.softMin and 0 or nil),
+		option.max or (not option.softMax and 100 or nil), option.step
 	if min then
 		if step then
 			value = math_floor((value - min) / step + 0.5) * step + min
@@ -893,6 +898,7 @@ local function CheckOptionDisabled(option, options, path, appName)
 
 	return GetOptionsMemberValue("disabled", option, options, path, appName)
 end
+
 --[[
 local function BuildTabs(group, options, path, appName)
 	local tabs = new()
@@ -1036,7 +1042,6 @@ local function InjectInfo(control, options, option, path, rootframe, appName)
 	control:SetCallback("OnLeave", OptionOnMouseLeave)
 	control:SetCallback("OnEnter", OptionOnMouseOver)
 end
-
 
 --[[
 	options - root of the options table being fed
@@ -1459,7 +1464,6 @@ local function TreeOnButtonLeave(widget, event, _, value, button)
 	GameTooltip:Hide()
 end
 
-
 local function GroupExists(appName, options, path, uniquevalue)
 
 	if not uniquevalue then return false end
@@ -1519,8 +1523,6 @@ local function GroupSelected(widget, event, _, uniquevalue)
 	del(feedpath)
 end
 
-
-
 --[[
 -- INTERNAL --
 This function will feed one group, and any inline child groups into the given container
@@ -1559,14 +1561,16 @@ function AceConfigDialog:FeedGroup(appName,options,container,rootframe,path, isR
 	--check if the group has child groups
 	local hasChildGroups
 	for k, v in pairs(group.args) do
-		if v.type == "group" and not pickfirstset(4,v.dialogInline,v.guiInline,v.inline, false) and not CheckOptionHidden(v, options, path, appName) then
+		if v.type == "group" and not pickfirstset(4, v.dialogInline, v.guiInline, v.inline, false) and
+			not CheckOptionHidden(v, options, path, appName) then
 			hasChildGroups = true
 		end
 	end
 	if group.plugins then
 		for plugin, t in pairs(group.plugins) do
 			for k, v in pairs(t) do
-				if v.type == "group" and not pickfirstset(4,v.dialogInline,v.guiInline,v.inline, false) and not CheckOptionHidden(v, options, path, appName) then
+				if v.type == "group" and not pickfirstset(4, v.dialogInline, v.guiInline, v.inline, false) and
+					not CheckOptionHidden(v, options, path, appName) then
 					hasChildGroups = true
 				end
 			end
@@ -1577,7 +1581,8 @@ function AceConfigDialog:FeedGroup(appName,options,container,rootframe,path, isR
 	local scroll
 
 	--Add a scrollframe if we are not going to add a group control, this is the inverse of the conditions for that later on
-	if (not (hasChildGroups and not inline)) or (grouptype ~= "tab" and grouptype ~= "select" and (parenttype == "tree" and not isRoot)) then
+	if (not (hasChildGroups and not inline)) or
+		(grouptype ~= "tab" and grouptype ~= "select" and (parenttype == "tree" and not isRoot)) then
 		if container.type ~= "InlineGroup" and container.type ~= "SimpleGroup" then
 			scroll = gui:Create("ScrollFrame")
 			scroll:SetLayout("flow")
@@ -1743,13 +1748,13 @@ end
 
 -- Upgrade the OnUpdate script as well, if needed.
 if AceConfigDialog.frame:GetScript("OnUpdate") then
-	AceConfigDialog.frame:SetScript("OnUpdate", RefreshOnUpdate)
+	AceConfigDialog.frame:SetScript("OnUpdate", function() RefreshOnUpdate(this) end)
 end
 
 --- Close all open options windows
 function AceConfigDialog:CloseAll()
 	AceConfigDialog.frame.closeAll = true
-	AceConfigDialog.frame:SetScript("OnUpdate", RefreshOnUpdate)
+	AceConfigDialog.frame:SetScript("OnUpdate", function() RefreshOnUpdate(this) end)
 	if next(self.OpenFrames) then
 		return true
 	end
@@ -1760,7 +1765,7 @@ end
 function AceConfigDialog:Close(appName)
 	if self.OpenFrames[appName] then
 		AceConfigDialog.frame.closing[appName] = true
-		AceConfigDialog.frame:SetScript("OnUpdate", RefreshOnUpdate)
+		AceConfigDialog.frame:SetScript("OnUpdate", function() RefreshOnUpdate(this) end)
 		return true
 	end
 end
@@ -1768,7 +1773,7 @@ end
 -- Internal -- Called by AceConfigRegistry
 function AceConfigDialog:ConfigTableChanged(event, appName)
 	AceConfigDialog.frame.apps[appName] = true
-	AceConfigDialog.frame:SetScript("OnUpdate", RefreshOnUpdate)
+	AceConfigDialog.frame:SetScript("OnUpdate", function() RefreshOnUpdate(this) end)
 end
 
 reg.RegisterCallback(AceConfigDialog, "ConfigTableChange", "ConfigTableChanged")
@@ -1901,7 +1906,7 @@ end
 local function ClearBlizPanel(widget, event)
 	local appName = widget:GetUserData("appName")
 	AceConfigDialog.frame.closing[appName] = true
-	AceConfigDialog.frame:SetScript("OnUpdate", RefreshOnUpdate)
+	AceConfigDialog.frame:SetScript("OnUpdate", function() RefreshOnUpdate(this) end)
 end
 
 --- Add an option table into the Blizzard Interface Options panel.
@@ -1944,15 +1949,112 @@ function AceConfigDialog:AddToBlizOptions(appName, name, parent, ...)
 		if l > 0 then
 			local path = {}
 			for n = 1, l do
-				tinsert(path, args[n])
+				tinsert(path, arg[n])
 			end
 			group:SetUserData("path", path)
 		end
 		group:SetCallback("OnShow", FeedToBlizPanel)
 		group:SetCallback("OnHide", ClearBlizPanel)
-	--	InterfaceOptions_AddCategory(group.frame)
+		InterfaceOptions_AddCategory(group)
 		return group.frame
 	else
 		error(format("%s has already been added to the Blizzard Options Window with the given path", appName), 2)
 	end
+end
+
+do
+	local tree = {}
+	function InterfaceOptions_AddCategory(widget, addon, position)
+		local parent = widget.frame.parent;
+		local appName = widget:GetUserData("appName")
+		if (parent) then
+			for k, v in pairs(tree) do
+				if (v.value == parent) then
+					if not v.children then
+						v.children = {}
+					end
+					tinsert(v.children, { value = widget.frame.name, text = widget.frame.name, frame = widget });
+					return;
+				end
+			end
+		end
+
+		if (position) then
+			tinsert(tree, position, { value = appName, text = widget.frame.name, frame = widget });
+		else
+			tinsert(tree, { value = appName, text = widget.frame.name, frame = widget });
+		end
+	end
+
+	local function SelectTreeGroup(container, event, count, group)
+		container:ReleaseChildren()
+		local bg = gui:Create("BlizOptionsGroup")
+
+
+		bg:SetCallback("OnShow", FeedToBlizPanel)
+		bg:SetCallback("OnHide", ClearBlizPanel)
+		local path = {}
+		BuildPath(path, strsplit("\001", group))
+		local node
+		local app = tremove(path, 1)
+		for k, v in pairs(container.tree) do
+			if v.value == app then
+				if table.getn(path) < 1 then
+					node = v
+				else
+					for j, w in pairs(v.children) do
+
+						if w.value == path[1] then
+							node = w
+							break;
+						end
+					end
+				end
+				break;
+			end
+		end
+		bg:SetName(node.value, app)
+		bg:SetTitle(node.frame.label:GetText())
+		bg:SetUserData("appName", app)
+		bg:SetUserData("path", node.frame:GetUserData("path"))
+		bg.width = "fill"
+		bg.height = "fill"
+		container:AddChild(bg)
+	end
+
+	_G["AddonConfigFrame"] = _G["AddonConfigFrame"] or nil
+	local frame
+	function InterfaceOptionsFrame_OpenToCategory(...)
+		-- Create the frame container
+		frame = _G["AddonConfigFrame"] or gui:Create("Frame")
+		_G["AddonConfigFrame"] = frame
+		if frame:IsShown() then
+			frame:ReleaseChildren()
+		end
+		frame:SetTitle("Addon's Configuration")
+		frame:SetStatusText("Addons configuration panel")
+		frame:SetCallback("OnClose", function(widget) gui:Release(widget); _G["AddonConfigFrame"] = nil end)
+		frame:SetLayout("Flow")
+		frame:SetWidth(850)
+		-- Create the TreeGroup
+		local tg = gui:Create("TreeGroup")
+		tg:SetLayout("Flow")
+		tg:SetTree(tree)
+		--tg:SetWidth(320)
+		tg.width = "fill"
+		tg.height = "fill"
+		tg:SetCallback("OnGroupSelected", SelectTreeGroup)
+		frame:AddChild(tg)
+		local l = tgetn(arg)
+		local path = new()
+
+		if l > 0 then
+			for n = 1, l do
+				tinsert(path, arg[n])
+			end
+			tg:SelectByPath(unpack(arg))
+		end
+		del(path)
+	end
+
 end

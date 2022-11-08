@@ -1,15 +1,16 @@
-## Interface: 20400
+## Interface: 11200
 ## Title: Spy
 ## Notes: Detects and alerts you to the presence of nearby enemy players.
-## Author: Immolation
+## Author: Immolation, ported laytya @ git
+## Version: beta0.3
 ## OptionalDeps:  Ace3, LibSharedMedia-3.0, LibBabble-Class-3.0
 ## SavedVariables: SpyDB
-## SavedVariablesPerCharacter: SpyPerCharDB
+## SavedVariablesPerCharacter: SpyPerCharDB, SpyFuDB
 
 Libs\LibStub\LibStub.lua
 Libs\AceLibrary\AceLibrary.lua
-Libs\AceCore-3.0\AceCore-3.0.xml
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\AceCore-3.0\AceCore-3.0.xml
 Libs\AceLocale-3.0\AceLocale-3.0.xml
 Libs\AceAddon-3.0\AceAddon-3.0.xml
 Libs\AceDB-3.0\AceDB-3.0.xml
@@ -20,10 +21,15 @@ Libs\AceSerializer-3.0\AceSerializer-3.0.xml
 Libs\AceEvent-3.0\AceEvent-3.0.xml
 Libs\AceTimer-3.0\AceTimer-3.0.xml
 Libs\AceGUI-3.0\AceGUI-3.0.xml
+Libs\AceGUI-3.0\widgets\widgets.xml
+Libs\LibSharedMedia-3.0\lib.xml
+Libs\AceGUI-3.0-SharedMediaWidgets\widget.xml
 Libs\AceConfig-3.0\AceConfig-3.0.xml
 Libs\Astrolabe-0.2\Astrolabe-0.2.lua
 Libs\LibBabble-Class-3.0\lib.xml
-Libs\LibSharedMedia-3.0\lib.xml
+Libs\LibBabble-Spell-3.0\lib.xml
+Libs\ParserLib\lib.xml
+Libs\UnitCasting-1.1\lib.xml
 
 Spy.xml
 Locales\Spy-enUS.lua
@@ -34,3 +40,7 @@ Widgets.lua
 WindowOrder.lua
 MainWindow.lua
 List.lua
+SpyFu.lua
+SpyStats.xml
+SpyStats.lua
+SpyData.lua

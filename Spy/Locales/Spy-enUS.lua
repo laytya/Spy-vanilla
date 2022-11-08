@@ -8,15 +8,16 @@ L["Version"] = "Version"
 L["LoadDescription"] = "|cff9933ffSpy addon loaded. Type |cffffffff/spy|cff9933ff for options."
 L["SpyEnabled"] = "|cff9933ffSpy addon enabled."
 L["SpyDisabled"] = "|cff9933ffSpy addon disabled. Type |cffffffff/spy show|cff9933ff to enable."
-L["UpgradeAvailable"] = "|cff9933ffA new version of Spy is available. It can be downloaded from:\n|cffffffffhttps://github.com/fkndarthlol/Spy"
+L["UpgradeAvailable"] = "|cff9933ffA new version of Spy is available. It can be downloaded from:\n|cffffffffhttps://github.com/laytya/Spy"
 
 -- Configuration strings
 L["Profiles"] = "Profiles"
 
-L["GeneralSettings"] = "General Settings"
+L["About"] = "About"
 L["SpyDescription1"] = [[
 Spy is an addon that will alert you to the presence of nearby enemy players.
 ]]
+
 L["SpyDescription2"] = [[
 
 |cffffd000Nearby list|cffffffff
@@ -33,22 +34,38 @@ Players that are added to the Ignore list will not be reported by Spy. You can a
 |cffffd000Kill On Sight list|cffffffff
 Players on your Kill On Sight list cause an alarm to sound when detected. You can add and remove players to/from this list by using the button's drop down menu or by holding the Shift key while clicking the button.
 
-The drop down menu can also be used to set the reasons why you have added someone to the Kill On Sight list. If you want to enter a specific reason that is not in the list, then use the "Other..." option.
-
-
-|cffffd000Author: http://www.wowhead.com/?user=Immolation|cffffffff
+The drop down menu can also be used to set the reasons why you have added someone to the Kill On Sight list. If you want to enter a specific reason that is not in the list, then use the "Enter your own reason..." in the Other list.
 
 ]]
+
+L["SpyDescription3"] = [[
+|cffffd000 Statistics Window |cffffffff
+The Statistics Window contains a list of all enemy encounters which can be sorted by name, level, guild, wins, losses and the last time an enemy was detected. It also provides the ability to search for a specific enemy by name or guild and has filters to show only enemies that are marked as Kill on Sight, with a Win/Loss or entered Reasons.
+
+|cffffd000 Kill On Sight Button |cffffffff
+If enabled, this button will be located on the enemy players target frame. Clicking on this button will add/remove the enemy target to/from the Kill On Sight list. Right clicking on the button will allow you to enter Kill on Sight reasons.
+
+|cffffd000 Author:|cffffffff Slipjack
+|cffffd000 Ported to Vanilla:|cffffffff LaYt
+]]
+
+-- General Settings
+L["GeneralSettings"] = "General Settings"
+L["GeneralSettingsDescription"] = [[
+Options for when Spy is Enabled or Disabled.
+]] 
 L["EnableSpy"] = "Enable Spy"
 L["EnableSpyDescription"] = "Enables or disables Spy both now and also on login."
 L["EnabledInBattlegrounds"] = "Enable Spy in battlegrounds"
 L["EnabledInBattlegroundsDescription"] = "Enables or disables Spy when you are in a battleground."
-L["EnabledInArenas"] = "Enable Spy in arenas"
-L["EnabledInArenasDescription"] = "Enables or disables Spy when you are in an arena."
-L["EnabledInWintergrasp"] = "Enable Spy in world combat zones"
-L["EnabledInWintergraspDescription"] = "Enables or disables Spy when you are in world combat zones such as Lake Wintergrasp in Northrend."
 L["DisableWhenPVPUnflagged"] = "Disable Spy when not flagged for PVP"
 L["DisableWhenPVPUnflaggedDescription"] = "Enables or disables Spy depending on your PVP status."
+L["DisabledInZones"] = "Disable Spy while in these locations"
+L["DisabledInZonesDescription"]	= "Select locations where Spy will be disabled"
+L["Booty Bay"] = "Booty Bay"
+L["Everlook"] = "Everlook"						
+L["Gadgetzan"] = "Gadgetzan"
+L["Ratchet"] = "Ratchet"
 
 L["DisplayOptions"] = "Display"
 L["DisplayOptionsDescription"] = [[
@@ -58,19 +75,61 @@ L["ShowOnDetection"] = "Show Spy when enemy players are detected"
 L["ShowOnDetectionDescription"] = "Set this to display the Spy window and the Nearby list if Spy is hidden when enemy players are detected."
 L["HideSpy"] = "Hide Spy when no enemy players are detected"
 L["HideSpyDescription"] = "Set this to hide Spy when the Nearby list is displayed and it becomes empty. Spy will not be hidden if you clear the list manually."
+L["ShowKoSButton"] = "Show KOS button on the enemy target frame"
+L["ShowKoSButtonDescription"] = "Set this to show the KOS button on the enemy player's target frame."
+L["Alpha"] = "Transparency"
+L["AlphaDescription"] = "Set the transparency of the Spy window."
+L["AlphaBG"] = "Transparency in BGs"
+L["AlphaBGDescription"] = "Set the transparency of the Spy window in battlegrounds."
+L["LockSpy"] = "Lock the Spy window"
+L["LockSpyDescription"] = "Locks the Spy window in place so it doesn't move."
+L["ClampToScreen"] = "Clamp to Screen"
+L["ClampToScreenDescription"] = "Controls whether the Spy window can be dragged off screen."
+L["InvertSpy"] = "Invert the Spy window"
+L["InvertSpyDescription"] = "Flips the Spy window upside down."
+L["Reload"] = "Reload UI"
+L["ReloadDescription"] = "Required when changing the Spy window."
+L["LockSpy"] = "Lock the Spy window"
+L["LockSpyDescription"] = "Locks the Spy window in place so it doesn't move."
 L["ResizeSpy"] = "Resize the Spy window automatically"
 L["ResizeSpyDescription"] = "Set this to automatically resize the Spy window as enemy players are added and removed."
+L["ResizeSpyLimit"] = "List Limit"
+L["ResizeSpyLimitDescription"] = "Limit the number of enemy players shown in the Spy window."
+L["DisplayTooltipNearSpyWindow"] = "Display tooltip near the Spy window"
+L["DisplayTooltipNearSpyWindowDescription"] = "Set this to display tooltips near the Spy window."
+L["SelectTooltipAnchor"] = "Tooltip Anchor Point"
+L["SelectTooltipAnchorDescription"] = "Select the anchor point for the tooltip if the option above has been checked"
+L["ANCHOR_CURSOR"] = "Cursor"
+L["ANCHOR_TOP"] = "Top"
+L["ANCHOR_BOTTOM"] = "Bottom"
+L["ANCHOR_LEFT"] = "Left"			
+L["ANCHOR_RIGHT"] = "Right"
 L["TooltipDisplayWinLoss"] = "Display win/loss statistics in tooltip"
 L["TooltipDisplayWinLossDescription"] = "Set this to display the win/loss statistics of a player in the player's tooltip."
 L["TooltipDisplayKOSReason"] = "Display Kill On Sight reasons in tooltip"
 L["TooltipDisplayKOSReasonDescription"] = "Set this to display the Kill On Sight reasons of a player in the player's tooltip."
 L["TooltipDisplayLastSeen"] = "Display last seen details in tooltip"
 L["TooltipDisplayLastSeenDescription"] = "Set this to display the last known time and location of a player in the player's tooltip."
+L["DisplayListData"] = "Select enemy data to display"
+L["Name"] = "Name"
+L["Class"] = "Class"
+L["SelectFont"] = "Select a Font"
+L["SelectFontDescription"] = "Select a Font for the Spy Window."
+L["RowHeight"] = "Select the Row Height"
+L["RowHeightDescription"] = "Select the Row Height for the Spy window."
+L["Texture"] = "Texture"
+L["TextureDescription"] = "Select a texture for the Spy Window"
+
 
 L["AlertOptions"] = "Alerts"
 L["AlertOptionsDescription"] = [[
 You can announce the details on an encounter to a chat channel and control how Spy alerts you when enemy players are detected.
 ]]
+L["SoundChannel"] = "Select Sound Channel"
+L["Master"] = "Master"
+L["SFX"] = "Sound Effects"
+L["Music"] = "Music"
+L["Ambience"] = "Ambience"
 L["Announce"] = "Announce to:"
 L["None"] = "None"
 L["NoneDescription"] = "Do not announce when enemy players are detected."
@@ -92,10 +151,21 @@ L["WarnOnKOS"] = "Warn upon Kill On Sight detection"
 L["WarnOnKOSDescription"] = "Set this to display a warning and sound an alert when an enemy player on your Kill On Sight list is detected."
 L["WarnOnKOSGuild"] = "Warn upon Kill On Sight guild detection"
 L["WarnOnKOSGuildDescription"] = "Set this to display a warning and sound an alert when an enemy player in the same guild as someone on your Kill On Sight list is detected."
-L["DisplayWarningsInErrorsFrame"] = "Display warnings in the errors frame"
-L["DisplayWarningsInErrorsFrameDescription"] = "Set this to use the errors frame to display warnings instead of using the graphical popup frames."
+L["WarnOnRace"] = "Warn upon Race detection"
+L["WarnOnRaceDescription"] = "Set this to sound an alert when the selected Race is detected."
+L["SelectWarnRace"] = "Select Race for detection"
+L["SelectWarnRaceDescription"] = "Select a Race for audio alert."
+L["WarnRaceNote"] = "Note: You must target an enemy at least once so their Race can be added to the database. Upon the next detection an alert will sound. This does not work the same as detecting nearby enemies in combat."
+L["DisplayWarnings"] = "Select warnings message location"
+L["Default"] = "Default"
+L["ErrorFrame"] = "Error Frame"
+L["Moveable"] = "Moveable"
 L["EnableSound"] = "Enable audio alerts"
 L["EnableSoundDescription"] = "Set this to enable audio alerts when enemy players are detected. Different alerts sound if an enemy player gains stealth or if an enemy player is on your Kill On Sight list."
+L["OnlySoundKoS"] = "Only sound audio alerts for Kill On Sight detection"
+L["OnlySoundKoSDescription"] = "Set this to only play audio alerts when enemy players on the Kill on Sight list are detected."
+L["StopAlertsOnTaxi"] = "Turn off alerts while on a flight path"
+L["StopAlertsOnTaxiDescription"] = "Stop all new alerts and warnings while on a flight path."
 
 L["ListOptions"] = "Nearby List"
 L["ListOptionsDescription"] = [[
@@ -119,18 +189,20 @@ L["ShowNearbyListDescription"] = "Set this to display the Nearby list if it is n
 L["PrioritiseKoS"] = "Prioritise Kill On Sight enemy players in the Nearby list"
 L["PrioritiseKoSDescription"] = "Set this to always show Kill On Sight enemy players first in the Nearby list."
 
-L["MinimapOptions"] = "Map"
-L["MinimapOptionsDescription"] = [[
-For players who can track humanoids the minimap can be utilised to provide additional features.
-
-Players who can track humanoids include hunters, druids, and those who have received the ability through other means such as eating a Blackened Worg Steak.
+-- Map
+L["MapOptions"] = "Map"
+L["MapOptionsDescription"] = [[
+Options for world map and minimap including icons and tooltips.
 ]]
-L["MinimapTracking"] = "Enable minimap tracking"
-L["MinimapTrackingDescription"] = "Set this to enable minimap tracking and detection. Known enemy players detected on the minimap will be added to the Nearby list."
+L["MinimapDetection"] = "Enable minimap detection"
+L["MinimapDetectionDescription"] = "Rolling the cursor over known enemy players detected on the minimap will add them to the Nearby list."
+L["MinimapNote"] = "          Note: Only works for players that can Track Humanoids."
 L["MinimapDetails"] = "Display level/class details"
 L["MinimapDetailsDescription"] = "Set this to update the minimap tooltip so that level/class details are displayed alongside enemy names."
 L["DisplayOnMap"] = "Display enemy location on map"
 L["DisplayOnMapDescription"] = "Set this to display on the world map and minimap the location of enemies detected by other Spy users in your party, raid and guild."
+L["SwitchToZone"] = "Switch to current zone map on enemy detection"
+L["SwitchToZoneDescription"] = "Change the map to the players current zone map when enemies are detected."
 L["MapDisplayLimit"] = "Limit displayed map icons to:"
 L["LimitNone"] = "Everywhere"
 L["LimitNoneDescription"] = "Displayes all detected enemies on the map regardless of your current location."
@@ -139,9 +211,11 @@ L["LimitSameZoneDescription"] = "Only displays detected enemies on the map if yo
 L["LimitSameContinent"] = "Same continent"
 L["LimitSameContinentDescription"] = "Only displays detected enemies on the map if you are on the same continent."
 
+-- Data Management
 L["DataOptions"] = "Data Management"
 L["DataOptionsDescription"] = [[
-You can configure how Spy maintains and gathers its data.
+
+Options on how Spy maintains and gathers data.
 ]]
 L["PurgeData"] = "Purge undetected enemy player data after:"
 L["OneDay"] = "1 day"
@@ -156,6 +230,10 @@ L["SixtyDays"] = "60 days"
 L["SixtyDaysDescription"] = "Purge data for enemy players that have been undetected for 60 days."
 L["NinetyDays"] = "90 days"
 L["NinetyDaysDescription"] = "Purge data for enemy players that have been undetected for 90 days."
+L["PurgeKoS"] = "Purge Kill on Sight players based on undetected time."
+L["PurgeKoSDescription"] = "Set this to purge Kill on Sight players that have been undetected based on the time settings for undetected players."
+L["PurgeWinLossData"] = "Purge win/loss data based on undetected time."
+L["PurgeWinLossDataDescription"] = "Set this to purge win/loss data of your enemy encounters based on the time settings for undetected players."
 L["ShareData"] = "Share data with other Spy addon users"
 L["ShareDataDescription"] = "Set this to share the details of your enemy player encounters with other Spy users in your party, raid and guild."
 L["UseData"] = "Use data from other Spy addon users"
@@ -168,16 +246,25 @@ L["ShareKOSBetweenCharactersDescription"] = "Set this to share the players you m
 
 L["SlashCommand"] = "Slash Command"
 L["SpySlashDescription"] = "These buttons execute the same functions as the ones in the slash command /spy"
+L["Enable"] = "Enable"
+L["EnableDescription"] = "Enables Spy and shows the main window."
 L["Show"] = "Show"
 L["ShowDescription"] = "Shows the main window."
+L["Hide"] = "Hide"
+L["HideDescription"] = "Hides the main window."
 L["Reset"] = "Reset"
 L["ResetDescription"] = "Resets the position and appearance of the main window."
+L["ClearSlash"] = "Clear"
+L["ClearSlashDescription"] = "Clears the list of players that have been detected."
 L["Config"] = "Config"
 L["ConfigDescription"] = "Open the Interface Addons configuration window for Spy."
 L["KOS"] = "KOS"
 L["KOSDescription"] = "Add/remove a player to/from the Kill On Sight list."
 L["Ignore"] = "Ignore"
 L["IgnoreDescription"] = "Add/remove a player to/from the Ignore list."
+L["InvalidInput"] = "Invalid Input"
+L["Test"] = "Test"
+L["TestDescription"] = "Shows a warning so it can be repositioned."
 
 -- Lists
 L["Nearby"] = "Nearby"
@@ -185,7 +272,21 @@ L["LastHour"] = "Last Hour"
 L["Ignore"] = "Ignore"
 L["KillOnSight"] = "Kill On Sight"
 
--- Class descriptions
+--Stats
+L["Won"] = "Won"
+L["Lost"] = "Lost"
+L["Time"] = "Time"	
+L["List"] = "List"	
+L["Filter"] = "Filter"
+L["Show Only"] = "Show Only"
+L["Realm"] = "Realm"
+L["KOS"] = "KOS"
+L["Won/Lost"] = "Won/Lost"
+L["Reason"] = "Reason"	  
+L["HonorKills"] = "Honor Kills"
+L["PvPDeaths"] = "PvP Deaths"
+
+--++ Class descriptions
 L["DEATHKNIGHT"] = "Death Knight"
 L["DRUID"] = "|cffff7c0aDruid|cffffffff"
 L["HUNTER"] = "|cffaad372Hunter|cffffffff"
@@ -197,6 +298,16 @@ L["SHAMAN"] = "|cff2359ffShaman|cffffffff"
 L["WARLOCK"] = "|cff9382c9Warlock|cffffffff"
 L["WARRIOR"] = "|cffc69b6dWarrior|cffffffff"
 L["UNKNOWN"] = "|cff191919Unknown|cffffffff"
+
+-- Race descriptions
+L["Human"] = "Human"
+L["Orc"] = "Orc"
+L["Dwarf"] = "Dwarf"
+L["Tauren"] = "Tauren"
+L["Troll"] = "Troll"
+L["Night Elf"] = "Night Elf"
+L["Undead"] = "Undead"
+L["Gnome"] = "Gnome"
 
 -- Stealth abilities
 L["Stealth"] = "Stealth"
@@ -243,11 +354,21 @@ L["LessThanOneMinuteAgo"] = "less than a minute ago"
 L["MinutesAgo"] = "minutes ago"
 L["HoursAgo"] = "hours ago"
 L["DaysAgo"] = "days ago"
+L["Close"] = "Close"
+L["CloseDescription"] = "|cffffffffHides the Spy window. By default will show again when the next enemy player is detected."
+L["Left/Right"] = "Left/Right"
+L["Left/RightDescription"] = "|cffffffffNavigates between the Nearby, Last Hour, Ignore and Kill On Sight lists."
 L["Clear"] = "Clear"
+L["ClearDescription"] = "|cffffffffClears the list of players that have been detected. CTRL click will Enable/Disable Spy while displayed."
+L["NearbyCount"] = "Nearby Count"
+L["NearbyCountDescription"] = "|cffffffffSends the count of nearby players to chat."
+L["Statistics"] = "Statistics"
+L["StatsDescription"] = "|cffffffffShows a list of enemy players encountered, win/loss records and where they were last seen."
 L["AddToIgnoreList"] = "Add to Ignore list"
 L["AddToKOSList"] = "Add to Kill On Sight list"
 L["RemoveFromIgnoreList"] = "Remove from Ignore list"
 L["RemoveFromKOSList"] = "Remove from Kill On Sight list"
+L["RemoveFromStatsList"] = "Remove from Statistics List"   --++
 L["AnnounceDropDownMenu"] = "Announce"
 L["KOSReasonDropDownMenu"] = "Set Kill On Sight reason"
 L["PartyDropDownMenu"] = "Party"
@@ -257,13 +378,16 @@ L["LocalDefenseDropDownMenu"] = "Local Defense"
 L["Player"] = " (Player)"
 L["KOSReason"] = "Kill On Sight"
 L["KOSReasonIndent"] = "    "
-L["KOSReasonOther"] = "Other..."
+L["KOSReasonOther"] = "Enter your own reason..."
 L["KOSReasonClear"] = "Clear"
 L["StatsWins"] = "|cff40ff00Wins: "
 L["StatsSeparator"] = "  "
 L["StatsLoses"] = "|cff0070ddLoses: "
 L["Located"] = "located:"
 L["Yards"] = "yards"
+
+L["Get Census Data"] = "Get Census Data"
+L["GetCensusData"] = "Get names of your factions to filter them in player detection."
 
 Spy_KOSReasonListLength = 13
 Spy_KOSReasonList = {
@@ -486,9 +610,11 @@ StaticPopupDialogs["Spy_SetKOSReasonOther"] = {
 	end,
     	OnAccept = function(self)
 		local reason = getglobal(this:GetParent():GetName().."EditBox"):GetText()
-		Spy:SetKOSReason(self.playerName, "Other...", reason)
+		Spy:SetKOSReason(self.playerName, "Enter your own reason...", reason)
 	end,
 };
+
+Spy_IgnoreList = {}
 
 Spy_AbilityList = {
 
@@ -536,14 +662,6 @@ Spy_AbilityList = {
 		race = "Orc",
 		level = 1,
 	},
-	["Arcane Torrent"] = {
-		race = "Blood Elf",
-		level = 1,
-	},
-	["Mana Tap"] = {
-		race = "Blood Elf",
-		level = 1,
-	},
 	["Perception"] = {
 		race = "Human",
 		level = 1,
@@ -556,333 +674,7 @@ Spy_AbilityList = {
 		race = "Dwarf",
 		level = 1,
 	},
-	["Gift of the Naaru"] = {
-		race = "Draenei",
-		level = 1,
-	},
 
---== Death Knight ==
-
-	["Abomination's Might"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Acclimation"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Blade Barrier"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Blood Gorged"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Bloodworms"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Bloody Vengeance"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Butchery"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Chilblains"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Chill of the Grave"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Crypt Fever"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Desecration"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Ebon Plague"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Endless Winter"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Icy Talons"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Scent of Blood"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Vendetta"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Anti-Magic Zone"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Bone Shield"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Deathchill"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Ghoul Frenzy"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Hungering Cold"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Hysteria"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Improved Icy Talons"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Lichborne"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Mark of Blood"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Vampiric Blood"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["On a Pale Horse"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune Tap"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Will of the Necropolis"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Unbreakable Armor"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Frost Fever"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Blood Plague"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune of Cinderglacier"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune of Lichbane"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune of Razorice"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune of Spellbreaking"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune of Spellshattering"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune of Swordbreaking"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune of Swordshattering"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune of the Fallen Crusader"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Rune of the Stoneskin Gargoyle"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Acherus Deathcharger"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Blood Presence"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Blood Strike"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Heart Strike"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Frost Strike"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Scourge Strike"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Corpse Explosion"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Unholy Blight"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Death Gate"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Death Grip"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Forceful Deflection"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Icy Touch"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Plague Strike"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Runeforging"] = {
-		class = "DEATHKNIGHT",
-		level = 55,
-	},
-	["Death Strike"] = {
-		class = "DEATHKNIGHT",
-		level = 56,
-	},
-	["Pestilence"] = {
-		class = "DEATHKNIGHT",
-		level = 56,
-	},
-	["Raise Dead"] = {
-		class = "DEATHKNIGHT",
-		level = 56,
-	},
-	["Frost Presence"] = {
-		class = "DEATHKNIGHT",
-		level = 57,
-	},
-	["Mind Freeze"] = {
-		class = "DEATHKNIGHT",
-		level = 57,
-	},
-	["Blood Boil"] = {
-		class = "DEATHKNIGHT",
-		level = 58,
-	},
-	["Chains of Ice"] = {
-		class = "DEATHKNIGHT",
-		level = 58,
-	},
-	["Strangulate"] = {
-		class = "DEATHKNIGHT",
-		level = 59,
-	},
-	["Dancing Rune Weapon"] = {
-		class = "DEATHKNIGHT",
-		level = 60,
-	},
-	["Death and Decay"] = {
-		class = "DEATHKNIGHT",
-		level = 60,
-	},
-	["Howling Blast"] = {
-		class = "DEATHKNIGHT",
-		level = 60,
-	},
-	["Summon Gargoyle"] = {
-		class = "DEATHKNIGHT",
-		level = 60,
-	},
-	["Obliterate"] = {
-		class = "DEATHKNIGHT",
-		level = 61,
-	},
-	["Path of Frost"] = {
-		class = "DEATHKNIGHT",
-		level = 61,
-	},
-	["Icebound Fortitude"] = {
-		class = "DEATHKNIGHT",
-		level = 62,
-	},
-	["Blood Tap"] = {
-		class = "DEATHKNIGHT",
-		level = 64,
-	},
-	["Dark Command"] = {
-		class = "DEATHKNIGHT",
-		level = 65,
-	},
-	["Horn of Winter"] = {
-		class = "DEATHKNIGHT",
-		level = 65,
-	},
-	["Death Pact"] = {
-		class = "DEATHKNIGHT",
-		level = 66,
-	},
-	["Rune Strike"] = {
-		class = "DEATHKNIGHT",
-		level = 67,
-	},
-	["Anti-Magic Shell"] = {
-		class = "DEATHKNIGHT",
-		level = 68,
-	},
-	["Unholy Presence"] = {
-		class = "DEATHKNIGHT",
-		level = 70,
-	},
-	["Raise Ally"] = {
-		class = "DEATHKNIGHT",
-		level = 72,
-	},
-	["Empower Rune Weapon"] = {
-		class = "DEATHKNIGHT",
-		level = 75,
-	},
-	["Army of the Dead"] = {
-		class = "DEATHKNIGHT",
-		level = 80,
-	},
 
 --== Druid == 
 
@@ -906,10 +698,6 @@ Spy_AbilityList = {
 		class = "DRUID",
 		level = 4,
 	},
-	["Cower"] = {
-		class = "DRUID",
-		level = 5,
-	},
 	["Thorns"] = {
 		class = "DRUID",
 		level = 6,
@@ -926,15 +714,7 @@ Spy_AbilityList = {
 		class = "DRUID",
 		level = 10,
 	},
-	["Growl"] = {
-		class = "DRUID",
-		level = 10,
-	},
 	["Maul"] = {
-		class = "DRUID",
-		level = 10,
-	},
-	["Nature's Grasp"] = {
 		class = "DRUID",
 		level = 10,
 	},
@@ -942,15 +722,7 @@ Spy_AbilityList = {
 		class = "DRUID",
 		level = 10,
 	},
-	["Furor"] = {
-		class = "DRUID",
-		level = 10,
-	},
 	["Regrowth"] = {
-		class = "DRUID",
-		level = 12,
-	},
-	["Revive"] = {
 		class = "DRUID",
 		level = 12,
 	},
@@ -962,7 +734,7 @@ Spy_AbilityList = {
 		class = "DRUID",
 		level = 16,
 	},
-	["Swipe (Bear)"] = {
+	["Swipe"] = {
 		class = "DRUID",
 		level = 16,
 	},
@@ -976,7 +748,7 @@ Spy_AbilityList = {
 	},
 	["Faerie Fire (Feral)"] = {
 		class = "DRUID",
-		level = 18,
+		level = 30,
 	},
 	["Cat Form"] = {
 		class = "DRUID",
@@ -986,21 +758,13 @@ Spy_AbilityList = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Feral Charge - Bear"] = {
-		class = "DRUID",
-		level = 20,
-	},
-	["Feral Charge - Cat"] = {
-		class = "DRUID",
-		level = 20,
-	},
-	["Master Shapeshifter"] = {
+	["Feral Charge"] = {
 		class = "DRUID",
 		level = 20,
 	},
 	["Nature's Grace"] = {
 		class = "DRUID",
-		level = 20,
+		level = 30,
 	},
 	["Omen of Clarity"] = {
 		class = "DRUID",
@@ -1019,10 +783,6 @@ Spy_AbilityList = {
 		level = 20,
 	},
 	["Rip"] = {
-		class = "DRUID",
-		level = 20,
-	},
-	["Survival Instincts"] = {
 		class = "DRUID",
 		level = 20,
 	},
@@ -1072,7 +832,7 @@ Spy_AbilityList = {
 	},
 	["Insect Swarm"] = {
 		class = "DRUID",
-		level = 30,
+		level = 20,
 	},
 	["Ferocious Bite"] = {
 		class = "DRUID",
@@ -1114,114 +874,15 @@ Spy_AbilityList = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Natural Perfection"] = {
-		class = "DRUID",
-		level = 40,
-	},
-	["Savage Defense"] = {
-		class = "DRUID",
-		level = 40,
-	},
 	["Barkskin"] = {
 		class = "DRUID",
 		level = 44,
 	},
-	["Infected Wounds"] = {
-		class = "DRUID",
-		level = 45,
-	},
-	["Living Seed"] = {
-		class = "DRUID",
-		level = 45,
-	},
-	["Owlkin Frenzy"] = {
-		class = "DRUID",
-		level = 45,
-	},
-	["Mangle (Cat)"] = {
-		class = "DRUID",
-		level = 50,
-	},
-	["Mangle (Bear)"] = {
-		class = "DRUID",
-		level = 50,
-	},
-	["Force of Nature"] = {
-		class = "DRUID",
-		level = 50,
-	},
-	["Tree of Life"] = {
-		class = "DRUID",
-		level = 50,
-	},
 	["Gift of the Wild"] = {
 		class = "DRUID",
-		level = 50,
-	},
-	["Typhoon"] = {
-		class = "DRUID",
-		level = 50,
-	},
-	["Force of Nature"] = {
-		class = "DRUID",
-		level = 50,
-	},
-	["Eclipse"] = {
-		class = "DRUID",
-		level = 50,
-	},
-	["Earth and Moon"] = {
-		class = "DRUID",
-		level = 55,
-	},
-	["Starfall"] = {
-		class = "DRUID",
 		level = 60,
 	},
-	["Wild Growth"] = {
-		class = "DRUID",
-		level = 60,
-	},
-	["Berserk"] = {
-		class = "DRUID",
-		level = 60,
-	},
-	["Maim"] = {
-		class = "DRUID",
-		level = 62,
-	},
-	["Lifebloom"] = {
-		class = "DRUID",
-		level = 64,
-	},
-	["Lacerate"] = {
-		class = "DRUID",
-		level = 66,
-	},
-	["Flight Form"] = {
-		class = "DRUID",
-		level = 68,
-	},
-	["Cyclone"] = {
-		class = "DRUID",
-		level = 70,
-	},
-	["Swift Flight Form"] = {
-		class = "DRUID",
-		level = 70,
-	},
-	["Swipe (Cat)"] = {
-		class = "DRUID",
-		level = 71,
-	},
-	["Savage Roar"] = {
-		class = "DRUID",
-		level = 75,
-	},
-	["Nourish"] = {
-		class = "DRUID",
-		level = 80,
-	},
+
 
 --== Hunter == 
 
@@ -1505,46 +1166,10 @@ Spy_AbilityList = {
 		class = "HUNTER",
 		level = 60,
 	}, 
-	["Kill Command"] = {
-		class = "HUNTER",
-		level = 66,
-	},
-	["Snake Trap"] = {
-		class = "HUNTER",
-		level = 68,
-	},
-	["Misdirection"] = {
-		class = "HUNTER",
-		level = 70,
-	},
-	["Kill Shot"] = {
-		class = "HUNTER",
-		level = 71,
-	}, 
-	["Aspect of the Dragonhawk"] = {
-		class = "HUNTER",
-		level = 74,
-	},
-	["Master's Call"] = {
-		class = "HUNTER",
-		level = 71,
-	}, 
-	["Call Stabled Pet"] = {
-		class = "HUNTER",
-		level = 80,
-	}, 
-	["Freezing Arrow"] = {
-		class = "HUNTER",
-		level = 80,
-	}, 
-
+	
 --== Mage == 
 
 	["Arcane Intellect"] = {
-		class = "MAGE",
-		level = 1,
-	},
-	["Fiery Payback"] = {
 		class = "MAGE",
 		level = 1,
 	},
@@ -1580,10 +1205,6 @@ Spy_AbilityList = {
 		class = "MAGE",
 		level = 8,
 	},
-	["Fireball!"] = {
-		class = "MAGE",
-		level = 10,
-	},
 	["Frost Nova"] = {
 		class = "MAGE",
 		level = 10,
@@ -1605,10 +1226,6 @@ Spy_AbilityList = {
 		level = 15,
 	},
 	["Frostbite"] = {
-		class = "MAGE",
-		level = 15,
-	},
-	["Burning Determination"] = {
 		class = "MAGE",
 		level = 15,
 	},
@@ -1636,15 +1253,7 @@ Spy_AbilityList = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Teleport: Exodar"] = {
-		class = "MAGE",
-		level = 20,
-	},
 	["Teleport: Orgrimmar"] = {
-		class = "MAGE",
-		level = 20,
-	},
-	["Teleport: Silvermoon"] = {
 		class = "MAGE",
 		level = 20,
 	},
@@ -1653,10 +1262,6 @@ Spy_AbilityList = {
 		level = 20,
 	},
 	["Teleport: Undercity"] = {
-		class = "MAGE",
-		level = 20,
-	},
-	["Focus Magic"] = {
 		class = "MAGE",
 		level = 20,
 	},
@@ -1688,10 +1293,6 @@ Spy_AbilityList = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Icy Veins"] = {
-		class = "MAGE",
-		level = 20,
-	},
 	["Scorch"] = {
 		class = "MAGE",
 		level = 22,
@@ -1715,10 +1316,6 @@ Spy_AbilityList = {
 	["Cone of Cold"] = {
 		class = "MAGE",
 		level = 26,
-	},
-	["Conjure Mana Gem"] = {
-		class = "MAGE",
-		level = 28,
 	},
 	["Ice Block"] = {
 		class = "MAGE",
@@ -1752,26 +1349,6 @@ Spy_AbilityList = {
 		class = "MAGE",
 		level = 35,
 	},
-	["Portal: Stonard"] = {
-		class = "MAGE",
-		level = 35,
-	},
-	["Portal: Theramore"] = {
-		class = "MAGE",
-		level = 35,
-	},
-	["Teleport: Stonard"] = {
-		class = "MAGE",
-		level = 35,
-	},
-	["Teleport: Theramore"] = {
-		class = "MAGE",
-		level = 35,
-	},
-	["Blazing Speed"] = {
-		class = "MAGE",
-		level = 35,
-	},
 	["Combustion"] = {
 		class = "MAGE",
 		level = 40,
@@ -1788,14 +1365,6 @@ Spy_AbilityList = {
 		class = "MAGE",
 		level = 40,
 	},
-	["Portal: Exodar"] = {
-		class = "MAGE",
-		level = 40,
-	},
-	["Portal: Silvermoon"] = {
-		class = "MAGE",
-		level = 40,
-	},
 	["Portal: Stormwind"] = {
 		class = "MAGE",
 		level = 40,
@@ -1804,23 +1373,11 @@ Spy_AbilityList = {
 		class = "MAGE",
 		level = 40,
 	},
-	["Fingers of Frost"] = {
-		class = "MAGE",
-		level = 45,
-	},
 	["Portal: Thunder Bluff"] = {
 		class = "MAGE",
 		level = 50,
 	},
 	["Portal: Darnassus"] = {
-		class = "MAGE",
-		level = 50,
-	},
-	["Summon Water Elemental"] = {
-		class = "MAGE",
-		level = 50,
-	},
-	["Slow"] = {
 		class = "MAGE",
 		level = 50,
 	},
@@ -1832,23 +1389,7 @@ Spy_AbilityList = {
 		class = "MAGE",
 		level = 56,
 	},
-	["Polymorph: Black Cat"] = {
-		class = "MAGE",
-		level = 60,
-	},
 	["Polymorph: Pig"] = {
-		class = "MAGE",
-		level = 60,
-	},
-	["Polymorph: Rabbit"] = {
-		class = "MAGE",
-		level = 60,
-	},
-	["Polymorph: Serpent"] = {
-		class = "MAGE",
-		level = 60,
-	},
-	["Polymorph: Turkey"] = {
 		class = "MAGE",
 		level = 60,
 	},
@@ -1856,78 +1397,11 @@ Spy_AbilityList = {
 		class = "MAGE",
 		level = 60,
 	},
-	["Teleport: Shattrath"] = {
-		class = "MAGE",
-		level = 60,
-	},
-	["Deep Freeze"] = {
-		class = "MAGE",
-		level = 60,
-	},
-	["Arcane Barrage"] = {
-		class = "MAGE",
-		level = 60,
-	},
-	["Living Bomb"] = {
-		class = "MAGE",
-		level = 60,
-	},
-	["Molten Armor"] = {
-		class = "MAGE",
-		level = 62,
-	},
-	["Arcane Blast"] = {
-		class = "MAGE",
-		level = 64,
-	},
-	["Portal: Shattrath"] = {
-		class = "MAGE",
-		level = 65,
-	},
-	["Ice Lance"] = {
-		class = "MAGE",
-		level = 66,
-	},
-	["Invisibility"] = {
-		class = "MAGE",
-		level = 68,
-	},
-	["Spellsteal"] = {
-		class = "MAGE",
-		level = 70,
-	},
-	["Ritual of Refreshment"] = {
-		class = "MAGE",
-		level = 70,
-	},
-	["Teleport: Dalaran"] = {
-		class = "MAGE",
-		level = 71,
-	},
-	["Portal: Dalaran"] = {
-		class = "MAGE",
-		level = 74,
-	},
-	["Conjure Refreshment"] = {
-		class = "MAGE",
-		level = 75,
-	},
-	["Frostfire Bolt"] = {
-		class = "MAGE",
-		level = 75,
-	},
-	["Mirror Image"] = {
-		class = "MAGE",
-		level = 80,
-	},
+	
 
 --== Paladin ==
 
 	["Devotion Aura"] = {
-		class = "PALADIN",
-		level = 1,
-	},
-	["Glyph of Holy Light"] = {
 		class = "PALADIN",
 		level = 1,
 	},
@@ -2235,47 +1709,7 @@ Spy_AbilityList = {
 		class = "PALADIN",
 		level = 60,
 	},
-	["Crusader Aura"] = {
-		class = "PALADIN",
-		level = 62,
-	},
-	["Seal of Blood"] = {
-		class = "PALADIN",
-		level = 64,
-	},
-	["Seal of Vengeance"] = {
-		class = "PALADIN",
-		level = 64,
-	},
-	["Seal of Corruption"] = {
-		class = "PALADIN",
-		level = 66,
-	},
-	["Seal of the Martyr"] = {
-		class = "PALADIN",
-		level = 66,
-	},
-	["Avenging Wrath"] = {
-		class = "PALADIN",
-		level = 70,
-	},
-	["Divine Plea"] = {
-		class = "PALADIN",
-		level = 71,
-	},
-	["Shield of Righteousness"] = {
-		class = "PALADIN",
-		level = 75,
-	},
-	["Holy Mending"] = {
-		class = "PALADIN",
-		level = 80,
-	},
-	["Sacred Shield"] = {
-		class = "PALADIN",
-		level = 80,
-	},
-
+	
 --== Priest == 
 
 	["Power Word: Fortitude"] = {
@@ -2526,38 +1960,7 @@ Spy_AbilityList = {
 		class = "PRIEST",
 		level = 60,
 	},
-	["Shadow Word: Death"] = {
-		class = "PRIEST",
-		level = 62,
-	},
-	["Binding Heal"] = {
-		class = "PRIEST",
-		level = 64,
-	},
-	["Shadowfiend"] = {
-		class = "PRIEST",
-		level = 66,
-	},
-	["Prayer of Mending"] = {
-		class = "PRIEST",
-		level = 68,
-	},
-	["Mass Dispel"] = {
-		class = "PRIEST",
-		level = 70,
-	},
-	["Mind Sear"] = {
-		class = "PRIEST",
-		level = 75,
-	},
-	["Divine Hymn"] = {
-		class = "PRIEST",
-		level = 80,
-	},
-	["Hymn of Hope"] = {
-		class = "PRIEST",
-		level = 80,
-	},
+	
 
 --== Rogue == 
 
@@ -2821,74 +2224,7 @@ Spy_AbilityList = {
 		class = "ROGUE",
 		level = 60,
 	},
-	["Deadly Poison VI"] = {
-		class = "ROGUE",
-		level = 62,
-	},
-	["Envenom"] = {
-		class = "ROGUE",
-		level = 62,
-	},
-	["Deadly Throw"] = {
-		class = "ROGUE",
-		level = 64,
-	},
-	["Wound Poison V"] = {
-		class = "ROGUE",
-		level = 64,
-	},
-	["Cloak of Shadows"] = {
-		class = "ROGUE",
-		level = 66,
-	},
-	["Instant Poison VII"] = {
-		class = "ROGUE",
-		level = 68,
-	},
-	["Anesthetic Poison"] = {
-		class = "ROGUE",
-		level = 68,
-	},
-	["Deadly Poison VII"] = {
-		class = "ROGUE",
-		level = 70,
-	},
-	["Shiv"] = {
-		class = "ROGUE",
-		level = 70,
-	},
-	["Wound Poison VI"] = {
-		class = "ROGUE",
-		level = 72,
-	},
-	["Instant Poison VIII"] = {
-		class = "ROGUE",
-		level = 73,
-	},
-	["Tricks of the Trade"] = {
-		class = "ROGUE",
-		level = 75,
-	},
-	["Deadly Poison VIII"] = {
-		class = "ROGUE",
-		level = 76,
-	},
-	["Wound Poison VII"] = {
-		class = "ROGUE",
-		level = 78,
-	},
-	["Fan of Knives"] = {
-		class = "ROGUE",
-		level = 80,
-	},
-	["Instant Poison IX"] = {
-		class = "ROGUE",
-		level = 79,
-	},
-	["Deadly Poison IX"] = {
-		class = "ROGUE",
-		level = 80,
-	},
+	
 
 --== Shaman == 
 
@@ -3176,34 +2512,7 @@ Spy_AbilityList = {
 		class = "SHAMAN",
 		level = 60,
 	},
-	["Wrath of Air Totem"] = {
-		class = "SHAMAN",
-		level = 64,
-	},
-	["Earth Elemental Totem"] = {
-		class = "SHAMAN",
-		level = 66,
-	},
-	["Fire Elemental Totem"] = {
-		class = "SHAMAN",
-		level = 68,
-	},
-	["Bloodlust"] = {
-		class = "SHAMAN",
-		level = 70,
-	},
-	["Heroism"] = {
-		class = "SHAMAN",
-		level = 70,
-	},
-	["Lava Burst"] = {
-		class = "SHAMAN",
-		level = 75,
-	},
-	["Hex"] = {
-		class = "SHAMAN",
-		level = 80,
-	},
+	
 
 --== Warlock == 
 
@@ -3423,10 +2732,6 @@ Spy_AbilityList = {
 		class = "WARLOCK",
 		level = 40,
 	},
-	["Soul Link"] = {
-		class = "WARLOCK",
-		level = 40,
-	},
 	["Eradication"] = {
 		class = "WARLOCK",
 		level = 40,
@@ -3515,54 +2820,7 @@ Spy_AbilityList = {
 		class = "WARLOCK",
 		level = 60,
 	},
-	["Dreadsteed"] = {
-		class = "WARLOCK",
-		level = 61,
-	},
-	["Metamorphosis"] = {
-		class = "WARLOCK",
-		level = 60,
-	},
-	["Chaos Bolt"] = {
-		class = "WARLOCK",
-		level = 60,
-	},
-	["Haunt"] = {
-		class = "WARLOCK",
-		level = 60,
-	},
-	["Fel Armor"] = {
-		class = "WARLOCK",
-		level = 62,
-	},
-	["Incinerate"] = {
-		class = "WARLOCK",
-		level = 64,
-	},
-	["Soulshatter"] = {
-		class = "WARLOCK",
-		level = 66,
-	},
-	["Ritual of Souls"] = {
-		class = "WARLOCK",
-		level = 68,
-	},
-	["Seed of Corruption"] = {
-		class = "WARLOCK",
-		level = 70,
-	},
-	["Shadowflame"] = {
-		class = "WARLOCK",
-		level = 75,
-	},
-	["Demonic Circle: Summon"] = {
-		class = "WARLOCK",
-		level = 80,
-	},
-	["Demonic Circle: Teleport"] = {
-		class = "WARLOCK",
-		level = 80,
-	},
+	
 
 --== Warrior == 
 
@@ -3628,7 +2886,7 @@ Spy_AbilityList = {
 	},
 	["Shield Specialization"] = {
 		class = "WARRIOR",
-		level = 15,
+		level = 10,
 	},
 	["Unbridled Wrath"] = {
 		class = "WARRIOR",
@@ -3678,10 +2936,6 @@ Spy_AbilityList = {
 		class = "WARRIOR",
 		level = 24,
 	},
-	["Taste for Blood"] = {
-		class = "WARRIOR",
-		level = 25,
-	},
 	["Challenging Shout"] = {
 		class = "WARRIOR",
 		level = 26,
@@ -3718,10 +2972,6 @@ Spy_AbilityList = {
 		class = "WARRIOR",
 		level = 32,
 	},
-	["Trauma"] = {
-		class = "WARRIOR",
-		level = 35,
-	},
 	["Whirlwind"] = {
 		class = "WARRIOR",
 		level = 36,
@@ -3742,84 +2992,9 @@ Spy_AbilityList = {
 		class = "WARRIOR",
 		level = 40,
 	},
-	["Vigilance"] = {
-		class = "WARRIOR",
-		level = 40,
-	},
-	["Second Wind"] = {
-		class = "WARRIOR",
-		level = 40,
-	},
-	["Furious Attacks"] = {
-		class = "WARRIOR",
-		level = 45,
-	},
-	["Safeguard"] = {
-		class = "WARRIOR",
-		level = 45,
-	},
-	["Devastate"] = {
-		class = "WARRIOR",
-		level = 50,
-	},
-	["Slam!"] = {
-		class = "WARRIOR",
-		level = 50,
-	},
-	["Sudden Death"] = {
-		class = "WARRIOR",
-		level = 50,
-	},
-	["Rampage"] = {
-		class = "WARRIOR",
-		level = 50,
-	},
 	["Recklessness"] = {
 		class = "WARRIOR",
 		level = 50,
 	},
-	["Heroic Fury"] = {
-		class = "WARRIOR",
-		level = 50,
-	},
-	["Sword and Board"] = {
-		class = "WARRIOR",
-		level = 55,
-	},
-	["Bladestorm"] = {
-		class = "WARRIOR",
-		level = 60,
-	},
-	["Shockwave"] = {
-		class = "WARRIOR",
-		level = 60,
-	},
-	["Victory Rush"] = {
-		class = "WARRIOR",
-		level = 62,
-	},
-	["Spell Reflection"] = {
-		class = "WARRIOR",
-		level = 64,
-	},
-	["Commanding Shout"] = {
-		class = "WARRIOR",
-		level = 68,
-	},
-	["Intervene"] = {
-		class = "WARRIOR",
-		level = 70,
-	},
-	["Shattering Throw"] = {
-		class = "WARRIOR",
-		level = 71,
-	},
-	["Enraged Regeneration"] = {
-		class = "WARRIOR",
-		level = 75,
-	},
-	["Heroic Throw"] = {
-		class = "WARRIOR",
-		level = 80,
-	},
-};
+
+}

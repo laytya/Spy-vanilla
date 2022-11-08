@@ -2,7 +2,7 @@
 BlizOptionsGroup Container
 Simple container widget for the integration of AceGUI into the Blizzard Interface Options
 -------------------------------------------------------------------------------]]
-local Type, Version = "BlizOptionsGroup", 21
+local Type, Version = "BlizOptionsGroup", 22
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
@@ -17,11 +17,11 @@ Scripts
 -------------------------------------------------------------------------------]]
 
 local function OnShow(frame)
-	frame.obj:Fire("OnShow")
+	this.obj:Fire("OnShow")
 end
 
 local function OnHide(frame)
-	frame.obj:Fire("OnHide")
+	this.obj:Fire("OnHide")
 end
 
 --[[-----------------------------------------------------------------------------

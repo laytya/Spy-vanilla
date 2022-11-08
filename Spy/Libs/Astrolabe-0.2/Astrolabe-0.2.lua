@@ -38,7 +38,7 @@ local LIBRARY_VERSION_MINOR = "$Revision: 18 $"
 if not AceLibrary then error(LIBRARY_VERSION_MAJOR .. " requires AceLibrary.") end
 if not AceLibrary:IsNewVersion(LIBRARY_VERSION_MAJOR, LIBRARY_VERSION_MINOR) then return end
 
-Astrolabe = {};
+local Astrolabe = {};
 
 -- define local variables for Data Tables (defined at the end of this file)
 -- changed to global since TomTom needs it
@@ -1000,3 +1000,5 @@ function initSizes()
 end
 
 AceLibrary:Register(Astrolabe, LIBRARY_VERSION_MAJOR, LIBRARY_VERSION_MINOR, activate)
+local _G = getfenv()
+_G["Astrolabe"] = AceLibrary("Astrolabe-0.2")

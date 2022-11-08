@@ -49,15 +49,15 @@ function Spy:AddWindow(window)
 
 	Spy:SetLevel(window, TopWindow:GetFrameLevel() + 10)
 	TopWindow = window
-
-	AddToScale[tgetn(AddToScale) + 1] = window
-	AllWindows[tgetn(AllWindows) + 1] = window
+	tinsert(AddToScale, window)
+	tinsert(AllWindows, window)
 
 	window.isLocked = Spy.db.profile.Locked
 end
 
 function Spy:LockWindows(lock)
-	for _, v in pairs(AllWindows) do
+	for k, v in pairs(AllWindows) do
+		if not Spy.db.profile.InvertSpy then
 		if v.DragBottomRight then
 			v.isLocked = lock
 			v:EnableMouse(not lock)
@@ -71,6 +71,22 @@ function Spy:LockWindows(lock)
 		else
 			v.isLocked = false
 			v:EnableMouse(true)
+		end
+		else
+			if v.DragTopRight then
+				v.isLocked = lock
+				v:EnableMouse(not lock)
+				if lock then
+					v.DragTopRight:Hide()
+					v.DragTopLeft:Hide()
+				else
+					v.DragTopRight:Show()
+					v.DragTopLeft:Show()
+				end
+			else
+				v.isLocked = false
+				v:EnableMouse(true)	
+			end
 		end
 	end
 end
