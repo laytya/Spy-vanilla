@@ -257,10 +257,8 @@ L["PurgeWinLossDataDescription"] = "Установите это, чтобы оч
 L["ShareData"] = "Делиться данными с другими пользователями аддона Шпион"
 L["ShareDataDescription"] = "Установите это, чтобы поделиться информацией о встречах вашего вражеского игрока с другими пользователями Шпиона в вашей группе, рейде и гильдии."
 L["UseData"] = "Использовать данные других пользователей Шпиона"
-L["UseDataDescription"] = [[Установите это, чтобы использовать данные, собранные другими пользователями Шпиона в вашей группе, рейде и гильдии.
+L["UseDataDescription"] = "Установите это, чтобы использовать данные, собранные другими пользователями Шпиона в вашей группе, рейде и гильдии."
 
-Если другой пользователь Шпиона обнаружит вражеского игрока, то этот вражеский игрок будет добавлен в ваш «Список Поблизости«, если есть место.
-]]
 L["ShareKOSBetweenCharacters"] = "Использовать общий список Kill On Sight для ваших персонажей"
 L["ShareKOSBetweenCharactersDescription"] = "Использовать общий список Kill On Sight для ваших персонажей на этом сервере и фракции."
 
@@ -307,17 +305,19 @@ L["HonorKills"] = "Почетные убийства" --БК-- ???
 L["PvPDeaths"] = "Смерти в PvP" --БК-- ???
 
 --++ Class descriptions
-L["DEATHKNIGHT"] = "рыцарь смерти" --БК--
-L["DRUID"] = "|cffff7c0aДруид|cffffffff"
-L["HUNTER"] = "|cffaad372Охотник|cffffffff"
-L["MAGE"] = "|cff68ccefМаг|cffffffff"
-L["PALADIN"] = "|cfff48cbaПаладин|cffffffff"
-L["PRIEST"] = "|cffffffffЖрец|cffffffff"
-L["ROGUE"] = "|cfffff468Разбойник|cffffffff"
-L["SHAMAN"] = "|cff2359ffШаман|cffffffff"
-L["WARLOCK"] = "|cff9382c9Чернокнижник|cffffffff"
-L["WARRIOR"] = "|cffc69b6dВоин|cffffffff"
-L["UNKNOWN"] = "|cff191919Неизвестный|cffffffff"
+L["UNKNOWN"] = "Неизвестный"
+L["DRUID"] = "Друид"
+L["HUNTER"] = "Охотник"
+L["MAGE"] = "Маг"
+L["PALADIN"] = "Паладин"
+L["PRIEST"] = "Жрец"
+L["ROGUE"] = "Разбойник"
+L["SHAMAN"] = "Шаман"
+L["WARLOCK"] = "Чернокнижник"
+L["WARRIOR"] = "Воин"
+L["DEATHKNIGHT"] = "рыцарь смерти"
+L["MONK"] = "Монах"
+L["DEMONHUNTER"] = "Охотник на демонов"
 
 -- Race descriptions
 L["Human"] = "Человек"
@@ -328,6 +328,21 @@ L["Troll"] = "Тролль"
 L["Night Elf"] = "Ночной эльф"
 L["Undead"] = "Нежить"
 L["Gnome"] = "Гном"
+L["Blood Elf"] = "Эльф крови"
+L["Draenei"] = "Дреней"
+L["Goblin"] = "Гоблин"
+L["Worgen"] = "Ворген"
+L["Pandaren"] = "Пандарен"
+L["Highmountain Tauren"] = "Таурен Крутогорья"
+L["Lightforged Draenei"] = "Озаренный дреней"
+L["Nightborne"] = "Ночнорожденный"
+L["Void Elf"] = "Эльф Бездны"
+L["Dark Iron Dwarf"] = "Дворф из клана Черного Железа"
+L["Mag'har Orc"] = "Маг'хар"
+L["Kul Tiran"] = "Култирасец"
+L["Zandalari Troll"] = "Зандалар"
+L["Mechagnome"] = "Механогном"
+L["Vulpera"] = "Вульпера"
 
 -- Stealth abilities
 L["Stealth"] = "Незаметность"
@@ -337,7 +352,8 @@ L["Prowl"] = "Крадущийся зверь"
 L["LocalDefenseChannelName"] = "ОборонаЛокальный"
 
 -- Minimap color codes
-L["MinimapClassTextDEATHKNIGHT"] = "|cffc41e3a"
+L["MinimapGuildText"] = "|cffffffff"
+L["MinimapClassTextUNKNOWN"] = "|cff191919"
 L["MinimapClassTextDRUID"] = "|cffff7c0a"
 L["MinimapClassTextHUNTER"] = "|cffaad372"
 L["MinimapClassTextMAGE"] = "|cff68ccef"
@@ -347,8 +363,9 @@ L["MinimapClassTextROGUE"] = "|cfffff468"
 L["MinimapClassTextSHAMAN"] = "|cff2359ff"
 L["MinimapClassTextWARLOCK"] = "|cff9382c9"
 L["MinimapClassTextWARRIOR"] = "|cffc69b6d"
-L["MinimapClassTextUNKNOWN"] = "|cff191919"
-L["MinimapGuildText"] = "|cffffffff"
+L["MinimapClassTextDEATHKNIGHT"] = "|cffc41e3a"
+L["MinimapClassTextMONK"] = "|cff00ff96"
+L["MinimapClassTextDEMONHUNTER"] = "|cffa330c9"
 
 -- Output messages
 --L["VersionCheck"] = "|cffc41e3aПредупреждение! Неправильная версия Шпиона установлена. Эта версия предназначена для Burning Crusade Classic."
@@ -610,7 +627,7 @@ Spy_KOSReasonList = {
 			"Red is dead", --найти подходящую поговорку
 			"Да просто так",
 			"Неудачи в PvP",
-			"Помеченный для PvP",
+			"Помечен для PvP",
 			"Не хочет участвовать в PvP",
 			"Тратит впустую наше время",
 			"Этот игрок - нуб",
