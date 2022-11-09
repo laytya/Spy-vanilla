@@ -1,5 +1,6 @@
 ## Interface: 11200
-## Title: Шпион
+## Title: Spy
+## Title-ruRU: Шпион
 ## Notes: Detects and alerts you to the presence of nearby enemy players.
 ## Notes-ruRU: Обнаруживает и предупреждает вас о присутствии поблизости вражеских игроков.
 ## Author: Immolation, ported laytya @ git
