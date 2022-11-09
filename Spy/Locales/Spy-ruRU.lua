@@ -1,7 +1,10 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Spy", "ruRU")
 if not L then return end
 -- TOC Note: Обнаруживает и предупреждает вас о присутствии ближайших вражеских игроков.
-
+--local BC = LibStub("LibBabble-Class-3.0")
+--local BCR = BC:GetReverseLookupTable()
+local B = LibStub("LibBabble-Spell-3.0")
+local BS = B:GetLookupTable()
 
 -- Addon information
 L["Spy"] = "Шпион"
@@ -305,19 +308,19 @@ L["HonorKills"] = "Почетные убийства" --БК-- ???
 L["PvPDeaths"] = "Смерти в PvP" --БК-- ???
 
 --++ Class descriptions
-L["UNKNOWN"] = "Неизвестный"
-L["DRUID"] = "Друид"
-L["HUNTER"] = "Охотник"
-L["MAGE"] = "Маг"
-L["PALADIN"] = "Паладин"
-L["PRIEST"] = "Жрец"
-L["ROGUE"] = "Разбойник"
-L["SHAMAN"] = "Шаман"
-L["WARLOCK"] = "Чернокнижник"
-L["WARRIOR"] = "Воин"
-L["DEATHKNIGHT"] = "рыцарь смерти"
-L["MONK"] = "Монах"
-L["DEMONHUNTER"] = "Охотник на демонов"
+L["UNKNOWN"] = "|cff191919Неизвестный|cffffffff"
+L["DRUID"] = "|cffff7c0aДруид|cffffffff"
+L["HUNTER"] = "|cffaad372Охотник|cffffffff"
+L["MAGE"] = "|cff68ccefМаг|cffffffff"
+L["PALADIN"] = "|cfff48cbaПаладин|cffffffff"
+L["PRIEST"] = "|cffffffffЖрец|cffffffff"
+L["ROGUE"] = "|cfffff468Разбойник|cffffffff"
+L["SHAMAN"] = "|cff2359ffШаман|cffffffff"
+L["WARLOCK"] = "|cff9382c9Чернокнижник|cffffffff"
+L["WARRIOR"] = "|cffc69b6dВоин|cffffffff"
+--L["DEATHKNIGHT"] = "рыцарь смерти"
+--L["MONK"] = "Монах"
+--L["DEMONHUNTER"] = "Охотник на демонов"
 
 -- Race descriptions
 L["Human"] = "Человек"
