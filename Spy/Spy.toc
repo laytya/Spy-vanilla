@@ -1,6 +1,7 @@
 ## Interface: 11200
-## Title: Spy
+## Title: Шпион
 ## Notes: Detects and alerts you to the presence of nearby enemy players.
+## Notes-ruRU: Обнаруживает и предупреждает вас о присутствии поблизости вражеских игроков.
 ## Author: Immolation, ported laytya @ git
 ## Version: beta0.3
 ## OptionalDeps:  Ace3, LibSharedMedia-3.0, LibBabble-Class-3.0
@@ -31,8 +32,10 @@ Libs\LibBabble-Spell-3.0\lib.xml
 Libs\ParserLib\lib.xml
 Libs\UnitCasting-1.1\lib.xml
 
-Spy.xml
 Locales\Spy-enUS.lua
+Locales\Spy-ruRU.lua
+
+Spy.xml
 Spy.lua
 Fonts.lua
 Colors.lua
