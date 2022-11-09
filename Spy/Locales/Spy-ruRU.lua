@@ -665,39 +665,39 @@ Spy_AbilityList = {
 
 --== Racials ==
 
-	["Слиться с тенью"] = {
+	["Shadowmeld"] = {
 		race = "Night Elf",
 		level = 1,
 	},
-	["Воля Отрекшихся"] = {
+	["Will of the Forsaken"] = {
 		race = "Undead",
 		level = 1,
 	},
-	["Каннибализм"] = {
+	["Cannibalize"] = {
 		race = "Undead",
 		level = 1,
 	},
-	["Берсерк"] = {
+	["Berserking"] = {
 		race = "Troll",
 		level = 1,
 	},
-	["Громовая поступь"] = {
+	["War Stomp"] = {
 		race = "Tauren",
 		level = 1,
 	},
-	["Кровавое неистовство"] = {
+	["Blood Fury"] = {
 		race = "Orc",
 		level = 1,
 	},
-	["Внимательность"] = {
+	["Perception"] = {
 		race = "Human",
 		level = 1,
 	},
-	["Мастер побега"] = {
+	["Escape Artist"] = {
 		race = "Gnome",
 		level = 1,
 	},
-	["Каменная форма"] = {
+	["Stoneform"] = {
 		race = "Dwarf",
 		level = 1,
 	},
@@ -705,39 +705,39 @@ Spy_AbilityList = {
 
 --== Druid == 
 
-	["Целительное прикосновение"] = {
+	["Healing Touch"] = {
 		class = "DRUID",
 		level = 1,
 	},
-	["Знак дикой природы"] = {
+	["Mark of the Wild"] = {
 		class = "DRUID",
 		level = 1,
 	},
-	["Гнев небес"] = {
+	["Wrath"] = {
 		class = "DRUID",
 		level = 1,
 	},
-	["Лунный огонь"] = {
+	["Moonfire"] = {
 		class = "DRUID",
 		level = 4,
 	},
-	["Омоложение"] = {
+	["Rejuvenation"] = {
 		class = "DRUID",
 		level = 4,
 	},
-	["Шипы"] = {
+	["Thorns"] = {
 		class = "DRUID",
 		level = 6,
 	},
-	["Гнев деревьев"] = {
+	["Entangling Roots"] = {
 		class = "DRUID",
 		level = 8,
 	},
-	["Облик медведя"] = {
+	["Bear Form"] = {
 		class = "DRUID",
 		level = 10,
 	},
-	["Деморализующий рев"] = {
+	["Demoralizing Roar"] = {
 		class = "DRUID",
 		level = 10,
 	},
@@ -745,167 +745,167 @@ Spy_AbilityList = {
 		class = "DRUID",
 		level = 10,
 	},
-	["Телепортация: Лунная поляна"] = {
+	["Teleport: Moonglade"] = {
 		class = "DRUID",
 		level = 10,
 	},
-	["Восстановление"] = {
+	["Regrowth"] = {
 		class = "DRUID",
 		level = 12,
 	},
-	["Оглушить"] = {
+	["Bash"] = {
 		class = "DRUID",
 		level = 14,
 	},
-	["Водный облик"] = {
+	["Aquatic Form"] = {
 		class = "DRUID",
 		level = 16,
 	},
-	["Размах"] = {
+	["Swipe"] = {
 		class = "DRUID",
 		level = 16,
 	},
-	["Спячка"] = {
+	["Hibernate"] = {
 		class = "DRUID",
 		level = 18,
 	},
-	["Волшебный огонь"] = {
+	["Faerie Fire"] = {
 		class = "DRUID",
 		level = 18,
 	},
-	["Волшебный огонь (зверь)"] = {
+	["Faerie Fire (Feral)"] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Облик кошки"] = {
+	["Cat Form"] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Цапнуть"] = {
+	["Claw"] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Звериная атака"] = {
+	["Feral Charge"] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Благоволение природы"] = {
+	["Nature's Grace"] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Знамение ясности"] = {
+	["Omen of Clarity"] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Порыв"] = {
+	["Prowl"] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Звездный огонь"] = {
+	["Starfire"] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Возрождение"] = {
+	["Rebirth"] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Разорвать"] = {
+	["Rip"] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Умиротворение животного"] = {
+	["Soothe Animal"] = {
 		class = "DRUID",
 		level = 22,
 	},
-	["Полоснуть"] = {
+	["Shred"] = {
 		class = "DRUID",
 		level = 22,
 	},
-	["Тигриное неистовство"] = {
+	["Tiger's Fury"] = {
 		class = "DRUID",
 		level = 24,
 	},
-	["Глубокая рана"] = {
+	["Rake"] = {
 		class = "DRUID",
 		level = 24,
 	},
-	["Изначальное неистовство"] = {
+	["Primal Fury"] = {
 		class = "DRUID",
 		level = 25,
 	},
-	["Устранение яда"] = {
+	["Abolish Poison"] = {
 		class = "DRUID",
 		level = 26,
 	},
-	["Порыв"] = {
+	["Dash"] = {
 		class = "DRUID",
 		level = 26,
 	},
-	["Вызывающий рев"] = {
+	["Challenging Roar"] = {
 		class = "DRUID",
 		level = 28,
 	},
-	["Спокойствие"] = {
+	["Tranquility"] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Походный облик"] = {
+	["Travel Form"] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Природная стремительность"] = {
+	["Nature's Swiftness"] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Рой насекомых"] = {
+	["Insect Swarm"] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Звериная агрессия"] = {
+	["Ferocious Bite"] = {
 		class = "DRUID",
 		level = 32,
 	},
-	["Накинуться"] = {
+	["Ravage"] = {
 		class = "DRUID",
 		level = 32,
 	},
-	["Наскок"] = {
+	["Pounce"] = {
 		class = "DRUID",
 		level = 36,
 	},
-	["Неистовое восстановление"] = {
+	["Frenzied Regeneration"] = {
 		class = "DRUID",
 		level = 36,
 	},
-	["Быстрое восстановление"] = {
+	["Swiftmend"] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Облик лютого медведя"] = {
+	["Dire Bear Form"] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Облик лунного совуха"] = {
+	["Moonkin Form"] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Кошачья грация"] = {
+	["Feline Grace"] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Предел сил Природы"] = {
+	["Hurricane"] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Озарение"] = {
+	["Innervate"] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Дубовая кожа"] = {
+	["Barkskin"] = {
 		class = "DRUID",
 		level = 44,
 	},
-	["Дар дикой природы"] = {
+	["Gift of the Wild"] = {
 		class = "DRUID",
 		level = 60,
 	},
