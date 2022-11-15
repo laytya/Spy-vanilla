@@ -9,6 +9,9 @@ local B = LibStub("LibBabble-Spell-3.0")
 local BS = B:GetLookupTable()
 local fonts = SM:List("font")
 
+local LDB = LibStub("LibDataBroker-1.1", true)
+local ldbIcon = LibStub("LibDBIcon-1.0", true)
+
 local strsplit, strtrim = AceCore.strsplit, AceCore.strtrim
 local format, strfind, strsub, find = string.format, string.find, string.sub, string.find
 
@@ -1583,6 +1586,7 @@ function Spy:SetupOptions()
 
 	self:RegisterModuleOptions("Profiles", LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db), L["Profiles"])
 	Spy.options.args.Profiles.order = -2
+	Spy:InitDBIcon()
 end
 
 SLASH_SPY1 = '/spygui'
@@ -1592,6 +1596,78 @@ function SlashCmdList.SPY()
 
     ACD3:Open('Spy')
 
+end
+
+local hintString = "|cffffffff%s:|r %s"
+local hintText = {
+	"Spy",
+	format(hintString, "Left-Click", "Show/Hide Spy"),
+	format(hintString, "Right-Click", L["Config"]),
+	--format(hintString, "Alt-Click", ""),
+	format(hintString, "Ctrl-Click", L["Reset"]),
+	format(hintString, "Shift-Click", L["Show/Hide stats"]),
+}
+
+local function LDBOnClick(self, button)
+	if (button == "LeftButton") then
+		if (IsShiftKeyDown()) then
+			SpyStats:Toggle()
+		elseif (IsControlKeyDown()) then
+			Spy:ResetMainWindow()
+		elseif (IsAltKeyDown()) then
+			
+		else
+			Spy:EnableSpy(not Spy.db.profile.Enabled, true)
+		end
+	elseif (button == "RightButton") then
+		InterfaceOptionsFrame_OpenToCategory("Spy")
+	end
+end
+
+function Spy:InitDBIcon()
+
+	if (LDB) then
+		local ldbSpy = LibStub("LibDataBroker-1.1"):NewDataObject("Spy", {
+			type = "launcher",
+			icon = "Interface\\AddOns\\Spy\\Textures\\spy",
+			tocname = "Spy",
+			label = "Spy",
+			OnClick = LDBOnClick,
+			OnTooltipShow = function(tooltip)
+				
+				if (tooltip and tooltip.AddLine) then
+					for _i, text in ipairs(hintText) do
+						tooltip:AddLine(text)
+					end
+				end
+			end,
+		})
+
+		if (ldbIcon) then
+			if (not Spy.db.profile.ldbIcon) then
+				Spy.db.profile.ldbIcon = {}
+			end
+			ldbIcon:Register("Spy", ldbSpy, Spy.db.profile.ldbIcon)
+
+			self.options.args.DisplayOptions.args.ldbIcon = {
+				type = "toggle",
+				order = 199,
+				width = "normal",
+				name = L["Show Minimap Icon"],
+				desc = L["Show Minimap Icon"],
+				get = function() return not Spy.db.profile.ldbIcon.hide end,
+				set = function(info, value)
+					value = not value
+					Spy.db.profile.ldbIcon.hide = value
+					if (value) then
+						ldbIcon:Hide("Spy")
+					else
+						ldbIcon:Show("Spy")
+					end
+				end,
+			}
+		end
+	end
 end
 
 function Spy:UpdateTimeoutSettings()
@@ -1826,9 +1902,6 @@ function Spy:OnInitialize()
 		["SHAMAN"] = true,
 		["WARLOCK"] = true,
 		["WARRIOR"] = true,
-		["DEATHKNIGHT"] = true,
-		["MONK"] = true,
-		["DEMONHUNTER"] = true
 	}
 
 	Spy.ValidRaces = {

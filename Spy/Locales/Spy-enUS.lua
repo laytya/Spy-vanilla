@@ -12,6 +12,8 @@ L["LoadDescription"] = "|cff9933ffSpy addon loaded. Type |cffffffff/spy|cff9933f
 L["SpyEnabled"] = "|cff9933ffSpy addon enabled."
 L["SpyDisabled"] = "|cff9933ffSpy addon disabled. Type |cffffffff/spy show|cff9933ff to enable."
 L["UpgradeAvailable"] = "|cff9933ffA new version of Spy is available. It can be downloaded from:\n|cffffffffhttps://github.com/laytya/Spy"
+L["Show Minimap Icon"] = "Show Minimap Icon"
+L["Show/Hide Spy"] = "Show/Hide Spy"
 
 -- Configuration strings
 L["Profiles"] = "Profiles"
@@ -276,6 +278,7 @@ L["Ignore"] = "Ignore"
 L["KillOnSight"] = "Kill On Sight"
 
 --Stats
+L["Show/Hide stats"] = "Show/Hide stats"
 L["Won"] = "Won"
 L["Lost"] = "Lost"
 L["Time"] = "Time"
