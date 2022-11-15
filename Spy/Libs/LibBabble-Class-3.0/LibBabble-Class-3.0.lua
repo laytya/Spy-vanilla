@@ -42,6 +42,18 @@ elseif l == "deDE" then
 		Shaman = "Schamane",
 		Rogue = "Schurke",
 	}
+elseif l == "ruRU" then
+	lib:SetCurrentTranslations {
+		Warlock = "Чернокнижник",
+		Warrior = "Воин",
+		Hunter = "Охотник",
+		Mage = "Маг",
+		Priest = "Жрец",
+		Druid = "Друид",
+		Paladin = "Паладин",
+		Shaman = "Шаман",
+		Rogue = "Разбойник",
+	}
 elseif l == "frFR" then
 	lib:SetCurrentTranslations {
 		Warlock = "Démoniste",

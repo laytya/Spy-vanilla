@@ -1660,14 +1660,14 @@ local combatLogEvents = {
 	"CHAT_MSG_SPELL_AURA_GONE_OTHER",
 --	"CHAT_MSG_SPELL_AURA_GONE_SELF",
 --	"CHAT_MSG_SPELL_AURA_GONE_PARTY",
-	"CHAT_MSG_SPELL_BREAK_AURA",
+--	"CHAT_MSG_SPELL_BREAK_AURA",
 --	"CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF",
 --	"CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE",
 --	"CHAT_MSG_SPELL_CREATURE_VS_PARTY_BUFF",
 --	"CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE",
 --	"CHAT_MSG_SPELL_CREATURE_VS_SELF_BUFF",
 --	"CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE",
-	"CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS",
+--	"CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS",
 --	"CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF",
 --	"CHAT_MSG_SPELL_FAILED_LOCALPLAYER",
 --	"CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF",
@@ -2060,12 +2060,12 @@ function Spy:CombatLogEvent(event, info ) --_, timestamp, event, srcGUID, srcNam
 	local victim = info.victim and (info.victim == ParserLib_SELF and playerName or info.victim) or nil
 		
 	if event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" then
-		if (info.skill == BS["Stealth"] or info.skill == BS["Prowl"]) then
+		if (info.skill == BS["Stealth"] or info.skill == BS["Prowl"]) and not Spy:PlayerIsFriend(victim) then
 			Spy:AlertStealthPlayer(victim)
 		end
 		return
 	end
-	--printT({event, info})
+	--printT({"CombatLogEvent", event, info})
 	if Spy.EnabledInZone then
 		-- analyse the source unit
 		if source and source ~= playerName and  not Spy:PlayerIsFriend(source) and not SpyPerCharDB.IgnoreData[source] and not find(source," ") and not find(source,"Unknown") then
@@ -2113,14 +2113,15 @@ end
 
 function Spy:DeathLog(event, info)
 	-- update win statistics
-	if info.source == playerName and info.victim then
+	--printT({"DeathLog", event, info})
+	if info.source == ParserLib_SELF and info.victim then
 			local playerData = SpyPerCharDB.PlayerData[info.victim]
 			if playerData then
 				if not playerData.wins then playerData.wins = 0 end
 				playerData.wins = playerData.wins + 1
 			end
 		end
-	if info.victim == playerName and (info.source or Spy.LastAttack) then
+	if info.victim == ParserLib_SELF and (info.source or Spy.LastAttack) then
 			local playerData = SpyPerCharDB.PlayerData[info.source or Spy.LastAttack]
 			if playerData then
 				if not playerData.loses then playerData.loses = 0 end
@@ -2249,8 +2250,8 @@ function Spy:CommReceived(prefix, message, distribution, source)
 end
 
 function Spy:VersionCheck(version1, version2)
-	local major1, minor1, update1 = strsplit(".", version1)
-	local major2, minor2, update2 = strsplit(".", version2)
+	local major1, minor1, update1 = strsplit("%.", version1)
+	local major2, minor2, update2 = strsplit("%.", version2)
 	major1, minor1, update1 = tonumber(major1), tonumber(minor1), tonumber(update1)
 	major2, minor2, update2 = tonumber(major2), tonumber(minor2), tonumber(update2)
 	if major1 < major2 then

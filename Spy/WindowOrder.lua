@@ -55,6 +55,13 @@ function Spy:AddWindow(window)
 	window.isLocked = Spy.db.profile.Locked
 end
 
+function Spy:ResetPositionAllWindows()
+	for k, v in pairs(AllWindows) do
+		v:ClearAllPoints()
+		v:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+	end
+end
+
 function Spy:LockWindows(lock)
 	for k, v in pairs(AllWindows) do
 		if not Spy.db.profile.InvertSpy then

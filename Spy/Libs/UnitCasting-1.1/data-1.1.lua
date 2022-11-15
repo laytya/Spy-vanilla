@@ -473,6 +473,8 @@ uc.RegisterTable("BuffsToTrack", {
     [BS['Rejuvenation']]          = { duration = 12, display = false, },
     [BS['Rip']]                   = { duration = 12, display = false, },
     [BS['Tiger\'s Fury']]         = { duration = 6, display = false, },
+    [BS['Faerie Fire']]           = { duration = 40, display = false, },
+    [BS['Faerie Fire (Feral)']]   = { duration = 40, display = false, },
 
     --[[	HUNTER 	]] --
     [BS['Bestial Wrath']]            = { duration = 18, prio = 2 },
@@ -515,9 +517,9 @@ uc.RegisterTable("BuffsToTrack", {
     [BS['Ice Block']]               = { duration = 10, prio = 5 },
     [BS['Impact']]                  = { duration = 2, type = 'physical', prio = 1 },
     [BS['Fire Vulnerability']]      = { duration = 30, display = false, },
-    [BS["Polymorph"]]               = { duration = 12, type = 'magic', prio = 3, dr = 'Polymorph' },
-    [BS['Polymorph: Pig']]          = { duration = 12, type = 'magic', prio = 3, dr = 'Polymorph' },
-    [BS['Polymorph: Turtle']]       = { duration = 12, type = 'magic', prio = 3, dr = 'Polymorph' },
+    [BS["Polymorph"]]               = { duration = 20, type = 'magic', prio = 3, dr = 'Polymorph' },
+    [BS['Polymorph: Pig']]          = { duration = 20, type = 'magic', prio = 3, dr = 'Polymorph' },
+    [BS['Polymorph: Turtle']]       = { duration = 20, type = 'magic', prio = 3, dr = 'Polymorph' },
     [BS['Pyroblast']]               = { duration = 12, display = false, },
     [BS['Slow Fall']]               = { duration = 30, display = false, },
     [BS['Winter\'s Chill']]         = { duration = 15, type = 'magic', display = false, },
@@ -653,7 +655,13 @@ uc.RegisterTable("BuffsToTrack", {
     -- [BS['Vanish']]                 = { [[Interface\Icons\Ability_vanish]], 10 },
 
 })
-
+uc.RegisterTable("UniqueDebuffs", {
+    [BS['Kidney Shot']] = {  cp = { 2, 3, 4, 5, 6 }, type = 'physical', prio = 2, dr = 'Controlled Stun' },
+    [BS['Rupture']]     = {  cp = { 8, 10, 12, 14, 16 }, type = 'physical', display = false, },
+    [BS['Sunder Armor']]           = { duration = 30 },
+    [BS['Entangling Roots']]  = {r = {12, 15, 18, 21, 24, 27}, type = 'magic', prio = 1, dr = 'Controlled Root'},
+    [BS["Polymorph"]]               = { r = {20, 30, 40, 50}, type = 'magic', prio = 3, dr = 'Polymorph' },
+})
 --
 uc.RegisterTable("DebuffRefreshingSpells", {
     -- DRUID
@@ -692,6 +700,7 @@ uc.RegisterTable("DebuffRefreshingSpells", {
     -- WARRRIOR
     [BS['Hamstring']] = { BS['Hamstring'], },
     [BS['Mortal Strike']] = { BS['Mortal Strike'], },
+    [BS['Sunder Armor']]  = { BS['Sunder Armor'], },
 })
 
 uc.RegisterTable("RootSnares", {

@@ -2,6 +2,9 @@ local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
 local L = AceLocale:NewLocale("Spy", "enUS", true)
 if not L then return end
 
+local B = LibStub("LibBabble-Spell-3.0")
+local BS = B:GetLookupTable()
+
 -- Addon information
 L["Spy"] = "Spy"
 L["Version"] = "Version"
@@ -53,7 +56,7 @@ If enabled, this button will be located on the enemy players target frame. Click
 L["GeneralSettings"] = "General Settings"
 L["GeneralSettingsDescription"] = [[
 Options for when Spy is Enabled or Disabled.
-]] 
+]]
 L["EnableSpy"] = "Enable Spy"
 L["EnableSpyDescription"] = "Enables or disables Spy both now and also on login."
 L["EnabledInBattlegrounds"] = "Enable Spy in battlegrounds"
@@ -61,9 +64,9 @@ L["EnabledInBattlegroundsDescription"] = "Enables or disables Spy when you are i
 L["DisableWhenPVPUnflagged"] = "Disable Spy when not flagged for PVP"
 L["DisableWhenPVPUnflaggedDescription"] = "Enables or disables Spy depending on your PVP status."
 L["DisabledInZones"] = "Disable Spy while in these locations"
-L["DisabledInZonesDescription"]	= "Select locations where Spy will be disabled"
+L["DisabledInZonesDescription"] = "Select locations where Spy will be disabled"
 L["Booty Bay"] = "Booty Bay"
-L["Everlook"] = "Everlook"						
+L["Everlook"] = "Everlook"
 L["Gadgetzan"] = "Gadgetzan"
 L["Ratchet"] = "Ratchet"
 
@@ -100,7 +103,7 @@ L["SelectTooltipAnchorDescription"] = "Select the anchor point for the tooltip i
 L["ANCHOR_CURSOR"] = "Cursor"
 L["ANCHOR_TOP"] = "Top"
 L["ANCHOR_BOTTOM"] = "Bottom"
-L["ANCHOR_LEFT"] = "Left"			
+L["ANCHOR_LEFT"] = "Left"
 L["ANCHOR_RIGHT"] = "Right"
 L["TooltipDisplayWinLoss"] = "Display win/loss statistics in tooltip"
 L["TooltipDisplayWinLossDescription"] = "Set this to display the win/loss statistics of a player in the player's tooltip."
@@ -273,19 +276,18 @@ L["KillOnSight"] = "Kill On Sight"
 --Stats
 L["Won"] = "Won"
 L["Lost"] = "Lost"
-L["Time"] = "Time"	
-L["List"] = "List"	
+L["Time"] = "Time"
+L["List"] = "List"
 L["Filter"] = "Filter"
 L["Show Only"] = "Show Only"
 L["Realm"] = "Realm"
 L["KOS"] = "KOS"
 L["Won/Lost"] = "Won/Lost"
-L["Reason"] = "Reason"	  
+L["Reason"] = "Reason"
 L["HonorKills"] = "Honor Kills"
 L["PvPDeaths"] = "PvP Deaths"
 
 --++ Class descriptions
-L["DEATHKNIGHT"] = "Death Knight"
 L["DRUID"] = "|cffff7c0aDruid|cffffffff"
 L["HUNTER"] = "|cffaad372Hunter|cffffffff"
 L["MAGE"] = "|cff68ccefMage|cffffffff"
@@ -315,7 +317,6 @@ L["Prowl"] = "Prowl"
 L["LocalDefenseChannelName"] = "LocalDefense"
 
 -- Minimap color codes
-L["MinimapClassTextDEATHKNIGHT"] = "|cffc41e3a"
 L["MinimapClassTextDRUID"] = "|cffff7c0a"
 L["MinimapClassTextHUNTER"] = "|cffaad372"
 L["MinimapClassTextMAGE"] = "|cff68ccef"
@@ -366,7 +367,7 @@ L["AddToIgnoreList"] = "Add to Ignore list"
 L["AddToKOSList"] = "Add to Kill On Sight list"
 L["RemoveFromIgnoreList"] = "Remove from Ignore list"
 L["RemoveFromKOSList"] = "Remove from Kill On Sight list"
-L["RemoveFromStatsList"] = "Remove from Statistics List"   --++
+L["RemoveFromStatsList"] = "Remove from Statistics List" --++
 L["AnnounceDropDownMenu"] = "Announce"
 L["KOSReasonDropDownMenu"] = "Set Kill On Sight reason"
 L["PartyDropDownMenu"] = "Party"
@@ -604,11 +605,11 @@ StaticPopupDialogs["Spy_SetKOSReasonOther"] = {
 	whileDead = 1,
 	hideOnEscape = 1,
 	OnShow = function()
-		getglobal(this:GetName().."EditBox"):SetText("");
+		getglobal(this:GetName() .. "EditBox"):SetText("");
 	end,
-    	OnAccept = function(self)
-		local reason = getglobal(this:GetParent():GetName().."EditBox"):GetText()
-		Spy:SetKOSReason(self.playerName, "Enter your own reason...", reason)
+	OnAccept = function()
+		local reason = getglobal(this:GetParent():GetName() .. "EditBox"):GetText()
+		Spy:SetKOSReason(this.playerName, "Enter your own reason...", reason)
 	end,
 };
 
@@ -616,2381 +617,2042 @@ Spy_IgnoreList = {}
 
 Spy_AbilityList = {
 
------------------------------------------------------------
--- Allows an estimation of the race, class and level of a
--- player to be determined from what abilities are observed
--- in the combat log.
---
--- Some abilities cannot be used as they are not unique:
---   "Arcane Power"         (Mage/Trinket)
---   "Enrage"               (Druid/Warrior)
---   "Flurry"               (Warrior/Shaman)
---   "Focused Casting"      (Priest/Shaman)
---   "Sword Specialization" (Warrior/Rogue)
---   "Death Coil"           (Warlock/Death Knight)
---   "Track Humanoids"      (Druid/Hunter)
---   "Remove Curse"         (Mage/Druid)
---   "Cure Poison"          (Druid/Shaman)
---   "Cure Disease"         (Priest/Shaman)
------------------------------------------------------------
+	-----------------------------------------------------------
+	-- Allows an estimation of the race, class and level of a
+	-- player to be determined from what abilities are observed
+	-- in the combat log.
+	--
+	-- Some abilities cannot be used as they are not unique:
+	--   "Arcane Power"         (Mage/Trinket)
+	--   "Enrage"               (Druid/Warrior)
+	--   "Flurry"               (Warrior/Shaman)
+	--   "Focused Casting"      (Priest/Shaman)
+	--   "Sword Specialization" (Warrior/Rogue)
+	--   "Death Coil"           (Warlock/Death Knight)
+	--   "Track Humanoids"      (Druid/Hunter)
+	--   "Remove Curse"         (Mage/Druid)
+	--   "Cure Poison"          (Druid/Shaman)
+	--   "Cure Disease"         (Priest/Shaman)
+	-----------------------------------------------------------
 
---== Racials ==
+	--== Racials ==
 
-	["Shadowmeld"] = {
+ [BS["Shadowmeld"]] = {
 		race = "Night Elf",
 		level = 1,
 	},
-	["Will of the Forsaken"] = {
+ [BS["Will of the Forsaken"]] = {
 		race = "Undead",
 		level = 1,
 	},
-	["Cannibalize"] = {
+ [BS["Cannibalize"]] = {
 		race = "Undead",
 		level = 1,
 	},
-	["Berserking"] = {
+ [BS["Berserking"]] = {
 		race = "Troll",
 		level = 1,
 	},
-	["War Stomp"] = {
+ [BS["War Stomp"]] = {
 		race = "Tauren",
 		level = 1,
 	},
-	["Blood Fury"] = {
+ [BS["Blood Fury"]] = {
 		race = "Orc",
 		level = 1,
 	},
-	["Perception"] = {
+ [BS["Perception"]] = {
 		race = "Human",
 		level = 1,
 	},
-	["Escape Artist"] = {
+ [BS["Escape Artist"]] = {
 		race = "Gnome",
 		level = 1,
 	},
-	["Stoneform"] = {
+ [BS["Stoneform"]] = {
 		race = "Dwarf",
 		level = 1,
 	},
 
 
---== Druid == 
+	--== Druid ==
 
-	["Healing Touch"] = {
+ [BS["Healing Touch"]] = {
 		class = "DRUID",
 		level = 1,
 	},
-	["Mark of the Wild"] = {
+ [BS["Mark of the Wild"]] = {
 		class = "DRUID",
 		level = 1,
 	},
-	["Wrath"] = {
+ [BS["Wrath"]] = {
 		class = "DRUID",
 		level = 1,
 	},
-	["Moonfire"] = {
+ [BS["Moonfire"]] = {
 		class = "DRUID",
 		level = 4,
 	},
-	["Rejuvenation"] = {
+ [BS["Rejuvenation"]] = {
 		class = "DRUID",
 		level = 4,
 	},
-	["Thorns"] = {
+ [BS["Thorns"]] = {
 		class = "DRUID",
 		level = 6,
 	},
-	["Entangling Roots"] = {
+ [BS["Entangling Roots"]] = {
 		class = "DRUID",
 		level = 8,
 	},
-	["Bear Form"] = {
+ [BS["Bear Form"]] = {
 		class = "DRUID",
 		level = 10,
 	},
-	["Demoralizing Roar"] = {
+ [BS["Demoralizing Roar"]] = {
 		class = "DRUID",
 		level = 10,
 	},
-	["Maul"] = {
+ [BS["Maul"]] = {
 		class = "DRUID",
 		level = 10,
 	},
-	["Teleport: Moonglade"] = {
+ [BS["Teleport: Moonglade"]] = {
 		class = "DRUID",
 		level = 10,
 	},
-	["Regrowth"] = {
+ [BS["Regrowth"]] = {
 		class = "DRUID",
 		level = 12,
 	},
-	["Bash"] = {
+ [BS["Bash"]] = {
 		class = "DRUID",
 		level = 14,
 	},
-	["Aquatic Form"] = {
+ [BS["Aquatic Form"]] = {
 		class = "DRUID",
 		level = 16,
 	},
-	["Swipe"] = {
+ [BS["Swipe"]] = {
 		class = "DRUID",
 		level = 16,
 	},
-	["Hibernate"] = {
+ [BS["Hibernate"]] = {
 		class = "DRUID",
 		level = 18,
 	},
-	["Faerie Fire"] = {
+ [BS["Faerie Fire"]] = {
 		class = "DRUID",
 		level = 18,
 	},
-	["Faerie Fire (Feral)"] = {
+ [BS["Faerie Fire (Feral)"]] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Cat Form"] = {
+ [BS["Cat Form"]] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Claw"] = {
+ [BS["Claw"]] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Feral Charge"] = {
+ [BS["Feral Charge"]] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Nature's Grace"] = {
+ [BS["Nature's Grace"]] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Omen of Clarity"] = {
+ [BS["Omen of Clarity"]] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Prowl"] = {
+ [BS["Prowl"]] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Starfire"] = {
+ [BS["Starfire"]] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Rebirth"] = {
+ [BS["Rebirth"]] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Rip"] = {
+ [BS["Rip"]] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Soothe Animal"] = {
+ [BS["Soothe Animal"]] = {
 		class = "DRUID",
 		level = 22,
 	},
-	["Shred"] = {
+ [BS["Shred"]] = {
 		class = "DRUID",
 		level = 22,
 	},
-	["Tiger's Fury"] = {
+ [BS["Tiger's Fury"]] = {
 		class = "DRUID",
 		level = 24,
 	},
-	["Rake"] = {
+ [BS["Rake"]] = {
 		class = "DRUID",
 		level = 24,
 	},
-	["Primal Fury"] = {
+ [BS["Primal Fury"]] = {
 		class = "DRUID",
 		level = 25,
 	},
-	["Abolish Poison"] = {
+ [BS["Abolish Poison"]] = {
 		class = "DRUID",
 		level = 26,
 	},
-	["Dash"] = {
+ [BS["Dash"]] = {
 		class = "DRUID",
 		level = 26,
 	},
-	["Challenging Roar"] = {
+ [BS["Challenging Roar"]] = {
 		class = "DRUID",
 		level = 28,
 	},
-	["Tranquility"] = {
+ [BS["Tranquility"]] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Travel Form"] = {
+ [BS["Travel Form"]] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Nature's Swiftness"] = {
+ [BS["Nature's Swiftness"]] = {
 		class = "DRUID",
 		level = 30,
 	},
-	["Insect Swarm"] = {
+ [BS["Insect Swarm"]] = {
 		class = "DRUID",
 		level = 20,
 	},
-	["Ferocious Bite"] = {
+ [BS["Ferocious Bite"]] = {
 		class = "DRUID",
 		level = 32,
 	},
-	["Ravage"] = {
+ [BS["Ravage"]] = {
 		class = "DRUID",
 		level = 32,
 	},
-	["Pounce"] = {
+ [BS["Pounce"]] = {
 		class = "DRUID",
 		level = 36,
 	},
-	["Frenzied Regeneration"] = {
+ [BS["Frenzied Regeneration"]] = {
 		class = "DRUID",
 		level = 36,
 	},
-	["Swiftmend"] = {
+ [BS["Swiftmend"]] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Dire Bear Form"] = {
+ [BS["Dire Bear Form"]] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Moonkin Form"] = {
+ [BS["Moonkin Form"]] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Feline Grace"] = {
+ [BS["Feline Grace"]] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Hurricane"] = {
+ [BS["Hurricane"]] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Innervate"] = {
+ [BS["Innervate"]] = {
 		class = "DRUID",
 		level = 40,
 	},
-	["Barkskin"] = {
+ [BS["Barkskin"]] = {
 		class = "DRUID",
 		level = 44,
 	},
-	["Gift of the Wild"] = {
+ [BS["Gift of the Wild"]] = {
 		class = "DRUID",
 		level = 60,
 	},
 
 
---== Hunter == 
+	--== Hunter ==
 
-	["Auto Shot"] = {
-		class = "HUNTER",
-		level = 1,
-	}, 
-	["Raptor Strike"] = {
-		class = "HUNTER",
-		level = 1,
-	}, 
-	["Track Beasts"] = {
+ [BS["Auto Shot"]] = {
 		class = "HUNTER",
 		level = 1,
 	},
-	["Aspect of the Monkey"] = {
+ [BS["Raptor Strike"]] = {
+		class = "HUNTER",
+		level = 1,
+	},
+ [BS["Track Beasts"]] = {
+		class = "HUNTER",
+		level = 1,
+	},
+ [BS["Aspect of the Monkey"]] = {
 		class = "HUNTER",
 		level = 4,
 	},
-	["Serpent Sting"] = {
+ [BS["Serpent Sting"]] = {
 		class = "HUNTER",
 		level = 4,
 	},
-	["Arcane Shot"] = {
+ [BS["Arcane Shot"]] = {
 		class = "HUNTER",
 		level = 6,
 	},
-	["Hunter's Mark"] = {
+ [BS["Hunter's Mark"]] = {
 		class = "HUNTER",
 		level = 6,
 	},
-	["Concussive Shot"] = {
+ [BS["Concussive Shot"]] = {
 		class = "HUNTER",
 		level = 8,
 	},
-	["Aspect of the Hawk"] = {
+ [BS["Aspect of the Hawk"]] = {
 		class = "HUNTER",
 		level = 10,
 	},
-	["Revive Pet"] = {
+ [BS["Revive Pet"]] = {
 		class = "HUNTER",
 		level = 10,
 	},
-	["Dismiss Pet"] = {
+ [BS["Dismiss Pet"]] = {
 		class = "HUNTER",
 		level = 10,
 	},
-	["Feed Pet"] = {
+ [BS["Feed Pet"]] = {
 		class = "HUNTER",
 		level = 10,
 	},
-	["Call Pet"] = {
+ [BS["Call Pet"]] = {
 		class = "HUNTER",
 		level = 10,
 	},
-	["Improved Aspect of the Hawk"] = {
-		class = "HUNTER",
-		level = 10,
-	}, 
-	["Tame Beast"] = {
+ [BS["Improved Aspect of the Hawk"]] = {
 		class = "HUNTER",
 		level = 10,
 	},
-	["Wing Clip"] = {
+ [BS["Tame Beast"]] = {
+		class = "HUNTER",
+		level = 10,
+	},
+ [BS["Wing Clip"]] = {
 		class = "HUNTER",
 		level = 12,
 	},
-	["Distracting Shot"] = {
+ [BS["Distracting Shot"]] = {
 		class = "HUNTER",
 		level = 12,
 	},
-	["Mend Pet"] = {
+ [BS["Mend Pet"]] = {
 		class = "HUNTER",
 		level = 12,
 	},
-	["Scare Beast"] = {
+ [BS["Scare Beast"]] = {
 		class = "HUNTER",
 		level = 14,
 	},
-	["Eagle Eye"] = {
+ [BS["Eagle Eye"]] = {
 		class = "HUNTER",
 		level = 14,
 	},
-	["Eyes of the Beast"] = {
+ [BS["Eyes of the Beast"]] = {
 		class = "HUNTER",
 		level = 14,
 	},
-	["Immolation Trap"] = {
+ [BS["Immolation Trap"]] = {
 		class = "HUNTER",
 		level = 16,
 	},
-	["Mongoose Bite"] = {
+ [BS["Mongoose Bite"]] = {
 		class = "HUNTER",
 		level = 16,
 	},
-	["Multi-Shot"] = {
+ [BS["Multi-Shot"]] = {
 		class = "HUNTER",
 		level = 18,
 	},
-	["Track Undead"] = {
+ [BS["Track Undead"]] = {
 		class = "HUNTER",
 		level = 18,
 	},
-	["Aspect of the Viper"] = {
+ [BS["Aspect of the Viper"]] = {
 		class = "HUNTER",
 		level = 20,
 	},
-	["Rapid Killing"] = {
+ [BS["Aimed Shot"]] = {
 		class = "HUNTER",
 		level = 20,
 	},
-	["Aimed Shot"] = {
+ [BS["Aspect of the Cheetah"]] = {
 		class = "HUNTER",
 		level = 20,
 	},
-	["Aspect of the Cheetah"] = {
+ [BS["Disengage"]] = {
 		class = "HUNTER",
 		level = 20,
 	},
-	["Disengage"] = {
+ [BS["Freezing Trap"]] = {
 		class = "HUNTER",
 		level = 20,
 	},
-	["Freezing Trap"] = {
-		class = "HUNTER",
-		level = 20,
-	},
-	["Scorpid Sting"] = {
+ [BS["Scorpid Sting"]] = {
 		class = "HUNTER",
 		level = 22,
 	},
-	["Track Hidden"] = {
+ [BS["Track Hidden"]] = {
 		class = "HUNTER",
 		level = 24,
 	},
-	["Beast Lore"] = {
+ [BS["Beast Lore"]] = {
 		class = "HUNTER",
 		level = 24,
 	},
-	["Lock and Load"] = {
-		class = "HUNTER",
-		level = 25,
-	}, 
-	["Rapid Fire"] = {
+ [BS["Rapid Fire"]] = {
 		class = "HUNTER",
 		level = 26,
 	},
-	["Track Elementals"] = {
+ [BS["Track Elementals"]] = {
 		class = "HUNTER",
 		level = 26,
 	},
-	["Frost Trap"] = {
+ [BS["Frost Trap"]] = {
 		class = "HUNTER",
 		level = 28,
 	},
-	["Counterattack"] = {
+ [BS["Counterattack"]] = {
 		class = "HUNTER",
 		level = 30,
 	},
-	["Aspect of the Beast"] = {
+ [BS["Aspect of the Beast"]] = {
 		class = "HUNTER",
 		level = 30,
 	},
-	["Feign Death"] = {
+ [BS["Feign Death"]] = {
 		class = "HUNTER",
 		level = 30,
 	},
-	["Spirit Bond"] = {
-		class = "HUNTER",
-		level = 30,
-	}, 
-	["Scatter Shot"] = {
+ [BS["Spirit Bond"]] = {
 		class = "HUNTER",
 		level = 30,
 	},
-	["Track Demons"] = {
+ [BS["Scatter Shot"]] = {
+		class = "HUNTER",
+		level = 30,
+	},
+ [BS["Track Demons"]] = {
 		class = "HUNTER",
 		level = 32,
 	},
-	["Flare"] = {
+ [BS["Flare"]] = {
 		class = "HUNTER",
 		level = 32,
 	},
-	["Explosive Trap"] = {
+ [BS["Explosive Trap"]] = {
 		class = "HUNTER",
 		level = 34,
 	},
-	["Viper Sting"] = {
+ [BS["Viper Sting"]] = {
 		class = "HUNTER",
 		level = 36,
 	},
-	["Track Giants"] = {
+ [BS["Track Giants"]] = {
 		class = "HUNTER",
 		level = 40,
 	},
-	["Thrill of the Hunt"] = {
-		class = "HUNTER",
-		level = 40,
-	}, 
-	["Trueshot Aura"] = {
+ [BS["Trueshot Aura"]] = {
 		class = "HUNTER",
 		level = 40,
 	},
-	["Ferocious Inspiration"] = {
-		class = "HUNTER",
-		level = 40,
-	}, 
-	["Volley"] = {
+ [BS["Volley"]] = {
 		class = "HUNTER",
 		level = 40,
 	},
-	["Aspect of the Pack"] = {
+ [BS["Aspect of the Pack"]] = {
 		class = "HUNTER",
 		level = 40,
 	},
-	["Wyvern Sting"] = {
+ [BS["Wyvern Sting"]] = {
 		class = "HUNTER",
 		level = 40,
 	},
-	["Expose Weakness"] = {
+ [BS["Expose Weakness"]] = {
 		class = "HUNTER",
 		level = 40,
 	},
-	["Master Tactician"] = {
-		class = "HUNTER",
-		level = 45,
-	}, 
-	["Rapid Recuperation"] = {
-		class = "HUNTER",
-		level = 45,
-	}, 
-	["Aspect of the Wild"] = {
+ [BS["Aspect of the Wild"]] = {
 		class = "HUNTER",
 		level = 46,
 	},
-	["Silencing Shot"] = {
+ [BS["Silencing Shot"]] = {
 		class = "HUNTER",
 		level = 50,
 	},
-	["Track Dragonkin"] = {
+ [BS["Track Dragonkin"]] = {
 		class = "HUNTER",
 		level = 50,
 	},
-	["The Beast Within"] = {
+ [BS["The Beast Within"]] = {
 		class = "HUNTER",
 		level = 50,
 	},
-	["Sniper Training"] = {
-		class = "HUNTER",
-		level = 50,
-	}, 
-	["Steady Shot"] = {
-		class = "HUNTER",
-		level = 50,
-	},
-	["Readiness"] = {
-		class = "HUNTER",
-		level = 50,
-	},
-	["Kindred Spirits"] = {
-		class = "HUNTER",
-		level = 55,
-	}, 
-	["Hunting Party"] = {
-		class = "HUNTER",
-		level = 55,
-	}, 
-	["Tranquilizing Shot"] = {
-		class = "HUNTER",
-		level = 60,
-	},
-	["Chimera Shot"] = {
-		class = "HUNTER",
-		level = 60,
-	}, 
-	["Deterrence"] = {
-		class = "HUNTER",
-		level = 60,
-	},
-	["Explosive Shot"] = {
-		class = "HUNTER",
-		level = 60,
-	}, 
-	
---== Mage == 
 
-	["Arcane Intellect"] = {
+ [BS["Steady Shot"]] = {
+		class = "HUNTER",
+		level = 50,
+	},
+ [BS["Readiness"]] = {
+		class = "HUNTER",
+		level = 50,
+	},
+ [BS["Tranquilizing Shot"]] = {
+		class = "HUNTER",
+		level = 60,
+	},
+ [BS["Deterrence"]] = {
+		class = "HUNTER",
+		level = 60,
+	},
+ [BS["Explosive Shot"]] = {
+		class = "HUNTER",
+		level = 60,
+	},
+
+	--== Mage ==
+
+ [BS["Arcane Intellect"]] = {
 		class = "MAGE",
 		level = 1,
 	},
-	["Fireball"] = {
+ [BS["Fireball"]] = {
 		class = "MAGE",
 		level = 1,
 	},
-	["Frost Armor"] = {
+ [BS["Frost Armor"]] = {
 		class = "MAGE",
 		level = 1,
 	},
-	["Frostbolt"] = {
+ [BS["Frostbolt"]] = {
 		class = "MAGE",
 		level = 4,
 	},
-	["Conjure Water"] = {
+ [BS["Conjure Water"]] = {
 		class = "MAGE",
 		level = 4,
 	},
-	["Conjure Food"] = {
+ [BS["Conjure Food"]] = {
 		class = "MAGE",
 		level = 6,
 	},
-	["Fire Blast"] = {
+ [BS["Fire Blast"]] = {
 		class = "MAGE",
 		level = 6,
 	},
-	["Polymorph"] = {
+ [BS["Polymorph"]] = {
 		class = "MAGE",
 		level = 8,
 	},
-	["Arcane Missiles"] = {
+ [BS["Arcane Missiles"]] = {
 		class = "MAGE",
 		level = 8,
 	},
-	["Frost Nova"] = {
+ [BS["Frost Nova"]] = {
 		class = "MAGE",
 		level = 10,
 	},
-	["Slow Fall"] = {
+ [BS["Slow Fall"]] = {
 		class = "MAGE",
 		level = 12,
 	},
-	["Dampen Magic"] = {
+ [BS["Dampen Magic"]] = {
 		class = "MAGE",
 		level = 12,
 	},
-	["Arcane Explosion"] = {
+ [BS["Arcane Explosion"]] = {
 		class = "MAGE",
 		level = 14,
 	},
-	["Magic Absorption"] = {
+ [BS["Frostbite"]] = {
 		class = "MAGE",
 		level = 15,
 	},
-	["Frostbite"] = {
+ [BS["Ignite"]] = {
 		class = "MAGE",
 		level = 15,
 	},
-	["Ignite"] = {
-		class = "MAGE",
-		level = 15,
-	},
-	["Detect Magic"] = {
+ [BS["Detect Magic"]] = {
 		class = "MAGE",
 		level = 16,
 	},
-	["Flamestrike"] = {
+ [BS["Flamestrike"]] = {
 		class = "MAGE",
 		level = 16,
 	},
-	["Remove Lesser Curse"] = {
+ [BS["Remove Lesser Curse"]] = {
 		class = "MAGE",
 		level = 18,
 	},
-	["Amplify Magic"] = {
+ [BS["Amplify Magic"]] = {
 		class = "MAGE",
 		level = 18,
 	},
-	["Teleport: Ironforge"] = {
+ [BS["Teleport: Ironforge"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Teleport: Orgrimmar"] = {
+ [BS["Teleport: Orgrimmar"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Teleport: Stormwind"] = {
+ [BS["Teleport: Stormwind"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Teleport: Undercity"] = {
+ [BS["Teleport: Undercity"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Blink"] = {
+ [BS["Blink"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Blizzard"] = {
+ [BS["Blizzard"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Cold Snap"] = {
+ [BS["Cold Snap"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Evocation"] = {
+ [BS["Evocation"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Fire Ward"] = {
+ [BS["Fire Ward"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Mana Shield"] = {
+ [BS["Mana Shield"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Pyroblast"] = {
+ [BS["Pyroblast"]] = {
 		class = "MAGE",
 		level = 20,
 	},
-	["Scorch"] = {
+ [BS["Scorch"]] = {
 		class = "MAGE",
 		level = 22,
 	},
-	["Frost Ward"] = {
+ [BS["Frost Ward"]] = {
 		class = "MAGE",
 		level = 22,
 	},
-	["Counterspell"] = {
+ [BS["Counterspell"]] = {
 		class = "MAGE",
 		level = 24,
 	},
-	["Master of Elements"] = {
+ [BS["Master of Elements"]] = {
 		class = "MAGE",
 		level = 25,
 	},
-	["Improved Scorch"] = {
+ [BS["Improved Scorch"]] = {
 		class = "MAGE",
 		level = 25,
 	},
-	["Cone of Cold"] = {
+ [BS["Cone of Cold"]] = {
 		class = "MAGE",
 		level = 26,
 	},
-	["Ice Block"] = {
+ [BS["Ice Block"]] = {
 		class = "MAGE",
 		level = 30,
 	},
-	["Ice Armor"] = {
+ [BS["Ice Armor"]] = {
 		class = "MAGE",
 		level = 30,
 	},
-	["Presence of Mind"] = {
+ [BS["Presence of Mind"]] = {
 		class = "MAGE",
 		level = 30,
 	},
-	["Teleport: Darnassus"] = {
+ [BS["Teleport: Darnassus"]] = {
 		class = "MAGE",
 		level = 30,
 	},
-	["Teleport: Thunder Bluff"] = {
+ [BS["Teleport: Thunder Bluff"]] = {
 		class = "MAGE",
 		level = 30,
 	},
-	["Blast Wave"] = {
+ [BS["Blast Wave"]] = {
 		class = "MAGE",
 		level = 30,
 	},
-	["Mage Armor"] = {
+ [BS["Mage Armor"]] = {
 		class = "MAGE",
 		level = 34,
 	},
-	["Winter's Chill"] = {
+ [BS["Winter's Chill"]] = {
 		class = "MAGE",
 		level = 35,
 	},
-	["Combustion"] = {
+ [BS["Combustion"]] = {
 		class = "MAGE",
 		level = 40,
 	},
-	["Ice Barrier"] = {
+ [BS["Ice Barrier"]] = {
 		class = "MAGE",
 		level = 40,
 	},
-	["Portal: Ironforge"] = {
+ [BS["Portal: Ironforge"]] = {
 		class = "MAGE",
 		level = 40,
 	},
-	["Portal: Orgrimmar"] = {
+ [BS["Portal: Orgrimmar"]] = {
 		class = "MAGE",
 		level = 40,
 	},
-	["Portal: Stormwind"] = {
+ [BS["Portal: Stormwind"]] = {
 		class = "MAGE",
 		level = 40,
 	},
-	["Portal: Undercity"] = {
+ [BS["Portal: Undercity"]] = {
 		class = "MAGE",
 		level = 40,
 	},
-	["Portal: Thunder Bluff"] = {
+ [BS["Portal: Thunder Bluff"]] = {
 		class = "MAGE",
 		level = 50,
 	},
-	["Portal: Darnassus"] = {
+ [BS["Portal: Darnassus"]] = {
 		class = "MAGE",
 		level = 50,
 	},
-	["Dragon's Breath"] = {
+ [BS["Dragon's Breath"]] = {
 		class = "MAGE",
 		level = 50,
 	},
-	["Arcane Brilliance"] = {
+ [BS["Arcane Brilliance"]] = {
 		class = "MAGE",
 		level = 56,
 	},
-	["Polymorph: Pig"] = {
+ [BS["Polymorph: Pig"]] = {
 		class = "MAGE",
 		level = 60,
 	},
-	["Polymorph: Turtle"] = {
+ [BS["Polymorph: Turtle"]] = {
 		class = "MAGE",
 		level = 60,
 	},
-	
 
---== Paladin ==
 
-	["Devotion Aura"] = {
+	--== Paladin ==
+
+ [BS["Devotion Aura"]] = {
 		class = "PALADIN",
 		level = 1,
 	},
-	["Holy Light"] = {
+ [BS["Holy Light"]] = {
 		class = "PALADIN",
 		level = 1,
 	},
-	["Seal of Righteousness"] = {
+ [BS["Seal of Righteousness"]] = {
 		class = "PALADIN",
 		level = 1,
 	},
-	["Blessing of Might"] = {
+ [BS["Blessing of Might"]] = {
 		class = "PALADIN",
 		level = 4,
 	},
-	["Judgement of Light"] = {
+ [BS["Judgement of Light"]] = {
 		class = "PALADIN",
 		level = 4,
 	},
-	["Seal of the Crusader"] = {
+ [BS["Seal of the Crusader"]] = {
 		class = "PALADIN",
 		level = 6,
 	},
-	["Divine Protection"] = {
+ [BS["Divine Protection"]] = {
 		class = "PALADIN",
 		level = 6,
 	},
-	["Purify"] = {
+ [BS["Purify"]] = {
 		class = "PALADIN",
 		level = 8,
 	},
-	["Hammer of Justice"] = {
+ [BS["Hammer of Justice"]] = {
 		class = "PALADIN",
 		level = 8,
 	},
-	["Lay on Hands"] = {
+ [BS["Lay on Hands"]] = {
 		class = "PALADIN",
 		level = 10,
 	},
-	["Hand of Protection"] = {
-		class = "PALADIN",
-		level = 10,
-	},
-	["Redemption"] = {
+
+ [BS["Redemption"]] = {
 		class = "PALADIN",
 		level = 12,
 	},
-	["Judgement of Wisdom"] = {
+ [BS["Judgement of Wisdom"]] = {
 		class = "PALADIN",
 		level = 12,
 	},
-	["Righteous Defense"] = {
+ [BS["Righteous Defense"]] = {
 		class = "PALADIN",
 		level = 14,
 	},
-	["Blessing of Wisdom"] = {
+ [BS["Blessing of Wisdom"]] = {
 		class = "PALADIN",
 		level = 14,
 	},
-	["Hand of Reckoning"] = {
+ [BS["Retribution Aura"]] = {
 		class = "PALADIN",
 		level = 16,
 	},
-	["Retribution Aura"] = {
+ [BS["Righteous Fury"]] = {
 		class = "PALADIN",
 		level = 16,
 	},
-	["Righteous Fury"] = {
-		class = "PALADIN",
-		level = 16,
-	},
-	["Hand of Freedom"] = {
+ [BS["Spiritual Attunement"]] = {
 		class = "PALADIN",
 		level = 18,
 	},
-	["Spiritual Attunement"] = {
-		class = "PALADIN",
-		level = 18,
-	},
-	["Seal of Command"] = {
+ [BS["Seal of Command"]] = {
 		class = "PALADIN",
 		level = 20,
 	},
-	["Exorcism"] = {
+ [BS["Exorcism"]] = {
 		class = "PALADIN",
 		level = 20,
 	},
-	["Flash of Light"] = {
+ [BS["Flash of Light"]] = {
 		class = "PALADIN",
 		level = 20,
 	},
-	["Blessing of Kings"] = {
+ [BS["Blessing of Kings"]] = {
 		class = "PALADIN",
 		level = 20,
 	},
-	["Vindication"] = {
+ [BS["Vindication"]] = {
 		class = "PALADIN",
 		level = 20,
 	},
-	["Aura Mastery"] = {
+ [BS["Sense Undead"]] = {
 		class = "PALADIN",
 		level = 20,
 	},
-	["Divine Sacrifice"] = {
+ [BS["Consecration"]] = {
 		class = "PALADIN",
 		level = 20,
 	},
-	["Sense Undead"] = {
-		class = "PALADIN",
-		level = 20,
-	},
-	["Consecration"] = {
-		class = "PALADIN",
-		level = 20,
-	},
-	["Concentration Aura"] = {
+ [BS["Concentration Aura"]] = {
 		class = "PALADIN",
 		level = 22,
 	},
-	["Seal of Justice"] = {
+ [BS["Seal of Justice"]] = {
 		class = "PALADIN",
 		level = 22,
 	},
-	["Turn Evil"] = {
-		class = "PALADIN",
-		level = 24,
-	},
-	["Illumination"] = {
+ [BS["Illumination"]] = {
 		class = "PALADIN",
 		level = 25,
 	},
-	["Eye for an Eye"] = {
+ [BS["Eye for an Eye"]] = {
 		class = "PALADIN",
 		level = 25,
 	},
-	["Hand of Salvation"] = {
-		class = "PALADIN",
-		level = 26,
-	},
-	["Shadow Resistance Aura"] = {
+ [BS["Shadow Resistance Aura"]] = {
 		class = "PALADIN",
 		level = 28,
 	},
-	["Judgement of Justice"] = {
+ [BS["Judgement of Justice"]] = {
 		class = "PALADIN",
 		level = 28,
 	},
-	["Divine Favor"] = {
+ [BS["Divine Favor"]] = {
 		class = "PALADIN",
 		level = 30,
 	},
-	["Divine Intervention"] = {
+ [BS["Divine Intervention"]] = {
 		class = "PALADIN",
 		level = 30,
 	},
-	["Reckoning"] = {
+ [BS["Reckoning"]] = {
 		class = "PALADIN",
 		level = 30,
 	},
-	["Sanctity Aura"] = {
+ [BS["Sanctity Aura"]] = {
 		class = "PALADIN",
 		level = 30,
 	},
-	["Seal of Light"] = {
+ [BS["Seal of Light"]] = {
 		class = "PALADIN",
 		level = 30,
 	},
-	["Summon Warhorse"] = {
+ [BS["Summon Warhorse"]] = {
 		class = "PALADIN",
 		level = 30,
 	},
-	["Warhorse"] = {
+ [BS["Blessing of Sanctuary"]] = {
 		class = "PALADIN",
 		level = 30,
 	},
-	["Blessing of Sanctuary"] = {
-		class = "PALADIN",
-		level = 30,
-	},
-	["Frost Resistance Aura"] = {
+ [BS["Frost Resistance Aura"]] = {
 		class = "PALADIN",
 		level = 32,
 	},
-	["Divine Shield"] = {
+ [BS["Divine Shield"]] = {
 		class = "PALADIN",
 		level = 36,
 	},
-	["Vengeance"] = {
+ [BS["Vengeance"]] = {
 		class = "PALADIN",
 		level = 35,
 	},
-	["Fire Resistance Aura"] = {
+ [BS["Fire Resistance Aura"]] = {
 		class = "PALADIN",
 		level = 36,
 	},
-	["Seal of Wisdom"] = {
+ [BS["Seal of Wisdom"]] = {
 		class = "PALADIN",
 		level = 38,
 	},
-	["Light's Grace"] = {
+ [BS["Blessing of Light"]] = {
 		class = "PALADIN",
 		level = 40,
 	},
-	["Blessing of Light"] = {
+ [BS["Holy Shock"]] = {
 		class = "PALADIN",
 		level = 40,
 	},
-	["Holy Shock"] = {
+ [BS["Repentance"]] = {
 		class = "PALADIN",
 		level = 40,
 	},
-	["Repentance"] = {
+ [BS["Holy Shield"]] = {
 		class = "PALADIN",
 		level = 40,
 	},
-	["Holy Shield"] = {
-		class = "PALADIN",
-		level = 40,
-	},
-	["The Art of War"] = {
-		class = "PALADIN",
-		level = 40,
-	},
-	["Cleanse"] = {
+ [BS["Cleanse"]] = {
 		class = "PALADIN",
 		level = 42,
 	},
-	["Hammer of Wrath"] = {
+ [BS["Hammer of Wrath"]] = {
 		class = "PALADIN",
 		level = 44,
 	},
-	["Redoubt"] = {
+ [BS["Redoubt"]] = {
 		class = "PALADIN",
 		level = 45,
 	},
-	["Sacred Cleansing"] = {
-		class = "PALADIN",
-		level = 45,
-	},
-	["Hand of Sacrifice"] = {
-		class = "PALADIN",
-		level = 46,
-	},
-	["Holy Wrath"] = {
+ [BS["Holy Wrath"]] = {
 		class = "PALADIN",
 		level = 50,
 	},
-	["Divine Illumination"] = {
+ [BS["Divine Illumination"]] = {
 		class = "PALADIN",
 		level = 50,
 	},
-	["Avenger's Shield"] = {
+ [BS["Avenger's Shield"]] = {
 		class = "PALADIN",
 		level = 50,
 	},
-	["Crusader Strike"] = {
+ [BS["Crusader Strike"]] = {
 		class = "PALADIN",
 		level = 50,
 	},
-	["Greater Blessing of Might"] = {
+ [BS["Greater Blessing of Might"]] = {
 		class = "PALADIN",
 		level = 52,
 	},
-	["Greater Blessing of Wisdom"] = {
+ [BS["Greater Blessing of Wisdom"]] = {
 		class = "PALADIN",
 		level = 54,
 	},
-	["Silenced - Shield of the Templar"] = {
-		class = "PALADIN",
-		level = 55,
-	},
-	["Greater Blessing of Sanctuary"] = {
+ [BS["Greater Blessing of Sanctuary"]] = {
 		class = "PALADIN",
 		level = 60,
 	},
-	["Greater Blessing of Kings"] = {
+ [BS["Greater Blessing of Kings"]] = {
 		class = "PALADIN",
 		level = 60,
 	},
-	["Greater Blessing of Might"] = {
+ [BS["Greater Blessing of Might"]] = {
 		class = "PALADIN",
 		level = 60,
 	},
-	["Summon Charger"] = {
+ [BS["Summon Charger"]] = {
 		class = "PALADIN",
 		level = 60,
 	},
-	["Charger"] = {
-		class = "PALADIN",
-		level = 60,
-	},
-	["Beacon of Light"] = {
-		class = "PALADIN",
-		level = 60,
-	},
-	["Light's Beacon"] = {
-		class = "PALADIN",
-		level = 60,
-	},
-	["Divine Storm"] = {
-		class = "PALADIN",
-		level = 60,
-	},
-	["Hammer of the Righteous"] = {
-		class = "PALADIN",
-		level = 60,
-	},
-	
---== Priest == 
 
-	["Power Word: Fortitude"] = {
+	--== Priest ==
+
+ [BS["Power Word: Fortitude"]] = {
 		class = "PRIEST",
 		level = 1,
 	},
-	["Glyph of Dispel Magic"] = {
+ [BS["Lesser Heal"]] = {
 		class = "PRIEST",
 		level = 1,
 	},
-	["Glyph of Power Word: Shield"] = {
+ [BS["Smite"]] = {
 		class = "PRIEST",
 		level = 1,
 	},
-	["Glyph of Prayer of Healing"] = {
-		class = "PRIEST",
-		level = 1,
-	},
-	["Lesser Heal"] = {
-		class = "PRIEST",
-		level = 1,
-	},
-	["Smite"] = {
-		class = "PRIEST",
-		level = 1,
-	},
-	["Shadow Word: Pain"] = {
+ [BS["Shadow Word: Pain"]] = {
 		class = "PRIEST",
 		level = 4,
 	},
-	["Power Word: Shield"] = {
+ [BS["Power Word: Shield"]] = {
 		class = "PRIEST",
 		level = 6,
 	},
-	["Fade"] = {
+ [BS["Fade"]] = {
 		class = "PRIEST",
 		level = 8,
 	},
-	["Renew"] = {
+ [BS["Renew"]] = {
 		class = "PRIEST",
 		level = 8,
 	},
-	["Mind Blast"] = {
+ [BS["Mind Blast"]] = {
 		class = "PRIEST",
 		level = 10,
 	},
-	["Resurrection"] = {
+ [BS["Resurrection"]] = {
 		class = "PRIEST",
 		level = 10,
 	},
-	["Spirit Tap"] = {
+ [BS["Spirit Tap"]] = {
 		class = "PRIEST",
 		level = 10,
 	},
-	["Touch of Weakness"] = {
+ [BS["Touch of Weakness"]] = {
 		class = "PRIEST",
 		level = 10,
 	},
-	["Inner Fire"] = {
+ [BS["Inner Fire"]] = {
 		class = "PRIEST",
 		level = 12,
 	},
-	["Psychic Scream"] = {
+ [BS["Psychic Scream"]] = {
 		class = "PRIEST",
 		level = 14,
 	},
-	["Heal"] = {
+ [BS["Heal"]] = {
 		class = "PRIEST",
 		level = 16,
 	},
-	["Dispel Magic"] = {
+ [BS["Dispel Magic"]] = {
 		class = "PRIEST",
 		level = 18,
 	},
-	["Desperate Prayer"] = {
+ [BS["Desperate Prayer"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Flash Heal"] = {
+ [BS["Flash Heal"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Shackle Undead"] = {
+ [BS["Shackle Undead"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Holy Fire"] = {
+ [BS["Holy Fire"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Mind Flay"] = {
+ [BS["Mind Flay"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Mind Soothe"] = {
+ [BS["Mind Soothe"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Inner Focus"] = {
+ [BS["Inner Focus"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Holy Nova"] = {
+ [BS["Holy Nova"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Blessed Recovery"] = {
+ [BS["Blessed Recovery"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Inspiration"] = {
+ [BS["Inspiration"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Devouring Plague"] = {
+ [BS["Devouring Plague"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Fear Ward"] = {
+ [BS["Fear Ward"]] = {
 		class = "PRIEST",
 		level = 20,
 	},
-	["Mind Vision"] = {
+ [BS["Mind Vision"]] = {
 		class = "PRIEST",
 		level = 22,
 	},
-	["Mana Burn"] = {
+ [BS["Mana Burn"]] = {
 		class = "PRIEST",
 		level = 24,
 	},
-	["Shadow Vulnerability"] = {
+ [BS["Shadow Vulnerability"]] = {
 		class = "PRIEST",
 		level = 25,
 	},
-	["Mind Control"] = {
+ [BS["Mind Control"]] = {
 		class = "PRIEST",
 		level = 30,
 	},
-	["Reflective Shield"] = {
+ [BS["Prayer of Healing"]] = {
 		class = "PRIEST",
 		level = 30,
 	},
-	["Prayer of Healing"] = {
+ [BS["Shadow Protection"]] = {
 		class = "PRIEST",
 		level = 30,
 	},
-	["Shadow Protection"] = {
+ [BS["Silence"]] = {
 		class = "PRIEST",
 		level = 30,
 	},
-	["Silence"] = {
+ [BS["Spirit of Redemption"]] = {
 		class = "PRIEST",
 		level = 30,
 	},
-	["Spirit of Redemption"] = {
+ [BS["Vampiric Embrace"]] = {
 		class = "PRIEST",
 		level = 30,
 	},
-	["Vampiric Embrace"] = {
+ [BS["Divine Spirit"]] = {
 		class = "PRIEST",
 		level = 30,
 	},
-	["Divine Spirit"] = {
-		class = "PRIEST",
-		level = 30,
-	},
-	["Abolish Disease"] = {
+ [BS["Abolish Disease"]] = {
 		class = "PRIEST",
 		level = 32,
 	},
-	["Levitate"] = {
+ [BS["Levitate"]] = {
 		class = "PRIEST",
 		level = 34,
 	},
-	["Surge of Light"] = {
-		class = "PRIEST",
-		level = 35,
-	},
-	["Greater Heal"] = {
+ [BS["Greater Heal"]] = {
 		class = "PRIEST",
 		level = 40,
 	},
-	["Shadowform"] = {
+ [BS["Shadowform"]] = {
 		class = "PRIEST",
 		level = 40,
 	},
-	["Focused Will"] = {
+ [BS["Power Infusion"]] = {
 		class = "PRIEST",
 		level = 40,
 	},
-	["Power Infusion"] = {
+ [BS["Lightwell"]] = {
 		class = "PRIEST",
 		level = 40,
 	},
-	["Lightwell"] = {
-		class = "PRIEST",
-		level = 40,
-	},
-	["Blessed Resilience"] = {
-		class = "PRIEST",
-		level = 40,
-	},
-	["Serendipity"] = {
-		class = "PRIEST",
-		level = 45,
-	},
-	["Prayer of Fortitude"] = {
+ [BS["Prayer of Fortitude"]] = {
 		class = "PRIEST",
 		level = 48,
 	},
-	["Focused Will"] = {
+ [BS["Circle of Healing"]] = {
 		class = "PRIEST",
 		level = 50,
 	},
-	["Circle of Healing"] = {
+ [BS["Pain Suppression"]] = {
 		class = "PRIEST",
 		level = 50,
 	},
-	["Pain Suppression"] = {
+ [BS["Vampiric Touch"]] = {
 		class = "PRIEST",
 		level = 50,
 	},
-	["Vampiric Touch"] = {
-		class = "PRIEST",
-		level = 50,
-	},
-	["Psychic Horror"] = {
-		class = "PRIEST",
-		level = 50,
-	},
-	["Prayer of Shadow Protection"] = {
+ [BS["Prayer of Shadow Protection"]] = {
 		class = "PRIEST",
 		level = 56,
 	},
-	["Prayer of Spirit"] = {
+ [BS["Prayer of Spirit"]] = {
 		class = "PRIEST",
 		level = 60,
 	},
-	["Guardian Spirit"] = {
-		class = "PRIEST",
-		level = 60,
-	},
-	["Dispersion"] = {
-		class = "PRIEST",
-		level = 60,
-	},
-	["Penance"] = {
-		class = "PRIEST",
-		level = 60,
-	},
-	
 
---== Rogue == 
 
-	["Stealth"] = {
+	--== Rogue ==
+
+ [BS["Stealth"]] = {
 		class = "ROGUE",
 		level = 1,
 	},
-	["Sinister Strike"] = {
+ [BS["Sinister Strike"]] = {
 		class = "ROGUE",
 		level = 1,
 	},
-	["Eviscerate"] = {
+ [BS["Eviscerate"]] = {
 		class = "ROGUE",
 		level = 1,
 	},
-	["Backstab"] = {
+ [BS["Backstab"]] = {
 		class = "ROGUE",
 		level = 4,
 	},
-	["Pick Pocket"] = {
+ [BS["Pick Pocket"]] = {
 		class = "ROGUE",
 		level = 4,
 	},
-	["Gouge"] = {
+ [BS["Gouge"]] = {
 		class = "ROGUE",
 		level = 6,
 	},
-	["Evasion"] = {
+ [BS["Evasion"]] = {
 		class = "ROGUE",
 		level = 8,
 	},
-	["Remorseless"] = {
+ [BS["Remorseless"]] = {
 		class = "ROGUE",
 		level = 10,
 	},
-	["Sap"] = {
+ [BS["Sap"]] = {
 		class = "ROGUE",
 		level = 10,
 	},
-	["Slice and Dice"] = {
+ [BS["Slice and Dice"]] = {
 		class = "ROGUE",
 		level = 10,
 	},
-	["Master of Deception"] = {
+ [BS["Master of Deception"]] = {
 		class = "ROGUE",
 		level = 10,
 	},
-	["Sprint"] = {
+ [BS["Sprint"]] = {
 		class = "ROGUE",
 		level = 10,
 	},
-	["Relentless Strikes"] = {
+ [BS["Relentless Strikes"]] = {
 		class = "ROGUE",
 		level = 10,
 	},
-	["Remorseless Attacks"] = {
+ [BS["Remorseless Attacks"]] = {
 		class = "ROGUE",
 		level = 10,
 	},
-	["Kick"] = {
+ [BS["Kick"]] = {
 		class = "ROGUE",
 		level = 12,
 	},
-	["Expose Armor"] = {
+ [BS["Expose Armor"]] = {
 		class = "ROGUE",
 		level = 14,
 	},
-	["Garrote"] = {
+ [BS["Garrote"]] = {
 		class = "ROGUE",
 		level = 14,
 	},
-	["Feint"] = {
+ [BS["Feint"]] = {
 		class = "ROGUE",
 		level = 16,
 	},
-	["Pick Lock"] = {
+ [BS["Pick Lock"]] = {
 		class = "ROGUE",
 		level = 16,
 	},
-	["Ambush"] = {
+ [BS["Ambush"]] = {
 		class = "ROGUE",
 		level = 18,
 	},
-	["Riposte"] = {
+ [BS["Riposte"]] = {
 		class = "ROGUE",
 		level = 20,
 	},
-	["Dismantle"] = {
+ [BS["Rupture"]] = {
 		class = "ROGUE",
 		level = 20,
 	},
-	["Rupture"] = {
+ [BS["Crippling Poison"]] = {
 		class = "ROGUE",
 		level = 20,
 	},
-	["Crippling Poison"] = {
+ [BS["Ghostly Strike"]] = {
 		class = "ROGUE",
 		level = 20,
 	},
-	["Ghostly Strike"] = {
+ [BS["Instant Poison"]] = {
 		class = "ROGUE",
 		level = 20,
 	},
-	["Instant Poison"] = {
-		class = "ROGUE",
-		level = 20,
-	},
-	["Vanish"] = {
+ [BS["Vanish"]] = {
 		class = "ROGUE",
 		level = 22,
 	},
-	["Distract"] = {
+ [BS["Distract"]] = {
 		class = "ROGUE",
 		level = 22,
 	},
-	["Detect Traps"] = {
+ [BS["Detect Traps"]] = {
 		class = "ROGUE",
 		level = 24,
 	},
-	["Mind-numbing Poison"] = {
+ [BS["Mind-numbing Poison"]] = {
 		class = "ROGUE",
 		level = 24,
 	},
-	["Cheap Shot"] = {
+ [BS["Cheap Shot"]] = {
 		class = "ROGUE",
 		level = 26,
 	},
-	["Instant Poison II"] = {
+ [BS["Instant Poison II"]] = {
 		class = "ROGUE",
 		level = 28,
 	},
-	["Cold Blood"] = {
+ [BS["Cold Blood"]] = {
 		class = "ROGUE",
 		level = 30,
 	},
-	["Preparation"] = {
+ [BS["Preparation"]] = {
 		class = "ROGUE",
 		level = 30,
 	},
-	["Disarm Trap"] = {
+ [BS["Disarm Trap"]] = {
 		class = "ROGUE",
 		level = 30,
 	},
-	["Blade Flurry"] = {
+ [BS["Blade Flurry"]] = {
 		class = "ROGUE",
 		level = 30,
 	},
-	["Deadly Poison"] = {
+ [BS["Deadly Poison"]] = {
 		class = "ROGUE",
 		level = 30,
 	},
-	["Kidney Shot"] = {
+ [BS["Kidney Shot"]] = {
 		class = "ROGUE",
 		level = 30,
 	},
-	["Hemorrhage"] = {
+ [BS["Hemorrhage"]] = {
 		class = "ROGUE",
 		level = 30,
 	},
-	["Wound Poison"] = {
+ [BS["Wound Poison"]] = {
 		class = "ROGUE",
 		level = 32,
 	},
-	["Blind"] = {
+ [BS["Blind"]] = {
 		class = "ROGUE",
 		level = 34,
 	},
-	["Blinding Powder"] = {
+ [BS["Blinding Powder"]] = {
 		class = "ROGUE",
 		level = 34,
 	},
-	["Find Weakness"] = {
-		class = "ROGUE",
-		level = 35,
-	},
-	["Instant Poison III"] = {
+ [BS["Instant Poison III"]] = {
 		class = "ROGUE",
 		level = 36,
 	},
-	["Deadly Poison II"] = {
+ [BS["Deadly Poison II"]] = {
 		class = "ROGUE",
 		level = 38,
 	},
-	["Wound Poison II"] = {
+ [BS["Wound Poison II"]] = {
 		class = "ROGUE",
 		level = 40,
 	},
-	["Premeditation"] = {
+ [BS["Premeditation"]] = {
 		class = "ROGUE",
 		level = 40,
 	},
-	["Adrenaline Rush"] = {
+ [BS["Adrenaline Rush"]] = {
 		class = "ROGUE",
 		level = 40,
 	},
-	["Instant Poison IV"] = {
+ [BS["Instant Poison IV"]] = {
 		class = "ROGUE",
 		level = 44,
 	},
-	["Combat Potency"] = {
-		class = "ROGUE",
-		level = 45,
-	},
-	["Deadly Poison III"] = {
+ [BS["Deadly Poison III"]] = {
 		class = "ROGUE",
 		level = 46,
 	},
-	["Wound Poison III"] = {
+ [BS["Wound Poison III"]] = {
 		class = "ROGUE",
 		level = 48,
 	},
-	["Mutilate"] = {
-		class = "ROGUE",
-		level = 50,
-	},
-	["Shadowstep"] = {
-		class = "ROGUE",
-		level = 50,
-	},
-	["Honor Among Thieves"] = {
-		class = "ROGUE",
-		level = 50,
-	},
-	["Turn the Tables"] = {
-		class = "ROGUE",
-		level = 50,
-	},
-	["Unfair Advantage"] = {
-		class = "ROGUE",
-		level = 50,
-	},
-	["Instant Poison V"] = {
+ [BS["Instant Poison V"]] = {
 		class = "ROGUE",
 		level = 52,
 	},
-	["Deadly Poison IV"] = {
+ [BS["Deadly Poison IV"]] = {
 		class = "ROGUE",
 		level = 54,
 	},
-	["Wound Poison IV"] = {
+ [BS["Wound Poison IV"]] = {
 		class = "ROGUE",
 		level = 56,
 	},
-	["Deadly Poison V"] = {
+ [BS["Deadly Poison V"]] = {
 		class = "ROGUE",
 		level = 60,
 	},
-	["Instant Poison VI"] = {
+ [BS["Instant Poison VI"]] = {
 		class = "ROGUE",
 		level = 60,
 	},
-	["Hunger For Blood"] = {
-		class = "ROGUE",
-		level = 60,
-	},
-	["Killing Spree"] = {
-		class = "ROGUE",
-		level = 60,
-	},
-	["Shadow Dance"] = {
-		class = "ROGUE",
-		level = 60,
-	},
-	
 
---== Shaman == 
+	--== Shaman ==
 
-	["Freeze"] = {
+
+ [BS["Rockbiter Weapon"]] = {
 		class = "SHAMAN",
 		level = 1,
 	},
-	["Glyph of Healing Wave"] = {
+ [BS["Healing Wave"]] = {
 		class = "SHAMAN",
 		level = 1,
 	},
-	["Rockbiter Weapon"] = {
+ [BS["Lightning Bolt"]] = {
 		class = "SHAMAN",
 		level = 1,
 	},
-	["Healing Wave"] = {
-		class = "SHAMAN",
-		level = 1,
-	},
-	["Lightning Bolt"] = {
-		class = "SHAMAN",
-		level = 1,
-	},
-	["Stoneskin Totem"] = {
+ [BS["Stoneskin Totem"]] = {
 		class = "SHAMAN",
 		level = 4,
 	},
-	["Earth Shock"] = {
+ [BS["Earth Shock"]] = {
 		class = "SHAMAN",
 		level = 4,
 	},
-	["Earthbind Totem"] = {
+ [BS["Earthbind Totem"]] = {
 		class = "SHAMAN",
 		level = 6,
 	},
-	["Stoneclaw Totem"] = {
+ [BS["Stoneclaw Totem"]] = {
 		class = "SHAMAN",
 		level = 8,
 	},
-	["Lightning Shield"] = {
+ [BS["Lightning Shield"]] = {
 		class = "SHAMAN",
 		level = 8,
 	},
-	["Flame Shock"] = {
+ [BS["Flame Shock"]] = {
 		class = "SHAMAN",
 		level = 10,
 	},
-	["Flametongue Weapon"] = {
+ [BS["Flametongue Weapon"]] = {
 		class = "SHAMAN",
 		level = 10,
 	},
-	["Strength of Earth Totem"] = {
+ [BS["Strength of Earth Totem"]] = {
 		class = "SHAMAN",
 		level = 10,
 	},
-	["Searing Totem"] = {
+ [BS["Searing Totem"]] = {
 		class = "SHAMAN",
 		level = 10,
 	},
-	["Ancestral Spirit"] = {
+ [BS["Ancestral Spirit"]] = {
 		class = "SHAMAN",
 		level = 12,
 	},
-	["Fire Nova Totem"] = {
+ [BS["Fire Nova Totem"]] = {
 		class = "SHAMAN",
 		level = 12,
 	},
-	["Purge"] = {
+ [BS["Purge"]] = {
 		class = "SHAMAN",
 		level = 12,
 	},
-	["Ancestral Fortitude"] = {
+ [BS["Ancestral Fortitude"]] = {
 		class = "SHAMAN",
 		level = 15,
 	},
-	["Elemental Devastation"] = {
-		class = "SHAMAN",
-		level = 15,
-	},
-	["Wind Shock"] = {
-		class = "SHAMAN",
-		level = 16,
-	},
-	["Tremor Totem"] = {
+ [BS["Tremor Totem"]] = {
 		class = "SHAMAN",
 		level = 18,
 	},
-	["Frost Shock"] = {
+ [BS["Frost Shock"]] = {
 		class = "SHAMAN",
 		level = 20,
 	},
-	["Frostbrand Weapon"] = {
+ [BS["Frostbrand Weapon"]] = {
 		class = "SHAMAN",
 		level = 20,
 	},
-	["Ghost Wolf"] = {
+ [BS["Ghost Wolf"]] = {
 		class = "SHAMAN",
 		level = 20,
 	},
-	["Tidal Force"] = {
+ [BS["Elemental Focus"]] = {
 		class = "SHAMAN",
 		level = 20,
 	},
-	["Elemental Focus"] = {
+ [BS["Lesser Healing Wave"]] = {
 		class = "SHAMAN",
 		level = 20,
 	},
-	["Lesser Healing Wave"] = {
+ [BS["Healing Stream Totem"]] = {
 		class = "SHAMAN",
 		level = 20,
 	},
-	["Healing Stream Totem"] = {
+ [BS["Water Shield"]] = {
 		class = "SHAMAN",
 		level = 20,
 	},
-	["Water Shield"] = {
-		class = "SHAMAN",
-		level = 20,
-	},
-	["Poison Cleansing Totem"] = {
+ [BS["Poison Cleansing Totem"]] = {
 		class = "SHAMAN",
 		level = 22,
 	},
-	["Water Breathing"] = {
+ [BS["Water Breathing"]] = {
 		class = "SHAMAN",
 		level = 22,
 	},
-	["Frost Resistance Totem"] = {
+ [BS["Frost Resistance Totem"]] = {
 		class = "SHAMAN",
 		level = 24,
 	},
-	["Far Sight"] = {
+ [BS["Far Sight"]] = {
 		class = "SHAMAN",
 		level = 26,
 	},
-	["Magma Totem"] = {
+ [BS["Magma Totem"]] = {
 		class = "SHAMAN",
 		level = 26,
 	},
-	["Mana Spring Totem"] = {
+ [BS["Mana Spring Totem"]] = {
 		class = "SHAMAN",
 		level = 26,
 	},
-	["Fire Resistance Totem"] = {
+ [BS["Fire Resistance Totem"]] = {
 		class = "SHAMAN",
 		level = 28,
 	},
-	["Flametongue Totem"] = {
+ [BS["Flametongue Totem"]] = {
 		class = "SHAMAN",
 		level = 28,
 	},
-	["Water Walking"] = {
+ [BS["Water Walking"]] = {
 		class = "SHAMAN",
 		level = 28,
 	},
-	["Astral Recall"] = {
+ [BS["Astral Recall"]] = {
 		class = "SHAMAN",
 		level = 30,
 	},
-	["Grounding Totem"] = {
+ [BS["Grounding Totem"]] = {
 		class = "SHAMAN",
 		level = 30,
 	},
-	["Nature Resistance Totem"] = {
+ [BS["Nature Resistance Totem"]] = {
 		class = "SHAMAN",
 		level = 30,
 	},
-	["Nature's Swiftness"] = {
+ [BS["Nature's Swiftness"]] = {
 		class = "SHAMAN",
 		level = 30,
 	},
-	["Reincarnation"] = {
+ [BS["Reincarnation"]] = {
 		class = "SHAMAN",
 		level = 30,
 	},
-	["Healing Way"] = {
+ [BS["Healing Way"]] = {
 		class = "SHAMAN",
 		level = 30,
 	},
-	["Earthliving Weapon"] = {
+ [BS["Windfury Weapon"]] = {
 		class = "SHAMAN",
 		level = 30,
 	},
-	["Windfury Weapon"] = {
-		class = "SHAMAN",
-		level = 30,
-	},
-	["Spirit Weapons"] = {
-		class = "SHAMAN",
-		level = 30,
-	},
-	["Totemic Call"] = {
-		class = "SHAMAN",
-		level = 30,
-	},
-	["Chain Lightning"] = {
+ [BS["Chain Lightning"]] = {
 		class = "SHAMAN",
 		level = 32,
 	},
-	["Windfury Totem"] = {
+ [BS["Windfury Totem"]] = {
 		class = "SHAMAN",
 		level = 32,
 	},
-	["Sentry Totem"] = {
+ [BS["Sentry Totem"]] = {
 		class = "SHAMAN",
 		level = 34,
 	},
-	["Unleashed Rage"] = {
+ [BS["Unleashed Rage"]] = {
 		class = "SHAMAN",
 		level = 35,
 	},
-	["Windwall Totem"] = {
+ [BS["Windwall Totem"]] = {
 		class = "SHAMAN",
 		level = 36,
 	},
-	["Cleansing Totem"] = {
-		class = "SHAMAN",
-		level = 38,
-	},
-	["Nature's Guardian"] = {
+  [BS["Chain Heal"]] = {
 		class = "SHAMAN",
 		level = 40,
 	},
-	["Cleanse Spirit"] = {
+ [BS["Elemental Mastery"]] = {
 		class = "SHAMAN",
 		level = 40,
 	},
-	["Chain Heal"] = {
+ [BS["Mana Tide Totem"]] = {
 		class = "SHAMAN",
 		level = 40,
 	},
-	["Elemental Mastery"] = {
+ [BS["Stormstrike"]] = {
 		class = "SHAMAN",
 		level = 40,
 	},
-	["Mana Tide Totem"] = {
-		class = "SHAMAN",
-		level = 40,
-	},
-	["Stormstrike"] = {
-		class = "SHAMAN",
-		level = 40,
-	},
-	["Grace of Air Totem"] = {
+ [BS["Grace of Air Totem"]] = {
 		class = "SHAMAN",
 		level = 42,
 	},
-	["Elemental Oath"] = {
-		class = "SHAMAN",
-		level = 45,
-	},
-	["Lava Lash"] = {
-		class = "SHAMAN",
-		level = 45,
-	},
-	["Totem of Wrath"] = {
+ [BS["Totem of Wrath"]] = {
 		class = "SHAMAN",
 		level = 50,
 	},
-	["Shamanistic Rage"] = {
+ [BS["Shamanistic Rage"]] = {
 		class = "SHAMAN",
 		level = 50,
 	},
-	["Earth Shield"] = {
+ [BS["Earth Shield"]] = {
 		class = "SHAMAN",
 		level = 50,
 	},
-	["Tranquil Air Totem"] = {
+ [BS["Tranquil Air Totem"]] = {
 		class = "SHAMAN",
 		level = 50,
 	},
-	["Maelstrom Weapon"] = {
-		class = "SHAMAN",
-		level = 55,
-	},
-	["Feral Spirit"] = {
-		class = "SHAMAN",
-		level = 60,
-	},
-	["Riptide"] = {
-		class = "SHAMAN",
-		level = 60,
-	},
-	["Thunderstorm"] = {
-		class = "SHAMAN",
-		level = 60,
-	},
-	
 
---== Warlock == 
+	--== Warlock ==
 
-	["Challenging Howl"] = {
+ [BS["Blood Pact"]] = {
 		class = "WARLOCK",
 		level = 1,
 	},
-	["Blood Pact"] = {
+ [BS["Immolate"]] = {
 		class = "WARLOCK",
 		level = 1,
 	},
-	["Immolate"] = {
+ [BS["Summon Imp"]] = {
 		class = "WARLOCK",
 		level = 1,
 	},
-	["Summon Imp"] = {
+ [BS["Demon Skin"]] = {
 		class = "WARLOCK",
 		level = 1,
 	},
-	["Demon Skin"] = {
+ [BS["Shadow Bolt"]] = {
 		class = "WARLOCK",
 		level = 1,
 	},
-	["Shadow Bolt"] = {
-		class = "WARLOCK",
-		level = 1,
-	},
-	["Corruption"] = {
+ [BS["Corruption"]] = {
 		class = "WARLOCK",
 		level = 4,
 	},
-	["Curse of Weakness"] = {
+ [BS["Curse of Weakness"]] = {
 		class = "WARLOCK",
 		level = 4,
 	},
-	["Life Tap"] = {
+ [BS["Life Tap"]] = {
 		class = "WARLOCK",
 		level = 6,
 	},
-	["Curse of Agony"] = {
+ [BS["Curse of Agony"]] = {
 		class = "WARLOCK",
 		level = 8,
 	},
-	["Fear"] = {
+ [BS["Fear"]] = {
 		class = "WARLOCK",
 		level = 8,
 	},
-	["Create Healthstone"] = {
+ [BS["Create Healthstone"]] = {
 		class = "WARLOCK",
 		level = 10,
 	},
-	["Summon Voidwalker"] = {
+ [BS["Summon Voidwalker"]] = {
 		class = "WARLOCK",
 		level = 10,
 	},
-	["Drain Soul"] = {
+ [BS["Drain Soul"]] = {
 		class = "WARLOCK",
 		level = 10,
 	},
-	["Shadow Vulnerability"] = {
+ [BS["Shadow Vulnerability"]] = {
 		class = "WARLOCK",
 		level = 10,
 	},
-	["Health Funnel"] = {
+ [BS["Health Funnel"]] = {
 		class = "WARLOCK",
 		level = 12,
 	},
-	["Curse of Recklessness"] = {
+ [BS["Curse of Recklessness"]] = {
 		class = "WARLOCK",
 		level = 14,
 	},
-	["Drain Life"] = {
+ [BS["Drain Life"]] = {
 		class = "WARLOCK",
 		level = 14,
 	},
-	["Unending Breath"] = {
+ [BS["Unending Breath"]] = {
 		class = "WARLOCK",
 		level = 16,
 	},
-	["Create Soulstone"] = {
+ [BS["Create Soulstone"]] = {
 		class = "WARLOCK",
 		level = 18,
 	},
-	["Searing Pain"] = {
+ [BS["Searing Pain"]] = {
 		class = "WARLOCK",
 		level = 18,
 	},
-	["Demon Armor"] = {
+ [BS["Demon Armor"]] = {
 		class = "WARLOCK",
 		level = 20,
 	},
-	["Amplify Curse"] = {
+ [BS["Amplify Curse"]] = {
 		class = "WARLOCK",
 		level = 20,
 	},
-	["Fel Domination"] = {
+ [BS["Fel Domination"]] = {
 		class = "WARLOCK",
 		level = 20,
 	},
-	["Rain of Fire"] = {
+ [BS["Rain of Fire"]] = {
 		class = "WARLOCK",
 		level = 20,
 	},
-	["Ritual of Summoning"] = {
+ [BS["Ritual of Summoning"]] = {
 		class = "WARLOCK",
 		level = 20,
 	},
-	["Shadowburn"] = {
+ [BS["Shadowburn"]] = {
 		class = "WARLOCK",
 		level = 20,
 	},
-	["Summon Succubus"] = {
+ [BS["Summon Succubus"]] = {
 		class = "WARLOCK",
 		level = 20,
 	},
-	["Soul Link"] = {
+ [BS["Soul Link"]] = {
 		class = "WARLOCK",
 		level = 20,
 	},
-	["Eye of Kilrogg"] = {
+ [BS["Eye of Kilrogg"]] = {
 		class = "WARLOCK",
 		level = 22,
 	},
-	["Sense Demons"] = {
+ [BS["Sense Demons"]] = {
 		class = "WARLOCK",
 		level = 24,
 	},
-	["Drain Mana"] = {
+ [BS["Drain Mana"]] = {
 		class = "WARLOCK",
 		level = 24,
 	},
-	["Shadow Trance"] = {
+ [BS["Shadow Trance"]] = {
 		class = "WARLOCK",
 		level = 25,
 	},
-	["Detect Invisibility"] = {
+ [BS["Detect Invisibility"]] = {
 		class = "WARLOCK",
 		level = 26,
 	},
-	["Curse of Tongues"] = {
+ [BS["Curse of Tongues"]] = {
 		class = "WARLOCK",
 		level = 26,
 	},
-	["Banish"] = {
+ [BS["Banish"]] = {
 		class = "WARLOCK",
 		level = 28,
 	},
-	["Create Firestone"] = {
+ [BS["Create Firestone"]] = {
 		class = "WARLOCK",
 		level = 28,
 	},
-	["Curse of Exhaustion"] = {
+ [BS["Curse of Exhaustion"]] = {
 		class = "WARLOCK",
 		level = 30,
 	},
-	["Demonic Sacrifice"] = {
+ [BS["Demonic Sacrifice"]] = {
 		class = "WARLOCK",
 		level = 30,
 	},
-	["Enslave Demon"] = {
+ [BS["Enslave Demon"]] = {
 		class = "WARLOCK",
 		level = 30,
 	},
-	["Summon Felsteed"] = {
+ [BS["Summon Felsteed"]] = {
 		class = "WARLOCK",
 		level = 30,
 	},
-	["Felsteed"] = {
+ [BS["Hellfire"]] = {
 		class = "WARLOCK",
 		level = 30,
 	},
-	["Hellfire"] = {
+ [BS["Siphon Life"]] = {
 		class = "WARLOCK",
 		level = 30,
 	},
-	["Siphon Life"] = {
+ [BS["Summon Felhunter"]] = {
 		class = "WARLOCK",
 		level = 30,
 	},
-	["Summon Felhunter"] = {
+ [BS["Backlash"]] = {
 		class = "WARLOCK",
 		level = 30,
 	},
-	["Backlash"] = {
-		class = "WARLOCK",
-		level = 30,
-	},
-	["Shadow Embrace"] = {
-		class = "WARLOCK",
-		level = 30,
-	},
-	["Curse of the Elements"] = {
+ [BS["Curse of the Elements"]] = {
 		class = "WARLOCK",
 		level = 32,
 	},
-	["Shadow Ward"] = {
+ [BS["Shadow Ward"]] = {
 		class = "WARLOCK",
 		level = 32,
 	},
-	["Master Demonologist"] = {
+ [BS["Master Demonologist"]] = {
 		class = "WARLOCK",
 		level = 35,
 	},
-	["Molten Core"] = {
-		class = "WARLOCK",
-		level = 35,
-	},
-	["Nether Protection"] = {
-		class = "WARLOCK",
-		level = 35,
-	},
-	["Create Spellstone"] = {
+ [BS["Create Spellstone"]] = {
 		class = "WARLOCK",
 		level = 36,
 	},
-	["Howl of Terror"] = {
+ [BS["Howl of Terror"]] = {
 		class = "WARLOCK",
 		level = 40,
 	},
-	["Eradication"] = {
+ [BS["Pyroclasm"]] = {
 		class = "WARLOCK",
 		level = 40,
 	},
-	["Pyroclasm"] = {
+ [BS["Conflagrate"]] = {
 		class = "WARLOCK",
 		level = 40,
 	},
-	["Demonic Empowerment"] = {
+ [BS["Dark Pact"]] = {
 		class = "WARLOCK",
 		level = 40,
 	},
-	["Demonic Knowledge"] = {
-		class = "WARLOCK",
-		level = 40,
-	},
-	["Conflagrate"] = {
-		class = "WARLOCK",
-		level = 40,
-	},
-	["Dark Pact"] = {
-		class = "WARLOCK",
-		level = 40,
-	},
-	["Soul Leech"] = {
-		class = "WARLOCK",
-		level = 40,
-	},
-	["Curse of Shadow"] = {
+ [BS["Curse of Shadow"]] = {
 		class = "WARLOCK",
 		level = 44,
 	},
-	["Decimation"] = {
-		class = "WARLOCK",
-		level = 45,
-	},
-	["Improved Soul Leech"] = {
-		class = "WARLOCK",
-		level = 45,
-	},
-	["Soul Fire"] = {
+ [BS["Soul Fire"]] = {
 		class = "WARLOCK",
 		level = 48,
 	},
-	["Inferno"] = {
+ [BS["Inferno"]] = {
 		class = "WARLOCK",
 		level = 50,
 	},
-	["Backdraft"] = {
+ [BS["Summon Felguard"]] = {
 		class = "WARLOCK",
 		level = 50,
 	},
-	["Summon Felguard"] = {
+ [BS["Unstable Affliction"]] = {
 		class = "WARLOCK",
 		level = 50,
 	},
-	["Unstable Affliction"] = {
+ [BS["Shadowfury"]] = {
 		class = "WARLOCK",
 		level = 50,
 	},
-	["Shadowfury"] = {
-		class = "WARLOCK",
-		level = 50,
-	},
-	["Ritual of Doom"] = {
+ [BS["Ritual of Doom"]] = {
 		class = "WARLOCK",
 		level = 60,
 	},
-	["Curse of Doom"] = {
+ [BS["Curse of Doom"]] = {
 		class = "WARLOCK",
 		level = 60,
 	},
-	["Demonic Charge"] = {
+ [BS["Summon Dreadsteed"]] = {
 		class = "WARLOCK",
 		level = 60,
 	},
-	["Immolation Aura"] = {
-		class = "WARLOCK",
-		level = 60,
-	},
-	["Shadow Cleave"] = {
-		class = "WARLOCK",
-		level = 60,
-	},
-	["Summon Dreadsteed"] = {
-		class = "WARLOCK",
-		level = 60,
-	},
-	
 
---== Warrior == 
 
-	["Battle Shout"] = {
+	--== Warrior ==
+
+ [BS["Battle Shout"]] = {
 		class = "WARRIOR",
 		level = 1,
 	},
-	["Heroic Strike"] = {
+ [BS["Heroic Strike"]] = {
 		class = "WARRIOR",
 		level = 1,
 	},
-	["Battle Stance"] = {
+ [BS["Battle Stance"]] = {
 		class = "WARRIOR",
 		level = 1,
 	},
-	["Rend"] = {
+ [BS["Rend"]] = {
 		class = "WARRIOR",
 		level = 4,
 	},
-	["Charge"] = {
+ [BS["Charge"]] = {
 		class = "WARRIOR",
 		level = 4,
 	},
-	["Thunder Clap"] = {
+ [BS["Thunder Clap"]] = {
 		class = "WARRIOR",
 		level = 6,
 	},
-	["Hamstring"] = {
+ [BS["Hamstring"]] = {
 		class = "WARRIOR",
 		level = 8,
 	},
-	["Sunder Armor"] = {
+ [BS["Sunder Armor"]] = {
 		class = "WARRIOR",
 		level = 10,
 	},
-	["Bloodrage"] = {
+ [BS["Bloodrage"]] = {
 		class = "WARRIOR",
 		level = 10,
 	},
-	["Taunt"] = {
+ [BS["Taunt"]] = {
 		class = "WARRIOR",
 		level = 10,
 	},
-	["Defensive Stance"] = {
+ [BS["Defensive Stance"]] = {
 		class = "WARRIOR",
 		level = 10,
 	},
-	["Shield Bash"] = {
+ [BS["Shield Bash"]] = {
 		class = "WARRIOR",
 		level = 12,
 	},
-	["Overpower"] = {
+ [BS["Overpower"]] = {
 		class = "WARRIOR",
 		level = 12,
 	},
-	["Demoralizing Shout"] = {
+ [BS["Demoralizing Shout"]] = {
 		class = "WARRIOR",
 		level = 14,
 	},
-	["Revenge"] = {
+ [BS["Revenge"]] = {
 		class = "WARRIOR",
 		level = 14,
 	},
-	["Shield Specialization"] = {
+ [BS["Shield Specialization"]] = {
 		class = "WARRIOR",
 		level = 10,
 	},
-	["Unbridled Wrath"] = {
+ [BS["Unbridled Wrath"]] = {
 		class = "WARRIOR",
 		level = 15,
 	},
-	["Mocking Blow"] = {
+ [BS["Mocking Blow"]] = {
 		class = "WARRIOR",
 		level = 16,
 	},
-	["Shield Block"] = {
+ [BS["Shield Block"]] = {
 		class = "WARRIOR",
 		level = 16,
 	},
-	["Disarm"] = {
+ [BS["Disarm"]] = {
 		class = "WARRIOR",
 		level = 18,
 	},
-	["Piercing Howl"] = {
+ [BS["Piercing Howl"]] = {
 		class = "WARRIOR",
 		level = 20,
 	},
-	["Retaliation"] = {
+ [BS["Retaliation"]] = {
 		class = "WARRIOR",
 		level = 20,
 	},
-	["Blood Craze"] = {
+ [BS["Blood Craze"]] = {
 		class = "WARRIOR",
 		level = 20,
 	},
-	["Cleave"] = {
+ [BS["Cleave"]] = {
 		class = "WARRIOR",
 		level = 20,
 	},
-	["Last Stand"] = {
+ [BS["Last Stand"]] = {
 		class = "WARRIOR",
 		level = 20,
 	},
-	["Deep Wound"] = {
+ [BS["Deep Wound"]] = {
 		class = "WARRIOR",
 		level = 20,
 	},
-	["Intimidating Shout"] = {
+ [BS["Intimidating Shout"]] = {
 		class = "WARRIOR",
 		level = 22,
 	},
-	["Execute"] = {
+ [BS["Execute"]] = {
 		class = "WARRIOR",
 		level = 24,
 	},
-	["Challenging Shout"] = {
+ [BS["Challenging Shout"]] = {
 		class = "WARRIOR",
 		level = 26,
 	},
-	["Shield Wall"] = {
+ [BS["Shield Wall"]] = {
 		class = "WARRIOR",
 		level = 28,
 	},
-	["Concussion Blow"] = {
+ [BS["Concussion Blow"]] = {
 		class = "WARRIOR",
 		level = 30,
 	},
-	["Death Wish"] = {
+ [BS["Death Wish"]] = {
 		class = "WARRIOR",
 		level = 30,
 	},
-	["Intercept"] = {
+ [BS["Intercept"]] = {
 		class = "WARRIOR",
 		level = 30,
 	},
-	["Slam"] = {
+ [BS["Slam"]] = {
 		class = "WARRIOR",
 		level = 30,
 	},
-	["Sweeping Strikes"] = {
+ [BS["Sweeping Strikes"]] = {
 		class = "WARRIOR",
 		level = 30,
 	},
-	["Berserker Stance"] = {
+ [BS["Berserker Stance"]] = {
 		class = "WARRIOR",
 		level = 30,
 	},
-	["Berserker Rage"] = {
+ [BS["Berserker Rage"]] = {
 		class = "WARRIOR",
 		level = 32,
 	},
-	["Whirlwind"] = {
+ [BS["Whirlwind"]] = {
 		class = "WARRIOR",
 		level = 36,
 	},
-	["Pummel"] = {
+ [BS["Pummel"]] = {
 		class = "WARRIOR",
 		level = 38,
 	},
-	["Shield Slam"] = {
+ [BS["Shield Slam"]] = {
 		class = "WARRIOR",
 		level = 40,
 	},
-	["Mortal Strike"] = {
+ [BS["Mortal Strike"]] = {
 		class = "WARRIOR",
 		level = 40,
 	},
-	["Bloodthirst"] = {
+ [BS["Bloodthirst"]] = {
 		class = "WARRIOR",
 		level = 40,
 	},
-	["Recklessness"] = {
+ [BS["Recklessness"]] = {
 		class = "WARRIOR",
 		level = 50,
 	},
