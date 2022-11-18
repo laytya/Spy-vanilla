@@ -293,10 +293,16 @@ end
 function Spy:UpdatePlayerData(name, class, level, race, guild, isEnemy, isGuess)
 	local detected = true
 	local playerData = SpyPerCharDB.PlayerData[name]
+	if Spy:PlayerIsFriend(name) then
+		if playerData then
+			Spy:RemovePlayerData(name)
+		end
+		return
+	end
 	if not playerData then
 		playerData = Spy:AddPlayerData(name, class, level, race, guild, isEnemy, isGuess)
 	else
-		if name ~= nil then playerData.name = name end --++ added to merge addons
+		if name ~= nil then playerData.name = name end 
 		if class ~= nil then playerData.class = class end
 		if type(level) == "number" then playerData.level = level end
 		if race ~= nil then playerData.race = race end
@@ -421,6 +427,9 @@ function Spy:SetKOSReason(name, reason, other)
 end
 
 function Spy:AlertPlayer(player, source)
+	if Spy:PlayerIsFriend(player) then
+		return
+	end
 	local playerData = SpyPerCharDB.PlayerData[player]
 	if SpyPerCharDB.KOSData[player] and Spy.db.profile.WarnOnKOS then
 		--if Spy.db.profile.DisplayWarningsInErrorsFrame then

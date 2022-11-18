@@ -2030,6 +2030,17 @@ function Spy:GetCensusData()
 	end
 end
 
+local function scanName(name)
+	if UnitName("target") == nil then 
+		printT({"scanName", name})
+		Spy.scanningPlayers = true
+		TargetByName(name, true)
+		Spy:PlayerTargetEvent()
+		ClearTarget()
+		Spy.scanningPlayers = nil
+	end
+end
+
 function Spy:PlayerTargetEvent()
 	local name = GetUnitName("target", true)
 	if name and UnitIsPlayer("target") and not SpyPerCharDB.IgnoreData[name] then
@@ -2056,19 +2067,18 @@ function Spy:PlayerTargetEvent()
 					guess = true
 					level = UnitLevel("player") + 10
 				end
---			else
---				guess = true
---				level = nil
 			end
 
 			Spy:UpdatePlayerData(name, class, level, race, guild, true, guess)
 			if Spy.EnabledInZone then
 				Spy:AddDetected(name, time(), learnt)
 			end
-		elseif playerData then
+		else
 			Spy:AddFriendsData(name)
+			if playerData then
 			Spy:RemovePlayerFromList(name)
 			Spy:RemovePlayerData(name)
+		end
 		end
 	else
 		Spy:RemovePlayerFromList(name)
@@ -2102,19 +2112,18 @@ function Spy:PlayerMouseoverEvent()
 					guess = true
 					level = UnitLevel("player") + 10
 				end
---			else
---				guess = true
---				level = nil
 			end
 
 			Spy:UpdatePlayerData(name, class, level, race, guild, true, guess)
 			if Spy.EnabledInZone then
 				Spy:AddDetected(name, time(), learnt)
 			end
-		elseif playerData then
+		else
 			Spy:AddFriendsData(name)
+			if playerData then
 			Spy:RemovePlayerFromList(name)
 			Spy:RemovePlayerData(name)
+		end
 		end
 	else
 		Spy:RemovePlayerFromList(name)
@@ -2132,14 +2141,17 @@ function Spy:CombatLogEvent(event, info ) --_, timestamp, event, srcGUID, srcNam
 	local source = info.source and (info.source == ParserLib_SELF and playerName or info.source) or nil
 	local victim = info.victim and (info.victim == ParserLib_SELF and playerName or info.victim) or nil
 		
+	
+	printT({"CombatLogEvent", event, info})
+	if Spy.EnabledInZone then
 	if event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" then
 		if (info.skill == BS["Stealth"] or info.skill == BS["Prowl"]) and not Spy:PlayerIsFriend(victim) then
+				scanName(victim)
 			Spy:AlertStealthPlayer(victim)
 		end
 		return
 	end
-	--printT({"CombatLogEvent", event, info})
-	if Spy.EnabledInZone then
+
 		-- analyse the source unit
 		if source and source ~= playerName and  not Spy:PlayerIsFriend(source) and not SpyPerCharDB.IgnoreData[source] and not find(source," ") and not find(source,"Unknown") then
 			
@@ -2150,7 +2162,8 @@ function Spy:CombatLogEvent(event, info ) --_, timestamp, event, srcGUID, srcNam
 				learnt, playerData = Spy:ParseUnitAbility(true, info.type, source, info.skill)
 			end
 			if not learnt then
-				detected = Spy:UpdatePlayerData(info.source, nil, nil, nil, nil, true, nil)
+				scanName(source)
+				detected = Spy:UpdatePlayerData(source, nil, nil, nil, nil, true, nil)
 			end
 
 			if detected then
@@ -2158,7 +2171,7 @@ function Spy:CombatLogEvent(event, info ) --_, timestamp, event, srcGUID, srcNam
 				
 			end
 
-			if info.victim == playerName then
+			if victim == playerName then
 				Spy.LastAttack = info.source
 			end
 		
@@ -2173,12 +2186,12 @@ function Spy:CombatLogEvent(event, info ) --_, timestamp, event, srcGUID, srcNam
 				learnt, playerData = Spy:ParseUnitAbility(not source, info.type,  victim,  info.skill)
 			end
 			if not learnt then
+				scanName(victim)
 				detected = Spy:UpdatePlayerData(victim, nil, nil, nil, nil, true, nil)
 			end
 
 			if detected then
 				Spy:AddDetected(victim, time(), learnt)
-				
 			end
 		end
 	end
