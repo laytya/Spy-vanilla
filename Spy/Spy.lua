@@ -2032,7 +2032,6 @@ end
 
 local function scanName(name)
 	if UnitName("target") == nil then 
-		printT({"scanName", name})
 		Spy.scanningPlayers = true
 		TargetByName(name, true)
 		Spy:PlayerTargetEvent()
@@ -2142,7 +2141,7 @@ function Spy:CombatLogEvent(event, info ) --_, timestamp, event, srcGUID, srcNam
 	local victim = info.victim and (info.victim == ParserLib_SELF and playerName or info.victim) or nil
 		
 	
-	printT({"CombatLogEvent", event, info})
+
 	if Spy.EnabledInZone then
 	if event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" then
 		if (info.skill == BS["Stealth"] or info.skill == BS["Prowl"]) and not Spy:PlayerIsFriend(victim) then
