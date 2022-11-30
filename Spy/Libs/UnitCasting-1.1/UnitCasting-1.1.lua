@@ -308,7 +308,7 @@ local newIBuff = function(caster, buff)
 end
 
 local function manageDR(time, tar, b, castOn)
-	if not uc.BuffsToTrack[b]['dr'] then return 1 end
+	if not uc.BuffsToTrack[b] or not uc.BuffsToTrack[b]['dr'] then return 1 end
 
 	for k, v in pairs(dreturnsList) do
 		if v.target == tar and v.type == uc.BuffsToTrack[b]['dr'] then
