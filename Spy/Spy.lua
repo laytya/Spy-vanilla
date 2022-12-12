@@ -43,11 +43,11 @@ Spy.initTimer = ""
 Spy.Skull = -1
 
 -- Localizations for xml
-L_STATS = "Spy "..L["Statistics"]
+L_STATS = "Spy " .. L["Statistics"]
 L_LIST = L["List"]
 L_TIME = L["Time"]
-L_FILTER = FILTER..":"
-L_SHOWONLY = L["Show Only"]..":"
+L_FILTER = FILTER .. ":"
+L_SHOWONLY = L["Show Only"] .. ":"
 
 Spy.options = {
 	name = L["Spy"],
@@ -64,7 +64,7 @@ Spy.options = {
 					type = "description",
 					order = 1,
 					fontSize = "medium",
-				},	
+				},
 				intro2 = {
 					name = L["SpyDescription2"],
 					type = "description",
@@ -137,11 +137,11 @@ Spy.options = {
 					desc = L["DisabledInZonesDescription"],
 					type = "multiselect",
 					order = 6,
-					get = function(info, key) 
-						return Spy.db.profile.FilteredZones[key] 
+					get = function(info, key)
+						return Spy.db.profile.FilteredZones[key]
 					end,
-					set = function(info, key, value) 
-						Spy.db.profile.FilteredZones[key] = value 
+					set = function(info, key, value)
+						Spy.db.profile.FilteredZones[key] = value
 					end,
 					values = {
 						["Booty Bay"] = L["Booty Bay"],
@@ -241,7 +241,8 @@ Spy.options = {
 					min = 0, max = 1, step = 0.01,
 					isPercent = true,
 					get = function()
-						return Spy.db.profile.MainWindow.Alpha end,
+						return Spy.db.profile.MainWindow.Alpha
+					end,
 					set = function(info, value)
 						Spy.db.profile.MainWindow.Alpha = value
 						Spy:UpdateMainWindow()
@@ -257,7 +258,8 @@ Spy.options = {
 					min = 0, max = 1, step = 0.01,
 					isPercent = true,
 					get = function()
-						return Spy.db.profile.MainWindow.AlphaBG end,
+						return Spy.db.profile.MainWindow.AlphaBG
+					end,
 					set = function(info, value)
 						Spy.db.profile.MainWindow.AlphaBG = value
 						Spy:UpdateMainWindow()
@@ -269,7 +271,7 @@ Spy.options = {
 					type = "toggle",
 					order = 6,
 					width = "normal",
-					get = function(info) 
+					get = function(info)
 						return Spy.db.profile.Locked
 					end,
 					set = function(info, value)
@@ -284,7 +286,7 @@ Spy.options = {
 					type = "toggle",
 					order = 7,
 					width = "normal",
-					get = function(info) 
+					get = function(info)
 						return Spy.db.profile.ClampToScreen
 					end,
 					set = function(info, value)
@@ -330,7 +332,7 @@ Spy.options = {
 						if value then Spy:RefreshCurrentList() end
 					end,
 				},
-				ResizeSpyLimit = {  
+				ResizeSpyLimit = {
 					type = "range",
 					order = 11,
 					name = L["ResizeSpyLimit"],
@@ -339,10 +341,10 @@ Spy.options = {
 					get = function() return Spy.db.profile.ResizeSpyLimit end,
 					set = function(info, value)
 						Spy.db.profile.ResizeSpyLimit = value
-						if value then 
+						if value then
 							Spy:ResizeMainWindow()
-							Spy:RefreshCurrentList() 
-						end	
+							Spy:RefreshCurrentList()
+						end
 					end,
 				},
 				DisplayListData = {
@@ -350,10 +352,10 @@ Spy.options = {
 					type = 'select',
 					order = 12,
 					values = {
-						["NameLevelClass"] = L["Name"].." / "..L["Level"].." / "..L["Class"],
-						["NameLevelGuild"] = L["Name"].." / "..L["Level"].." / "..L["Guild"],
-						["NameLevelOnly"] = L["Name"].." / "..L["Level"],
-						["NameGuild"] = L["Name"].." / "..L["Guild"],
+						["NameLevelClass"] = L["Name"] .. " / " .. L["Level"] .. " / " .. L["Class"],
+						["NameLevelGuild"] = L["Name"] .. " / " .. L["Level"] .. " / " .. L["Guild"],
+						["NameLevelOnly"] = L["Name"] .. " / " .. L["Level"],
+						["NameGuild"] = L["Name"] .. " / " .. L["Guild"],
 						["NameOnly"] = L["Name"],
 					},
 					get = function()
@@ -361,7 +363,7 @@ Spy.options = {
 					end,
 					set = function(info, value)
 						Spy.db.profile.DisplayListData = value
-						Spy:RefreshCurrentList() 
+						Spy:RefreshCurrentList()
 					end,
 				},
 				SelectFont = {
@@ -385,8 +387,8 @@ Spy.options = {
 				RowHeight = {
 					type = "range",
 					order = 14,
-					name = L["RowHeight"], 
-					desc = L["RowHeightDescription"], 
+					name = L["RowHeight"],
+					desc = L["RowHeightDescription"],
 					min = 8, max = 20, step = 1,
 					get = function()
 						return Spy.db.profile.MainWindow.RowHeight
@@ -402,7 +404,7 @@ Spy.options = {
 					type = "select",
 					order = 15,
 					name = L["Texture"],
-					desc = L["TextureDescription"],	
+					desc = L["TextureDescription"],
 					dialogControl = "LSM30_Statusbar",
 					width = "double",
 					values = SM:HashTable("statusbar"),
@@ -426,18 +428,18 @@ Spy.options = {
 					set = function(info, value)
 						Spy.db.profile.DisplayTooltipNearSpyWindow = value
 					end,
-				},	
+				},
 				SelectTooltipAnchor = {
 					type = "select",
 					order = 17,
 					name = L["SelectTooltipAnchor"],
 					desc = L["SelectTooltipAnchorDescription"],
-					values = { 
+					values = {
 						["ANCHOR_CURSOR"] = L["ANCHOR_CURSOR"],
 						["ANCHOR_TOP"] = L["ANCHOR_TOP"],
 						["ANCHOR_BOTTOM"] = L["ANCHOR_BOTTOM"],
 						["ANCHOR_LEFT"] = L["ANCHOR_LEFT"],
-						["ANCHOR_RIGHT"] = L["ANCHOR_RIGHT"], 
+						["ANCHOR_RIGHT"] = L["ANCHOR_RIGHT"],
 					},
 					get = function()
 						return Spy.db.profile.TooltipAnchor
@@ -520,12 +522,12 @@ Spy.options = {
 						["SFX"] = L["SFX"],
 						["Music"] = L["Music"],
 						["Ambience"] = L["Ambience"],
-					},					
+					},
 					get = function()
 						return Spy.db.profile.SoundChannel
 					end,
 					set = function(info, value)
-						Spy.db.profile.SoundChannel = value 
+						Spy.db.profile.SoundChannel = value
 					end,
 				},
 				OnlySoundKoS = {
@@ -747,10 +749,10 @@ Spy.options = {
 						}
 						if Spy.EnemyFactionName == "Alliance" then
 							raceOptions = races.Alliance
-						end	
+						end
 						if Spy.EnemyFactionName == "Horde" then
 							raceOptions = races.Horde
-						end	
+						end
 						return raceOptions
 					end,
 				},
@@ -1127,7 +1129,7 @@ Spy.options = {
 					name = L["Get Census Data"],
 					desc = L["GetCensusData"],
 					type = 'execute',
-					
+
 					order = 13,
 					func = function()
 						Spy:GetCensusData()
@@ -1170,7 +1172,7 @@ Spy.optionsSlash = {
 				Spy:EnableSpy(false, true)
 			end,
 			dialogHidden = true
-		},		
+		},
 		reset = {
 			name = L["Reset"],
 			desc = L["ResetDescription"],
@@ -1206,13 +1208,13 @@ Spy.optionsSlash = {
 			desc = L["KOSDescription"],
 			type = 'input',
 			order = 7,
-			pattern = ".",	-- Changed so names with special characters can be added
+			pattern = ".", -- Changed so names with special characters can be added
 			set = function(info, value)
 				if Spy_IgnoreList[value] or strmatch(value, "[%s%d]+") then
 					DEFAULT_CHAT_FRAME:AddMessage(value .. " - " .. L["InvalidInput"])
 				else
-				Spy:ToggleKOSPlayer(not SpyPerCharDB.KOSData[value], value)
-				end	
+					Spy:ToggleKOSPlayer(not SpyPerCharDB.KOSData[value], value)
+				end
 			end,
 			dialogHidden = true
 		},
@@ -1226,7 +1228,7 @@ Spy.optionsSlash = {
 				if Spy_IgnoreList[value] or strmatch(value, "[%s%d]+") then
 					DEFAULT_CHAT_FRAME:AddMessage(value .. " - " .. L["InvalidInput"])
 				else
-				Spy:ToggleIgnorePlayer(not SpyPerCharDB.IgnoreData[value], value)
+					Spy:ToggleIgnorePlayer(not SpyPerCharDB.IgnoreData[value], value)
 				end
 			end,
 			dialogHidden = true
@@ -1258,12 +1260,12 @@ local Default_Profile = {
 		Colors = {
 			["Window"] = {
 				["Title"] = { r = 1, g = 1, b = 1, a = 1 },
-				["Background"]= { r = 24/255, g = 24/255, b = 24/255, a = 1 },
+				["Background"] = { r = 24 / 255, g = 24 / 255, b = 24 / 255, a = 1 },
 				["Title Text"] = { r = 1, g = 1, b = 1, a = 1 },
 			},
 			["Other Windows"] = {
 				["Title"] = { r = 1, g = 0, b = 0, a = 1 },
-				["Background"]= { r = 24/255, g = 24/255, b = 24/255, a = 1 },
+				["Background"] = { r = 24 / 255, g = 24 / 255, b = 24 / 255, a = 1 },
 				["Title Text"] = { r = 1, g = 1, b = 1, a = 1 },
 			},
 			["Bar"] = {
@@ -1279,7 +1281,7 @@ local Default_Profile = {
 				["Reason Text"] = { r = 1, g = 0, b = 0 },
 			},
 			["Alert"] = {
-				["Background"]= { r = 0, g = 0, b = 0, a = 0.4 },
+				["Background"] = { r = 0, g = 0, b = 0, a = 0.4 },
 				["Icon"] = { r = 1, g = 1, b = 1, a = 0.5 },
 				["KOS Border"] = { r = 1, g = 0, b = 0, a = 0.4 },
 				["KOS Text"] = { r = 1, g = 0, b = 0 },
@@ -1310,90 +1312,90 @@ local Default_Profile = {
 				["UNGROUPED"] = { r = 0.63, g = 0.58, b = 0.24, a = 0.6 },
 			},
 		},
-		MainWindow={
-			Alpha=1,
-			AlphaBG=1,
-			Buttons={
-				ClearButton=true,
-				LeftButton=true,
-				RightButton=true,
+		MainWindow = {
+			Alpha = 1,
+			AlphaBG = 1,
+			Buttons = {
+				ClearButton = true,
+				LeftButton = true,
+				RightButton = true,
 			},
-			RowHeight=14,
-			RowSpacing=2,
-			TextHeight=12,
-			AutoHide=true,
-			BarText={
+			RowHeight = 14,
+			RowSpacing = 2,
+			TextHeight = 12,
+			AutoHide = true,
+			BarText = {
 				RankNum = true,
 				PerSec = true,
 				Percent = true,
 				NumFormat = 1,
 			},
-			Position={
+			Position = {
 				x = 4,
 				y = 740,
 				w = 160,
 				h = 34,
 			},
 		},
-		AlertWindow={
-			Position={
---				x = 0,
---				y = -140,
+		AlertWindow = {
+			Position = {
+				--				x = 0,
+				--				y = -140,
 				x = 750,
 				y = 750,
 			},
-			NameSize=14,
-			LocationSize=10,
+			NameSize = 14,
+			LocationSize = 10,
 		},
-		AlertWindowNameSize=14,
-		AlertWindowLocationSize=10,
-		BarTexture="Minimalist",
-		MainWindowVis=true,
-		CurrentList=1,
-		Locked=false,
-		Font="Friz Quadrata TT",
-		Scaling=1,
-		Enabled=true,
-		EnabledInBattlegrounds=true,
-		DisableWhenPVPUnflagged=false,
-		MinimapDetection=false,
-		MinimapDetails=true,
-		DisplayOnMap=true,
-		SwitchToZone=false,
-		MapDisplayLimit="SameZone",
-		DisplayTooltipNearSpyWindow=false,
-		TooltipAnchor="ANCHOR_CURSOR",
-		DisplayWinLossStatistics=true,
-		DisplayKOSReason=true,
-		DisplayLastSeen=true,
-		DisplayListData="NameLevelClass",
-		ShowOnDetection=true,
-		HideSpy=false,
-		ShowKoSButton=false,
-		InvertSpy=false,
-		ResizeSpy=true,
-		ResizeSpyLimit=15,
-		SoundChannel="SFX",
-		Announce="None",
-		OnlyAnnounceKoS=false,
-		WarnOnStealth=true,
-		WarnOnKOS=true,
-		WarnOnKOSGuild=false,
-		WarnOnRace=false,
-		SelectWarnRace="None",
-		DisplayWarnings="Default",
-		EnableSound=true,
-		OnlySoundKoS=false, 
-		StopAlertsOnTaxi=true,
-		RemoveUndetected="OneMinute",
-		ShowNearbyList=true,
-		PrioritiseKoS=true,
-		PurgeData="NinetyDays",
-		PurgeKoS=false,
-		PurgeWinLossData=false,
-		ShareData=false,
-		UseData=false,
-		ShareKOSBetweenCharacters=true,
+		AlertWindowNameSize = 14,
+		AlertWindowLocationSize = 10,
+		BarTexture = "Minimalist",
+		MainWindowVis = true,
+		CurrentList = 1,
+		Locked = false,
+		Font = "Friz Quadrata TT",
+		Scaling = 1,
+		Enabled = true,
+		EnabledInBattlegrounds = true,
+		DisableWhenPVPUnflagged = false,
+		MinimapDetection = false,
+		MinimapDetails = true,
+		DisplayOnMap = true,
+		SwitchToZone = false,
+		MapDisplayLimit = "SameZone",
+		DisplayTooltipNearSpyWindow = false,
+		TooltipAnchor = "ANCHOR_CURSOR",
+		DisplayWinLossStatistics = true,
+		DisplayKOSReason = true,
+		DisplayLastSeen = true,
+		DisplayListData = "NameLevelClass",
+		ShowOnDetection = true,
+		HideSpy = false,
+		ShowKoSButton = false,
+		InvertSpy = false,
+		ResizeSpy = true,
+		ResizeSpyLimit = 15,
+		SoundChannel = "SFX",
+		Announce = "None",
+		OnlyAnnounceKoS = false,
+		WarnOnStealth = true,
+		WarnOnKOS = true,
+		WarnOnKOSGuild = false,
+		WarnOnRace = false,
+		SelectWarnRace = "None",
+		DisplayWarnings = "Default",
+		EnableSound = true,
+		OnlySoundKoS = false,
+		StopAlertsOnTaxi = true,
+		RemoveUndetected = "OneMinute",
+		ShowNearbyList = true,
+		PrioritiseKoS = true,
+		PurgeData = "NinetyDays",
+		PurgeKoS = false,
+		PurgeWinLossData = false,
+		ShareData = false,
+		UseData = false,
+		ShareKOSBetweenCharacters = true,
 		FilteredZones = {
 			["Booty Bay"] = false,
 			["Gadgetzan"] = false,
@@ -1428,11 +1430,12 @@ function Spy:CheckDatabase()
 	if SpyDB.kosData == nil then SpyDB.kosData = {} end
 	if SpyDB.kosData[Spy.RealmName] == nil then SpyDB.kosData[Spy.RealmName] = {} end
 	if SpyDB.kosData[Spy.RealmName][Spy.FactionName] == nil then SpyDB.kosData[Spy.RealmName][Spy.FactionName] = {} end
-	if SpyDB.kosData[Spy.RealmName][Spy.FactionName][Spy.CharacterName] == nil then SpyDB.kosData[Spy.RealmName][Spy.FactionName][Spy.CharacterName] = {} end
+	if SpyDB.kosData[Spy.RealmName][Spy.FactionName][Spy.CharacterName] == nil then SpyDB.kosData[Spy.RealmName][
+		Spy.FactionName][Spy.CharacterName] = {} end
 	if SpyDB.removeKOSData == nil then SpyDB.removeKOSData = {} end
 	if SpyDB.removeKOSData[Spy.RealmName] == nil then SpyDB.removeKOSData[Spy.RealmName] = {} end
 	if SpyDB.removeKOSData[Spy.RealmName][Spy.FactionName] == nil then SpyDB.removeKOSData[Spy.RealmName][Spy.FactionName] = {} end
---[[	if Spy.db.profile == nil then Spy.db.profile = Default_Profile.profile end
+	--[[	if Spy.db.profile == nil then Spy.db.profile = Default_Profile.profile end
 	if Spy.db.profile.Colors == nil then Spy.db.profile.Colors = Default_Profile.profile.Colors end
 	if Spy.db.profile.Colors["Window"] == nil then Spy.db.profile.Colors["Window"] = Default_Profile.profile.Colors["Window"] end
 	if Spy.db.profile.Colors["Window"]["Title"] == nil then Spy.db.profile.Colors["Window"]["Title"] = Default_Profile.profile.Colors["Window"]["Title"] end
@@ -1548,7 +1551,7 @@ function Spy:CheckDatabase()
 	if Spy.db.profile.UseData == nil then Spy.db.profile.UseData = Default_Profile.profile.UseData end
 	if Spy.db.profile.ShareKOSBetweenCharacters == nil then Spy.db.profile.ShareKOSBetweenCharacters = Default_Profile.profile.ShareKOSBetweenCharacters end
 	if Spy.db.profile.AppendUnitNameCheck == nil then Spy.db.profile.AppendUnitNameCheck = Default_Profile.profile.AppendUnitNameCheck end
-	if Spy.db.profile.AppendUnitKoSCheck == nil then Spy.db.profile.AppendUnitKoSCheck = Default_Profile.profile.AppendUnitKoSCheck end	]]--
+	if Spy.db.profile.AppendUnitKoSCheck == nil then Spy.db.profile.AppendUnitKoSCheck = Default_Profile.profile.AppendUnitKoSCheck end	]] --
 end
 
 function Spy:ResetProfile()
@@ -1557,11 +1560,12 @@ end
 
 function Spy:HandleProfileChanges()
 	Spy:CreateMainWindow()
-	Spy:RestoreMainWindowPosition(Spy.db.profile.MainWindow.Position.x, Spy.db.profile.MainWindow.Position.y, Spy.db.profile.MainWindow.Position.w, 34)
+	Spy:RestoreMainWindowPosition(Spy.db.profile.MainWindow.Position.x, Spy.db.profile.MainWindow.Position.y,
+		Spy.db.profile.MainWindow.Position.w, 34)
 	Spy:ResizeMainWindow()
 	Spy:UpdateTimeoutSettings()
 	Spy:LockWindows(Spy.db.profile.Locked)
---	Spy:ClampToScreen(Spy.db.profile.ClampToScreen)
+	--	Spy:ClampToScreen(Spy.db.profile.ClampToScreen)
 end
 
 function Spy:RegisterModuleOptions(name, optionTbl, displayName)
@@ -1573,10 +1577,10 @@ function Spy:SetupOptions()
 	self.optionsFrames = {}
 	self.acr = LibStub("AceConfigRegistry-3.0")
 	self.ac = LibStub("AceConfig-3.0")
- 	self.acr.RegisterOptionsTable(self, "Spy", Spy.options)
+	self.acr.RegisterOptionsTable(self, "Spy", Spy.options)
 	self.ac.RegisterOptionsTable(self, "Spy Commands", Spy.optionsSlash, "spy")
 
-	
+
 	self.optionsFrames.Spy = ACD3:AddToBlizOptions("Spy", nil, nil, "About")
 	self.optionsFrames.GeneralOptions = ACD3:AddToBlizOptions("Spy", L["GeneralSettings"], "Spy", "General")
 	self.optionsFrames.DisplayOptions = ACD3:AddToBlizOptions("Spy", L["DisplayOptions"], "Spy", "DisplayOptions")
@@ -1594,7 +1598,7 @@ SLASH_SPY1 = '/spygui'
 
 function SlashCmdList.SPY()
 
-    ACD3:Open('Spy')
+	ACD3:Open('Spy')
 
 end
 
@@ -1615,7 +1619,7 @@ local function LDBOnClick(self, button)
 		elseif (IsControlKeyDown()) then
 			Spy:ResetMainWindow()
 		elseif (IsAltKeyDown()) then
-			
+
 		else
 			Spy:EnableSpy(not Spy.db.profile.Enabled, true)
 		end
@@ -1634,7 +1638,7 @@ function Spy:InitDBIcon()
 			label = "Spy",
 			OnClick = LDBOnClick,
 			OnTooltipShow = function(tooltip)
-				
+
 				if (tooltip and tooltip.AddLine) then
 					for _i, text in ipairs(hintText) do
 						tooltip:AddLine(text)
@@ -1698,7 +1702,8 @@ end
 function Spy:ResetMainWindow()
 	Spy:EnableSpy(true, true)
 	Spy:CreateMainWindow()
-	Spy:RestoreMainWindowPosition(Default_Profile.profile.MainWindow.Position.x, Default_Profile.profile.MainWindow.Position.y, Default_Profile.profile.MainWindow.Position.w, 34)
+	Spy:RestoreMainWindowPosition(Default_Profile.profile.MainWindow.Position.x,
+		Default_Profile.profile.MainWindow.Position.y, Default_Profile.profile.MainWindow.Position.w, 34)
 	Spy:RefreshCurrentList()
 end
 
@@ -1712,62 +1717,62 @@ end
 
 local combatLogEvents = {
 
---	"CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS",
---	"CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_MISSES",
---	"CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS",
----	"CHAT_MSG_COMBAT_CREATURE_VS_PARTY_MISSES",
---	"CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS",
---	"CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES",
---	"CHAT_MSG_COMBAT_FACTION_CHANGE",
---	"CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS",
---	"CHAT_MSG_COMBAT_FRIENDLYPLAYER_MISSES",
+	--	"CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS",
+	--	"CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_MISSES",
+	--	"CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS",
+	---	"CHAT_MSG_COMBAT_CREATURE_VS_PARTY_MISSES",
+	--	"CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS",
+	--	"CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES",
+	--	"CHAT_MSG_COMBAT_FACTION_CHANGE",
+	--	"CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS",
+	--	"CHAT_MSG_COMBAT_FRIENDLYPLAYER_MISSES",
 	"CHAT_MSG_COMBAT_FRIENDLY_DEATH",
---	"CHAT_MSG_COMBAT_HONOR_GAIN",
+	--	"CHAT_MSG_COMBAT_HONOR_GAIN",
 	"CHAT_MSG_COMBAT_HOSTILEPLAYER_HITS",
 	"CHAT_MSG_COMBAT_HOSTILEPLAYER_MISSES",
 	"CHAT_MSG_COMBAT_HOSTILE_DEATH",
---	"CHAT_MSG_COMBAT_PARTY_HITS",
---	"CHAT_MSG_COMBAT_PARTY_MISSES",
---	"CHAT_MSG_COMBAT_PET_HITS",
---	"CHAT_MSG_COMBAT_PET_MISSES",
---	"CHAT_MSG_COMBAT_SELF_HITS",
---	"CHAT_MSG_COMBAT_SELF_MISSES",
---	"CHAT_MSG_COMBAT_XP_GAIN",
+	--	"CHAT_MSG_COMBAT_PARTY_HITS",
+	--	"CHAT_MSG_COMBAT_PARTY_MISSES",
+	--	"CHAT_MSG_COMBAT_PET_HITS",
+	--	"CHAT_MSG_COMBAT_PET_MISSES",
+	--	"CHAT_MSG_COMBAT_SELF_HITS",
+	--	"CHAT_MSG_COMBAT_SELF_MISSES",
+	--	"CHAT_MSG_COMBAT_XP_GAIN",
 	"CHAT_MSG_SPELL_AURA_GONE_OTHER",
---	"CHAT_MSG_SPELL_AURA_GONE_SELF",
---	"CHAT_MSG_SPELL_AURA_GONE_PARTY",
---	"CHAT_MSG_SPELL_BREAK_AURA",
---	"CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF",
---	"CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE",
---	"CHAT_MSG_SPELL_CREATURE_VS_PARTY_BUFF",
---	"CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE",
---	"CHAT_MSG_SPELL_CREATURE_VS_SELF_BUFF",
---	"CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE",
---	"CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS",
---	"CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF",
---	"CHAT_MSG_SPELL_FAILED_LOCALPLAYER",
---	"CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF",
---	"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",
+	--	"CHAT_MSG_SPELL_AURA_GONE_SELF",
+	--	"CHAT_MSG_SPELL_AURA_GONE_PARTY",
+	--	"CHAT_MSG_SPELL_BREAK_AURA",
+	--	"CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF",
+	--	"CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE",
+	--	"CHAT_MSG_SPELL_CREATURE_VS_PARTY_BUFF",
+	--	"CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE",
+	--	"CHAT_MSG_SPELL_CREATURE_VS_SELF_BUFF",
+	--	"CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE",
+	--	"CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS",
+	--	"CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF",
+	--	"CHAT_MSG_SPELL_FAILED_LOCALPLAYER",
+	--	"CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF",
+	--	"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",
 	"CHAT_MSG_SPELL_HOSTILEPLAYER_BUFF",
 	"CHAT_MSG_SPELL_HOSTILEPLAYER_DAMAGE",
 	"CHAT_MSG_SPELL_ITEM_ENCHANTMENTS",
---	"CHAT_MSG_SPELL_PARTY_BUFF",
---	"CHAT_MSG_SPELL_PARTY_DAMAGE",
---	"CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS",
---	"CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE",
---	"CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS",
---	"CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE",
+	--	"CHAT_MSG_SPELL_PARTY_BUFF",
+	--	"CHAT_MSG_SPELL_PARTY_DAMAGE",
+	--	"CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS",
+	--	"CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE",
+	--	"CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS",
+	--	"CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE",
 	"CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_BUFFS",
 	"CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE",
---	"CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS",
---	"CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE",
---	"CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS",
---	"CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE",
---	"CHAT_MSG_SPELL_PET_BUFF",
---	"CHAT_MSG_SPELL_PET_DAMAGE",
---	"CHAT_MSG_SPELL_SELF_BUFF",
---	"CHAT_MSG_SPELL_SELF_DAMAGE",
---	"CHAT_MSG_SPELL_TRADESKILLS",
+	--	"CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS",
+	--	"CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE",
+	--	"CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS",
+	--	"CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE",
+	--	"CHAT_MSG_SPELL_PET_BUFF",
+	--	"CHAT_MSG_SPELL_PET_DAMAGE",
+	--	"CHAT_MSG_SPELL_SELF_BUFF",
+	--	"CHAT_MSG_SPELL_SELF_DAMAGE",
+	--	"CHAT_MSG_SPELL_TRADESKILLS",
 
 }
 
@@ -1786,10 +1791,10 @@ function Spy:OnEnable(first)
 	Spy:RegisterComm(Spy.Signature, "CommReceived")
 
 	for _, event in pairs(combatLogEvents) do
-		Spy.parser:RegisterEvent("Spy", event, function (event, info) Spy:CombatLogEvent(event, info) end )	
+		Spy.parser:RegisterEvent("Spy", event, function(event, info) Spy:CombatLogEvent(event, info) end)
 	end
-	
---[[	Spy.uc.RegisterCallback(self, "NewCast", "CombatLogEvent")
+
+	--[[	Spy.uc.RegisterCallback(self, "NewCast", "CombatLogEvent")
 	Spy.uc.RegisterCallback(self, "NewBuff", "CombatLogEvent")
 	Spy.uc.RegisterCallback(self, "NewHeal", "CombatLogEvent")
 	Spy.uc.RegisterCallback(self, "Hit", "CombatLogEvent")
@@ -1797,8 +1802,8 @@ function Spy:OnEnable(first)
 	]]
 	Spy.IsEnabled = true
 	if not Spy:TimerStatus(Spy.initTimer) then
-	Spy:RefreshCurrentList()
-end
+		Spy:RefreshCurrentList()
+	end
 end
 
 function Spy:OnDisable()
@@ -1821,7 +1826,7 @@ function Spy:OnDisable()
 	Spy:UnregisterEvent("PLAYER_DEAD")
 	Spy:UnregisterComm(Spy.Signature)
 
---	self.uc.UnregisterAllCallbacks(self)
+	--	self.uc.UnregisterAllCallbacks(self)
 
 	Spy.parser:UnregisterAllEvents("Spy")
 
@@ -1866,7 +1871,7 @@ end
 function Spy:EnableSound(value)
 	Spy.db.profile.EnableSound = value
 	if value then
-		DEFAULT_CHAT_FRAME:AddMessage(L["SoundEnabled"]) 
+		DEFAULT_CHAT_FRAME:AddMessage(L["SoundEnabled"])
 	else
 		DEFAULT_CHAT_FRAME:AddMessage(L["SoundDisabled"])
 	end
@@ -1874,17 +1879,17 @@ end
 
 function Spy:OnInitialize()
 	Spy.FactionName, _ = UnitFactionGroup("player")
-	
+
 	if Spy.FactionName == nil then
 		Spy.initTimer = Spy:ScheduleTimer("OnInitialize", 1)
 		return
 	end
-	
+
 	WorldMapFrame:Show()
 	WorldMapFrame:Hide()
 
 	Spy.RealmName = GetCVar("realmName")
-	
+
 	if Spy.FactionName == "Alliance" then
 		Spy.EnemyFactionName = "Horde"
 	else
@@ -1915,7 +1920,7 @@ function Spy:OnInitialize()
 		["Gnome"] = true,
 		["HighElf"] = true,
 		["Goblin"] = true,
-		
+
 	}
 
 	local acedb = LibStub:GetLibrary("AceDB-3.0")
@@ -1923,16 +1928,16 @@ function Spy:OnInitialize()
 	Spy.db = acedb:New("SpyDB", Default_Profile)
 	Spy:CheckDatabase()
 
---	self.db.RegisterCallback(self, "OnNewProfile", "ResetProfile")
+	--	self.db.RegisterCallback(self, "OnNewProfile", "ResetProfile")
 	self.db.RegisterCallback(self, "OnNewProfile", "HandleProfileChanges")
---	self.db.RegisterCallback(self, "OnProfileReset", "ResetProfile")
+	--	self.db.RegisterCallback(self, "OnProfileReset", "ResetProfile")
 	self.db.RegisterCallback(self, "OnProfileReset", "HandleProfileChanges")
 	self.db.RegisterCallback(self, "OnProfileChanged", "HandleProfileChanges")
 	self.db.RegisterCallback(self, "OnProfileCopied", "HandleProfileChanges")
 	self:SetupOptions()
-	
+
 	local ContinentList, _, _ = { GetMapContinents() };
-	
+
 	Spy:BuildZoneIDTable(ContinentList)
 
 	SpyTempTooltip = CreateFrame("GameTooltip", "SpyTempTooltip", nil, "GameTooltipTemplate")
@@ -1949,29 +1954,29 @@ function Spy:OnInitialize()
 	Spy:CreateKoSButton()
 	Spy:UpdateTimeoutSettings()
 
---	SM.RegisterCallback(Spy, "LibSharedMedia_Registered", "UpdateBarTextures")
+	--	SM.RegisterCallback(Spy, "LibSharedMedia_Registered", "UpdateBarTextures")
 	SM.RegisterCallback(Spy, "LibSharedMedia_SetGlobal", "UpdateBarTextures")
 	if Spy.db.profile.BarTexture then
 		Spy:SetBarTextures(Spy.db.profile.BarTexture)
 	end
 
 	Spy:RefreshCurrentList()
-	
+
 	Spy:LockWindows(Spy.db.profile.Locked)
---	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", Spy.FilterNotInParty)
+	--	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", Spy.FilterNotInParty)
 	DEFAULT_CHAT_FRAME:AddMessage(L["LoadDescription"])
 end
 
 function Spy:ZoneChangedEvent()
-	
+
 	if not Spy.MainWindow then
 		Spy:ScheduleTimer("ZoneChangedEvent", 1)
 		return
 	end
-	
+
 	Spy.InInstance = false
 	local pvpType = GetZonePVPInfo()
- 	local zone = GetZoneText()
+	local zone = GetZoneText()
 	local subZone = GetSubZoneText()
 	local InFilteredZone = Spy:InFilteredZone(subZone)
 	if pvpType == "sanctuary" or zone == "" or InFilteredZone then
@@ -1986,7 +1991,7 @@ function Spy:ZoneChangedEvent()
 				(not Spy.db.profile.EnabledInBattlegrounds and instanceType == "pvp") then
 				Spy.EnabledInZone = false
 			end
-		
+
 		elseif (pvpType == "friendly" or pvpType == nil) then
 			if UnitIsPVP("player") == nil and Spy.db.profile.DisableWhenPVPUnflagged then
 				Spy.EnabledInZone = false
@@ -2031,7 +2036,7 @@ function Spy:GetCensusData()
 end
 
 local function scanName(name)
-	if UnitName("target") == nil then 
+	if UnitName("target") == nil then
 		Spy.scanningPlayers = true
 		TargetByName(name, true)
 		Spy:PlayerTargetEvent()
@@ -2055,13 +2060,13 @@ function Spy:PlayerTargetEvent()
 			local guess = false
 			if level == Spy.Skull then
 				if playerData and playerData.level then
-					if playerData.level > (UnitLevel("player") + 10) and playerData.level < Spy.MaximumPlayerLevel then	
+					if playerData.level > (UnitLevel("player") + 10) and playerData.level < Spy.MaximumPlayerLevel then
 						guess = true
 						level = nil
 					elseif UnitLevel("player") < Spy.MaximumPlayerLevel - 9 then
 						guess = true
 						level = UnitLevel("player") + 10
-					end	
+					end
 				else
 					guess = true
 					level = UnitLevel("player") + 10
@@ -2075,9 +2080,9 @@ function Spy:PlayerTargetEvent()
 		else
 			Spy:AddFriendsData(name)
 			if playerData then
-			Spy:RemovePlayerFromList(name)
-			Spy:RemovePlayerData(name)
-		end
+				Spy:RemovePlayerFromList(name)
+				Spy:RemovePlayerData(name)
+			end
 		end
 	else
 		Spy:RemovePlayerFromList(name)
@@ -2100,13 +2105,13 @@ function Spy:PlayerMouseoverEvent()
 			local guess = false
 			if level == Spy.Skull then
 				if playerData and playerData.level then
-					if playerData.level > (UnitLevel("player") + 10) and playerData.level < Spy.MaximumPlayerLevel then	
+					if playerData.level > (UnitLevel("player") + 10) and playerData.level < Spy.MaximumPlayerLevel then
 						guess = true
 						level = nil
 					elseif UnitLevel("player") < Spy.MaximumPlayerLevel - 9 then
 						guess = true
 						level = UnitLevel("player") + 10
-					end	
+					end
 				else
 					guess = true
 					level = UnitLevel("player") + 10
@@ -2120,9 +2125,9 @@ function Spy:PlayerMouseoverEvent()
 		else
 			Spy:AddFriendsData(name)
 			if playerData then
-			Spy:RemovePlayerFromList(name)
-			Spy:RemovePlayerData(name)
-		end
+				Spy:RemovePlayerFromList(name)
+				Spy:RemovePlayerData(name)
+			end
 		end
 	else
 		Spy:RemovePlayerFromList(name)
@@ -2130,8 +2135,8 @@ function Spy:PlayerMouseoverEvent()
 	end
 end
 
-local playerName  = UnitName("player")
-function Spy:CombatLogEvent(event, info ) --_, timestamp, event, srcGUID, srcName, srcFlags, dstGUID, dstName, dstFlags, ...)
+local playerName = UnitName("player")
+function Spy:CombatLogEvent(event, info) --_, timestamp, event, srcGUID, srcName, srcFlags, dstGUID, dstName, dstFlags, ...)
 	if not info then return end
 	if info.type == "death" then
 		Spy:DeathLog(event, info)
@@ -2139,21 +2144,20 @@ function Spy:CombatLogEvent(event, info ) --_, timestamp, event, srcGUID, srcNam
 	end
 	local source = info.source and (info.source == ParserLib_SELF and playerName or info.source) or nil
 	local victim = info.victim and (info.victim == ParserLib_SELF and playerName or info.victim) or nil
-		
-	
 
 	if Spy.EnabledInZone then
-	if event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" then
-		if (info.skill == BS["Stealth"] or info.skill == BS["Prowl"]) and not Spy:PlayerIsFriend(victim) then
+		if event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" then
+			if (info.skill == BS["Stealth"] or info.skill == BS["Prowl"]) and not Spy:PlayerIsFriend(victim) then
 				scanName(victim)
-			Spy:AlertStealthPlayer(victim)
+				Spy:AlertStealthPlayer(victim)
+			end
+			return
 		end
-		return
-	end
 
 		-- analyse the source unit
-		if source and source ~= playerName and  not Spy:PlayerIsFriend(source) and not SpyPerCharDB.IgnoreData[source] and not find(source," ") and not find(source,"Unknown") then
-			
+		if source and source ~= playerName and not Spy:PlayerIsFriend(source) and not SpyPerCharDB.IgnoreData[source] and
+			not find(source, " ") and not find(source, "Unknown") then
+
 			local learnt = false
 			local detected = true
 			local playerData = SpyPerCharDB.PlayerData[source]
@@ -2167,22 +2171,23 @@ function Spy:CombatLogEvent(event, info ) --_, timestamp, event, srcGUID, srcNam
 
 			if detected then
 				Spy:AddDetected(source, time(), learnt)
-				
+
 			end
 
 			if victim == playerName then
 				Spy.LastAttack = info.source
 			end
-		
+
 		end
 
 		-- analyse the destination unit
-		if  victim and victim ~= playerName and not Spy:PlayerIsFriend(victim) and not SpyPerCharDB.IgnoreData[victim] and not find(victim," ") and not find(victim,"Unknown") then
+		if victim and victim ~= playerName and not Spy:PlayerIsFriend(victim) and not SpyPerCharDB.IgnoreData[victim] and
+			not find(victim, " ") and not find(victim, "Unknown") then
 			local learnt = false
 			local detected = true
 			local playerData = SpyPerCharDB.PlayerData[victim]
 			if not playerData or playerData.isGuess then
-				learnt, playerData = Spy:ParseUnitAbility(not source, info.type,  victim,  info.skill)
+				learnt, playerData = Spy:ParseUnitAbility(not source, info.type, victim, info.skill)
 			end
 			if not learnt then
 				scanName(victim)
@@ -2200,19 +2205,19 @@ function Spy:DeathLog(event, info)
 	-- update win statistics
 	--printT({"DeathLog", event, info})
 	if info.source == ParserLib_SELF and info.victim then
-			local playerData = SpyPerCharDB.PlayerData[info.victim]
-			if playerData then
-				if not playerData.wins then playerData.wins = 0 end
-				playerData.wins = playerData.wins + 1
-			end
+		local playerData = SpyPerCharDB.PlayerData[info.victim]
+		if playerData then
+			if not playerData.wins then playerData.wins = 0 end
+			playerData.wins = playerData.wins + 1
 		end
+	end
 	if info.victim == ParserLib_SELF and (info.source or Spy.LastAttack) then
-			local playerData = SpyPerCharDB.PlayerData[info.source or Spy.LastAttack]
-			if playerData then
-				if not playerData.loses then playerData.loses = 0 end
-				playerData.loses = playerData.loses + 1
-			end
+		local playerData = SpyPerCharDB.PlayerData[info.source or Spy.LastAttack]
+		if playerData then
+			if not playerData.loses then playerData.loses = 0 end
+			playerData.loses = playerData.loses + 1
 		end
+	end
 
 end
 
@@ -2345,7 +2350,7 @@ function Spy:VersionCheck(version1, version2)
 		return true
 	elseif ((major1 == major2) and (minor1 == minor2) and (update1 < update2)) then
 		return true
-	else	
+	else
 		return false
 	end
 end
@@ -2388,13 +2393,13 @@ function Spy:ShowMapNote(player)
 			note.mapX = mapX
 			note.mapY = mapY
 			local mapScale = MinimapCluster:GetScale()
-			note.miniIcon:SetWidth(24/mapScale)
-			note.miniIcon:SetHeight(24/mapScale)
+			note.miniIcon:SetWidth(24 / mapScale)
+			note.miniIcon:SetHeight(24 / mapScale)
 			mapScale = WorldMapFrame:GetScale()
-			note.worldIcon:SetWidth(28*mapScale)
-			note.worldIcon:SetHeight(28*mapScale)
+			note.worldIcon:SetWidth(28 * mapScale)
+			note.worldIcon:SetHeight(28 * mapScale)
 			note.worldIcon:Show()
-			
+
 			Astrolabe:PlaceIconOnWorldMap(WorldMapButton, note.worldIcon, continentIndex, zoneIndex, mapX, mapY)
 			Astrolabe:PlaceIconOnMinimap(note.miniIcon, note.continentIndex, note.zoneIndex, note.mapX, note.mapY)
 
@@ -2403,9 +2408,9 @@ function Spy:ShowMapNote(player)
 					if continentIndex == Spy.MapNoteList[i].continentIndex and zoneIndex == Spy.MapNoteList[i].zoneIndex and
 						abs(mapX - Spy.MapNoteList[i].mapX) < Spy.MapProximityThreshold and
 						abs(mapY - Spy.MapNoteList[i].mapY) < Spy.MapProximityThreshold then
-					 	Spy.MapNoteList[i].displayed = false
-					 	Spy.MapNoteList[i].worldIcon:Hide()
-					  	Astrolabe:RemoveIconFromMinimap(Spy.MapNoteList[i].miniIcon)
+						Spy.MapNoteList[i].displayed = false
+						Spy.MapNoteList[i].worldIcon:Hide()
+						Astrolabe:RemoveIconFromMinimap(Spy.MapNoteList[i].miniIcon)
 						for player in pairs(Spy.PlayerCommList) do
 							if Spy.PlayerCommList[player] == i then
 								Spy.PlayerCommList[player] = Spy.CurrentMapNote
@@ -2428,50 +2433,54 @@ function Spy:GetPlayerLocation(playerData)
 	local mapX = playerData.mapX
 	local mapY = playerData.mapY
 	if location and playerData.subZone and playerData.subZone ~= "" and playerData.subZone ~= location then
-		location = playerData.subZone..", "..location
+		location = playerData.subZone .. ", " .. location
 	end
 	if mapX and mapX ~= 0 and mapY and mapY ~= 0 then
-		location = location.." ("..math.floor(tonumber(mapX) * 100)..","..math.floor(tonumber(mapY) * 100)..")"
+		location = location .. " (" .. math.floor(tonumber(mapX) * 100) .. "," .. math.floor(tonumber(mapY) * 100) .. ")"
 	end
 	return location
 end
-local modf = math.modf or function(num)
-    local int = math.floor(num)
-    local frac = math.abs(num) - math.abs(int)
 
-    return int, frac
+local modf = math.modf or function(num)
+	local int = math.floor(num)
+	local frac = math.abs(num) - math.abs(int)
+
+	return int, frac
 end
 function Spy:FormatTime(timestamp)
-    if timestamp == 0 then return "Long " end
+	if timestamp == 0 then return "Long " end
 
-    local age = time() - timestamp
+	local age = time() - timestamp
 
-    local days
-    if age >= 86400 then
-        days = modf(age / 86400)
-        age = age - (days * 86400)
-    end
+	local days
+	if age >= 86400 then
+		days = modf(age / 86400)
+		age = age - (days * 86400)
+	end
 
-    local hours
-    if age >= 3600 then
-        hours = modf(age / 3600)
-        age = age - (hours * 3600)
-    end
+	local hours
+	if age >= 3600 then
+		hours = modf(age / 3600)
+		age = age - (hours * 3600)
+	end
 
-    local minutes
-    if age >= 60 then
-        minutes = modf(age / 60)
-        age = age - (minutes * 60)
-    end
+	local minutes
+	if age >= 60 then
+		minutes = modf(age / 60)
+		age = age - (minutes * 60)
+	end
 
-    local seconds = age
+	local seconds = age
 
-    local text = (days and days .. "d " or "") .. ((hours and not days) and hours .. "h " or "") .. ((minutes and not hours and not days) and minutes .. "m " or "") .. ((seconds and not minutes and not hours and not days) and seconds .. "s " or "")
+	local text = (days and days .. "d " or "") ..
+		((hours and not days) and hours .. "h " or "") ..
+		((minutes and not hours and not days) and minutes .. "m " or "") ..
+		((seconds and not minutes and not hours and not days) and seconds .. "s " or "")
 
-    return strtrim(text)
+	return strtrim(text)
 end
 
 -- recieves pointer to SpyData db
 function Spy:SetDataDb(val)
-    Spy_db = val
+	Spy_db = val
 end

@@ -390,8 +390,9 @@ function Spy_CreateStatsDropdown(level)
             info.notCheckable = true
             info.text = L["KOSReasonDropDownMenu"]
             info.value = unit
-            info.func = function() Spy:SetKOSReason(unit.name, L["KOSReasonOther"], other) end
+            info.func = function(player) Spy:SetKOSReason(player, L["KOSReasonOther"], other) end
             info.checked = false
+            info.arg1 = unit.name
             UIDropDownMenu_AddButton(info, level)
     
             info.isTitle = nil

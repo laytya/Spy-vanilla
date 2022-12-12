@@ -596,7 +596,7 @@ Spy_KOSReasonList = {
 			"Exploits game mechanics",
 			"Suspected hacker",
 			"Farmer",
-			"Other...",
+			"Enter your own reason...",
 		};
 	},
 }
@@ -614,7 +614,7 @@ StaticPopupDialogs["Spy_SetKOSReasonOther"] = {
 	end,
 	OnAccept = function()
 		local reason = getglobal(this:GetParent():GetName() .. "EditBox"):GetText()
-		Spy:SetKOSReason(this.playerName, "Enter your own reason...", reason)
+		Spy:SetKOSReason(this:GetParent().playerName, "Enter your own reason...", reason)
 	end,
 };
 

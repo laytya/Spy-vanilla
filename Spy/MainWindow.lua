@@ -326,8 +326,8 @@ function Spy_CreateBarDropdown(level)
 				info.hasArrow = false
 				info.disabled = nil
 				info.text = reason
-				info.func = function()
-					Spy:SetKOSReason(player, reason)
+				info.func = function(button, reasonindex)
+					Spy:SetKOSReason(player, reasonindex)
 					CloseDropDownMenus(1)
 				end
 				info.checked = nil
@@ -336,6 +336,7 @@ function Spy_CreateBarDropdown(level)
 				end
 				info.value = { ["Key"] = subkey; ["Subkey"] = index; }
 				info.arg1 = this:GetName()
+				info.arg2 = reason 
 				UIDropDownMenu_AddButton(info, level)
 			end
 		end

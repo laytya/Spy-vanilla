@@ -588,6 +588,7 @@ uc.RegisterTable("BuffsToTrack", {
     [BS['Sprint']]                  = { duration = 15, prio = 1 },
     [BS['Kidney Shot']]             = { duration = 6, type = 'physical', prio = 2, dr = 'Controlled Stun' },
     [BS['Wound Poison IV']]         = { duration = 15, type = 'poison', display = false, },
+    [BS['Rupture']]                 = { duration = 16, type = 'physical', display = false, },
 
     -- SHAMAN
     [BS['Earthbind']]              = { duration = 5, type = 'magic', },
@@ -604,6 +605,7 @@ uc.RegisterTable("BuffsToTrack", {
     [BS['Curse of Agony']]      = { duration = 24, display = false, },
     [BS['Curse of Exhaustion']] = { duration = 30, type = 'curse', },
     [BS['Curse of Tongues']]    = { duration = 30, type = 'curse', },
+    [BS['Curse of Weakness']]    = { duration = 120, type = 'curse', },
     [BS['Death Coil']]          = { duration = 3, type = 'magic', prio = 1 },
     [BS['Drain Life']]          = { duration = 5, display = false, },
     [BS['Drain Mana']]          = { duration = 5, display = false, },
