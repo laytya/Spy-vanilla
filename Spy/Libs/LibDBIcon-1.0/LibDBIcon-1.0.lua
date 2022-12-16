@@ -199,7 +199,7 @@ local function onDragStop()
 	this:SetScript("OnUpdate", nil)
 	this.isMouseDown = false
 	this.icon:UpdateCoord()
-	sethislf:UnlockHighlight()
+	this:UnlockHighlight()
 	isDraggingButton = false
 	for _, button in next, lib.objects do
 		if button.showOnMouseover then
