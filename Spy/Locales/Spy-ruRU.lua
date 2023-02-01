@@ -421,7 +421,7 @@ Spy_KOSReasonList = {
 StaticPopupDialogs["Spy_SetKOSReasonOther"] = {
 	preferredIndex=STATICPOPUPS_NUMDIALOGS,  -- http://forums.wowace.com/showthread.php?p=320956
 	text = "Введите причину Kill on Sight для %s:",
-	button1 = "Введите",
+	button1 = "Применить",
 	button2 = "Отмена",
 	timeout = 120,
 	hasEditBox = 1,
@@ -433,7 +433,7 @@ StaticPopupDialogs["Spy_SetKOSReasonOther"] = {
 	end,
     OnAccept = function()
 		local reason = this.editBox:GetText()
-		Spy:SetKOSReason(this.playerName, "Введите собственную причину ...", reason)
+		Spy:SetKOSReason(this:GetParent().playerName, "Введите собственную причину ...", reason)
 	end,
 };
 

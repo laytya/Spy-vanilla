@@ -23,7 +23,7 @@
 -- LICENSE: ChatThrottleLib is released into the Public Domain
 --
 
-local CTL_VERSION = 23
+local CTL_VERSION = 24
 
 local AceCore = LibStub("AceCore-3.0")
 local _G = AceCore._G
@@ -419,10 +419,12 @@ function ChatThrottleLib:SendChatMessage(prio, prefix,   text, chattype, languag
 
 	local nSize = strlen(text)
 
+--[[   -- Vanilla dont have limit?
+
 	if nSize>255 then
 		error("ChatThrottleLib:SendChatMessage(): message length cannot exceed 255 bytes", 2)
 	end
-
+]]
 	nSize = nSize + self.MSG_OVERHEAD
 
 	-- Check if there's room in the global available bandwidth gauge to send directly
@@ -466,14 +468,18 @@ function ChatThrottleLib:SendAddonMessage(prio, prefix, text, chattype, target, 
 	local nSize = strlen(text);
 
 	if RegisterAddonMessagePrefix then
+		--[[   -- Vanilla dont have limit?
 		if nSize>255 then
 			error("ChatThrottleLib:SendAddonMessage(): message length cannot exceed 255 bytes", 2)
 		end
+		]]
 	else
 		nSize = nSize + strlen(prefix) + 1
+		--[[   -- Vanilla dont have limit?
 		if nSize>255 then
 			error("ChatThrottleLib:SendAddonMessage(): prefix + message length cannot exceed 254 bytes", 2)
 		end
+		]]
 	end
 
 	nSize = nSize + self.MSG_OVERHEAD;

@@ -254,7 +254,7 @@ AceTimer.embeds = AceTimer.embeds or {}
 local mixins = {
 	"ScheduleTimer", "ScheduleRepeatingTimer",
 	"CancelTimer", "CancelAllTimers",
-	"TimeLeft","TimerStatus"
+	"TimeLeft", "TimerStatus"
 }
 
 function AceTimer:Embed(target)
