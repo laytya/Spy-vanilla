@@ -88,7 +88,6 @@ function SpyFu:OnMenuRequest(level,value)
 				'hasEditBox', true,
 				'editBoxText', UnitName("target") and UnitName("target") or UnitName("mouseover") and UnitName("mouseover") or "",
 				'editBoxFunc', function(value) 
-					print(value)
 					Spy:ToggleKOSPlayer(not SpyPerCharDB.KOSData[value], value)
 				end,
 				'disabled', false,
@@ -102,7 +101,6 @@ function SpyFu:OnMenuRequest(level,value)
 				'hasEditBox', true,
 				'editBoxText', UnitName("target") and UnitName("target") or UnitName("mouseover") and UnitName("mouseover") or "",
 				'editBoxFunc', function(value) 
-					print(value)
 					Spy:ToggleIgnorePlayer(not SpyPerCharDB.IgnoreData[value], value)
 				end,
 				'disabled', false,
