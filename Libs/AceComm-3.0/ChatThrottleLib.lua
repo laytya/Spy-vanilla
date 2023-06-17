@@ -319,7 +319,7 @@ function ChatThrottleLib:Despool(Prio)
 		end
 		-- notify caller of delivery (even if we didn't send it)
 		if msg.callbackFn then
-			 -msg.callbackFn (msg.callbackArg, didSend) -- ERRORS HERE AS WELL AS 437 IDK WHY: FOR TURTLEWOW
+			 --msg.callbackFn (msg.callbackArg, didSend) -- ERRORS HERE I THINK AS WELL AS 437 IDK WHY: FOR TURTLEWOW
 		end
 		-- USER CALLBACK MAY ERROR
 	end
@@ -434,7 +434,7 @@ function ChatThrottleLib:SendChatMessage(prio, prefix,   text, chattype, languag
 		bMyTraffic = false
 		self.Prio[prio].nTotalSent = self.Prio[prio].nTotalSent + nSize
 		if callbackFn then
-			--callbackFn (callbackArg, true) --ERRORS HERE AS WELL AS 322 IDK WHY: FOR TURTLEWOW
+			--callbackFn (callbackArg, true) --ERRORS HERE I THINK AS WELL AS 322 IDK WHY: FOR TURTLEWOW
 		end
 		-- USER CALLBACK MAY ERROR
 		return
