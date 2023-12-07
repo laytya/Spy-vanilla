@@ -13,7 +13,7 @@ if not lib then
 	return
 end
 
-for _,v in ipairs(_G.LibBabble_Spell_3_0_funcs) do
+for _, v in ipairs(_G.LibBabble_Spell_3_0_funcs) do
 	v(lib)
 end
 

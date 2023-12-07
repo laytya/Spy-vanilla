@@ -1,0 +1,3 @@
+[submodule "LibStub"]
+	path = LibStub
+	url = https://github.com/laytya/LibStub

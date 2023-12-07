@@ -10,14 +10,14 @@ if not LibBabble then
 end
 
 local data = LibBabble.data or {}
-for k,v in pairs(LibBabble) do
+for k, v in pairs(LibBabble) do
 	LibBabble[k] = nil
 end
 LibBabble.data = data
 
 local tablesToDB = {}
 for namespace, db in pairs(data) do
-	for k,v in pairs(db) do
+	for k, v in pairs(db) do
 		tablesToDB[v] = db
 	end
 end
@@ -27,33 +27,35 @@ local function warn(message)
 	geterrorhandler()(ret)
 end
 
-local lookup_mt = { __index = function(self, key)
-	local db = tablesToDB[self]
-	local current_key = db.current[key]
-	if current_key then
-		self[key] = current_key
-		return current_key
-	end
-	local base_key = db.base[key]
-	local real_MAJOR_VERSION
-	for k,v in pairs(data) do
-		if v == db then
-			real_MAJOR_VERSION = k
-			break
+local lookup_mt = {
+	__index = function(self, key)
+		local db = tablesToDB[self]
+		local current_key = db.current[key]
+		if current_key then
+			self[key] = current_key
+			return current_key
 		end
-	end
-	if not real_MAJOR_VERSION then
-		real_MAJOR_VERSION = LIBBABBLE_MAJOR
-	end
-	if base_key then
-		warn(format("%s: Translation %q not found for locale %q", real_MAJOR_VERSION, key, GetLocale()))
-		rawset(self, key, base_key)
-		return base_key
-	end
-	warn(format("%s: Translation %q not found.", real_MAJOR_VERSION, key))
-	rawset(self, key, key)
-	return key
-end }
+		local base_key = db.base[key]
+		local real_MAJOR_VERSION
+		for k, v in pairs(data) do
+			if v == db then
+				real_MAJOR_VERSION = k
+				break
+			end
+		end
+		if not real_MAJOR_VERSION then
+			real_MAJOR_VERSION = LIBBABBLE_MAJOR
+		end
+		if base_key then
+			warn(format("%s: Translation %q not found for locale %q", real_MAJOR_VERSION, key, GetLocale()))
+			rawset(self, key, base_key)
+			return base_key
+		end
+		warn(format("%s: Translation %q not found.", real_MAJOR_VERSION, key))
+		rawset(self, key, key)
+		return key
+	end,
+}
 
 local function initLookup(module, lookup)
 	local db = tablesToDB[module]
@@ -71,7 +73,7 @@ local function initReverse(module, reverse)
 	for k in pairs(reverse) do
 		reverse[k] = nil
 	end
-	for k,v in pairs(db.current) do
+	for k, v in pairs(db.current) do
 		reverse[v] = k
 	end
 	tablesToDB[reverse] = db
@@ -81,7 +83,7 @@ local function initReverse(module, reverse)
 end
 
 local prototype = {}
-local prototype_mt = {__index = prototype}
+local prototype_mt = { __index = prototype }
 
 --[[---------------------------------------------------------------------------
 Notes:
@@ -158,7 +160,7 @@ function prototype:GetReverseLookupTable()
 	return initReverse(self, {})
 end
 local blank = {}
-local weakVal = {__mode='v'}
+local weakVal = { __mode = "v" }
 --[[---------------------------------------------------------------------------
 Arguments:
 	string - the localized word to chek for.
@@ -180,7 +182,7 @@ function prototype:GetReverseIterator(key)
 		return pairs(reverseIterators[key])
 	end
 	local t
-	for k,v in pairs(db.current) do
+	for k, v in pairs(db.current) do
 		if v == key then
 			if not t then
 				t = {}
@@ -222,7 +224,7 @@ function prototype:SetBaseTranslations(base)
 	else
 		db.base = base
 	end
-	for k,v in pairs(base) do
+	for k, v in pairs(base) do
 		if v == true then
 			base[k] = k
 		end
@@ -283,7 +285,7 @@ function LibBabble:New(namespace, minor)
 		data[namespace] = db
 		tablesToDB[module] = db
 	else
-		for k,v in pairs(module) do
+		for k, v in pairs(module) do
 			module[k] = nil
 		end
 	end
