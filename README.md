@@ -1,4 +1,4 @@
-  <b>stopped using so stopped developing sry still works I think</b>
+ # <b>stopped playing so stopped developing srry prob still works</b>
 # Spy-vanilla for TurtleWoW
 Spy ported to vanilla WOW Spy-vanilla from: https://github.com/laytya/Spy-vanilla
 
