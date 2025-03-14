@@ -303,7 +303,7 @@
                         <Texture file="Interface\Minimap\MiniMap-TrackingBorder" setAllPoints="true" />
                     </Layer>
                     <Layer level="ARTWORK">
-                        <Texture file="Interface\AddOns\Spy\Textures\Spy">
+                        <Texture file="Interface\AddOns\Spy-vanilla\Textures\Spy">
                             <Size x="22" y="22" />
                             <Anchors>
                                 <Anchor point="TOPLEFT">

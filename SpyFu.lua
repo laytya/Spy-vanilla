@@ -17,7 +17,7 @@ local refreshTime = 1;
 
 SpyFu = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDB-2.0", "FuBarPlugin-2.0");
 
-SpyFu.hasIcon = "Interface\\AddOns\\Spy\\Textures\\spy";
+SpyFu.hasIcon = "Interface\\AddOns\\Spy-vanilla\\Textures\\spy";
 SpyFu.defaultPosition = "RIGHT";
 SpyFu.defaultMinimapPosition = 180;
 SpyFu.cannotDetachTooltip = true;

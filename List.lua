@@ -457,9 +457,9 @@ function Spy:AlertPlayer(player, source)
 		end
 		if Spy.db.profile.EnableSound then
 			if source ~= nil and source ~= Spy.CharacterName then
-				PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-kosaway.wav")
+				PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-kosaway.wav")
 			else
-				PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-kos.wav")
+				PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-kos.wav")
 			end
 		end
 		if Spy.db.profile.ShareKOSBetweenCharacters then Spy:RegenerateKOSCentralList(player) end
@@ -479,18 +479,18 @@ function Spy:AlertPlayer(player, source)
 			end
 			if Spy.db.profile.EnableSound then
 				if source ~= nil and source ~= Spy.CharacterName then
-					PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-kosaway.wav")
+					PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-kosaway.wav")
 				else
-					PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-kosguild.wav")
+					PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-kosguild.wav")
 				end
 			end
 		else
 			if Spy.db.profile.EnableSound and not Spy.db.profile.OnlySoundKoS then
 				if source == nil or source == Spy.CharacterName then
 					if playerData and Spy.db.profile.WarnOnRace and playerData.race == Spy.db.profile.SelectWarnRace then --++
-						PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-race.wav") 
+						PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-race.wav") 
 					else
-						PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-nearby.wav")
+						PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-nearby.wav")
 					end
 				end
 			end
@@ -498,14 +498,14 @@ function Spy:AlertPlayer(player, source)
 	elseif Spy.db.profile.EnableSound and not Spy.db.profile.OnlySoundKoS then
 		if source == nil or source == Spy.CharacterName then
 			if playerData and Spy.db.profile.WarnOnRace and playerData.race == Spy.db.profile.SelectWarnRace then --++
-				PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-race.wav") 
+				PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-race.wav") 
 			else
-				PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-nearby.wav")
+				PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-nearby.wav")
 			end
 		end
 	elseif Spy.db.profile.EnableSound and not Spy.db.profile.OnlySoundKoS then
 		if source == nil or source == Spy.CharacterName then
-			PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-nearby.wav")
+			PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-nearby.wav")
 		end
 	end
 end
@@ -521,7 +521,7 @@ function Spy:AlertStealthPlayer(player)
 			Spy:ShowAlert("stealth", player)
 		end
 		if Spy.db.profile.EnableSound then
-			PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\detected-stealth.wav")
+			PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\detected-stealth.wav")
 		end
 	end
 end
@@ -669,13 +669,13 @@ function Spy:ToggleIgnorePlayer(ignore, player)
 		Spy:AddIgnoreData(player)
 		Spy:RemoveKOSData(player)
 		if Spy.db.profile.EnableSound then
-			PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\list-add.wav")
+			PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\list-add.wav")
 		end
 		DEFAULT_CHAT_FRAME:AddMessage(L["SpySignatureColored"] .. L["PlayerAddedToIgnoreColored"] .. player)
 	else
 		Spy:RemoveIgnoreData(player)
 		if Spy.db.profile.EnableSound then
-			PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\list-remove.wav")
+			PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\list-remove.wav")
 		end
 		DEFAULT_CHAT_FRAME:AddMessage(L["SpySignatureColored"] .. L["PlayerRemovedFromIgnoreColored"] .. player)
 	end
@@ -694,13 +694,13 @@ function Spy:ToggleKOSPlayer(kos, player)
 			SpyPerCharDB.PlayerData[player].kos = 1
 		end
 		if Spy.db.profile.EnableSound then
-			PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\list-add.wav")
+			PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\list-add.wav")
 		end
 		DEFAULT_CHAT_FRAME:AddMessage(L["SpySignatureColored"] .. L["PlayerAddedToKOSColored"] .. player)
 	else
 		Spy:RemoveKOSData(player)
 		if Spy.db.profile.EnableSound then
-			PlaySoundFile("Interface\\AddOns\\Spy\\Sounds\\list-remove.wav")
+			PlaySoundFile("Interface\\AddOns\\Spy-vanilla\\Sounds\\list-remove.wav")
 		end
 		DEFAULT_CHAT_FRAME:AddMessage(L["SpySignatureColored"] .. L["PlayerRemovedFromKOSColored"] .. player)
 	end
