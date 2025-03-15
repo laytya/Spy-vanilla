@@ -3,3 +3,5 @@
 Spy ported to vanilla WOW Spy-vanilla from: https://github.com/laytya/Spy-vanilla
 
 Version 1.1 - Fixed hunter pets being shown as enemy players in the frames.
+
+Version 1.2 - Added Zone "Nordanaar" to "Disable Spy while in these locations"
