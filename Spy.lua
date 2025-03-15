@@ -2147,13 +2147,21 @@ function Spy:CombatLogEvent(event, info)
     local victim = info.victim and (info.victim == ParserLib_SELF and playerName or info.victim) or nil
 
     if Spy.EnabledInZone then
-        -- Check if the source or victim is a pet by checking if their name contains "'s" or "the " (common pet name patterns)
+        if event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" then
+            if (info.skill == BS["Stealth"] or info.skill == BS["Prowl"]) and not Spy:PlayerIsFriend(victim) then
+                scanName(victim)
+                Spy:AlertStealthPlayer(victim)
+            end
+            return
+        end
+
+        -- Check if the source or victim is a pet
         local isSourcePet = source and (strfind(source, "'s") or strfind(source, "the ")) or false
         local isVictimPet = victim and (strfind(victim, "'s") or strfind(victim, "the ")) or false
 
         if source and not isSourcePet and not Spy:PlayerIsFriend(source) and not SpyPerCharDB.IgnoreData[source] and
            not find(source, " ") and not find(source, "Unknown") then
-           
+            
             local learnt = false
             local detected = true
             local playerData = SpyPerCharDB.PlayerData[source]
