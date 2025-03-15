@@ -2136,69 +2136,62 @@ function Spy:PlayerMouseoverEvent()
 end
 
 local playerName = UnitName("player")
-function Spy:CombatLogEvent(event, info) --_, timestamp, event, srcGUID, srcName, srcFlags, dstGUID, dstName, dstFlags, ...)
-	if not info then return end
-	if info.type == "death" then
-		Spy:DeathLog(event, info)
-		return
-	end
-	local source = info.source and (info.source == ParserLib_SELF and playerName or info.source) or nil
-	local victim = info.victim and (info.victim == ParserLib_SELF and playerName or info.victim) or nil
+function Spy:CombatLogEvent(event, info)
+    if not info then return end
+    if info.type == "death" then
+        Spy:DeathLog(event, info)
+        return
+    end
 
-	if Spy.EnabledInZone then
-		if event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" then
-			if (info.skill == BS["Stealth"] or info.skill == BS["Prowl"]) and not Spy:PlayerIsFriend(victim) then
-				scanName(victim)
-				Spy:AlertStealthPlayer(victim)
-			end
-			return
-		end
+    local source = info.source and (info.source == ParserLib_SELF and playerName or info.source) or nil
+    local victim = info.victim and (info.victim == ParserLib_SELF and playerName or info.victim) or nil
 
-		-- analyse the source unit
-		if source and source ~= playerName and not Spy:PlayerIsFriend(source) and not SpyPerCharDB.IgnoreData[source] and
-			not find(source, " ") and not find(source, "Unknown") then
+    if Spy.EnabledInZone then
+        -- Check if the source or victim is a pet by checking if their name contains "'s" or "the " (common pet name patterns)
+        local isSourcePet = source and (strfind(source, "'s") or strfind(source, "the ")) or false
+        local isVictimPet = victim and (strfind(victim, "'s") or strfind(victim, "the ")) or false
 
-			local learnt = false
-			local detected = true
-			local playerData = SpyPerCharDB.PlayerData[source]
-			if not playerData or playerData.isGuess then
-				learnt, playerData = Spy:ParseUnitAbility(true, info.type, source, info.skill)
-			end
-			if not learnt then
-				scanName(source)
-				detected = Spy:UpdatePlayerData(source, nil, nil, nil, nil, true, nil)
-			end
+        if source and not isSourcePet and not Spy:PlayerIsFriend(source) and not SpyPerCharDB.IgnoreData[source] and
+           not find(source, " ") and not find(source, "Unknown") then
+           
+            local learnt = false
+            local detected = true
+            local playerData = SpyPerCharDB.PlayerData[source]
+            if not playerData or playerData.isGuess then
+                learnt, playerData = Spy:ParseUnitAbility(true, info.type, source, info.skill)
+            end
+            if not learnt then
+                scanName(source)
+                detected = Spy:UpdatePlayerData(source, nil, nil, nil, nil, true, nil)
+            end
 
-			if detected then
-				Spy:AddDetected(source, time(), learnt)
+            if detected then
+                Spy:AddDetected(source, time(), learnt)
+            end
 
-			end
+            if victim == playerName then
+                Spy.LastAttack = info.source
+            end
+        end
 
-			if victim == playerName then
-				Spy.LastAttack = info.source
-			end
+        if victim and not isVictimPet and not Spy:PlayerIsFriend(victim) and not SpyPerCharDB.IgnoreData[victim] and
+           not find(victim, " ") and not find(victim, "Unknown") then
+            local learnt = false
+            local detected = true
+            local playerData = SpyPerCharDB.PlayerData[victim]
+            if not playerData or playerData.isGuess then
+                learnt, playerData = Spy:ParseUnitAbility(not source, info.type, victim, info.skill)
+            end
+            if not learnt then
+                scanName(victim)
+                detected = Spy:UpdatePlayerData(victim, nil, nil, nil, nil, true, nil)
+            end
 
-		end
-
-		-- analyse the destination unit
-		if victim and victim ~= playerName and not Spy:PlayerIsFriend(victim) and not SpyPerCharDB.IgnoreData[victim] and
-			not find(victim, " ") and not find(victim, "Unknown") then
-			local learnt = false
-			local detected = true
-			local playerData = SpyPerCharDB.PlayerData[victim]
-			if not playerData or playerData.isGuess then
-				learnt, playerData = Spy:ParseUnitAbility(not source, info.type, victim, info.skill)
-			end
-			if not learnt then
-				scanName(victim)
-				detected = Spy:UpdatePlayerData(victim, nil, nil, nil, nil, true, nil)
-			end
-
-			if detected then
-				Spy:AddDetected(victim, time(), learnt)
-			end
-		end
-	end
+            if detected then
+                Spy:AddDetected(victim, time(), learnt)
+            end
+        end
+    end
 end
 
 function Spy:DeathLog(event, info)
