@@ -147,7 +147,8 @@ Spy.options = {
 						["Booty Bay"] = L["Booty Bay"],
 						["Everlook"] = L["Everlook"],
 						["Gadgetzan"] = L["Gadgetzan"],
-						["Ratchet"] = L["Ratchet"],
+												["Ratchet"] = L["Ratchet"],
+						["Nordanaar"] = L["Nordanaar"],
 					},
 				},
 				ShowOnDetection = {
@@ -1401,6 +1402,7 @@ local Default_Profile = {
 			["Gadgetzan"] = false,
 			["Ratchet"] = false,
 			["Everlook"] = false,
+			["Nordanaar"] = false,
 
 		},
 	}
