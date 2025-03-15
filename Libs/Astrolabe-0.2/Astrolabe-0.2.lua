@@ -163,7 +163,7 @@ function Astrolabe:TranslateWorldMapPosition( C, Z, xPos, yPos, nC, nZ )
 			xPos = xPos - zoneData.xOffset;
 			yPos = yPos - zoneData.yOffset;
 		end
-	elseif ( C and nC) and ( WorldMapSize[C].parentContinent == WorldMapSize[nC].parentContinent ) then
+	elseif ( C and nC) and (WorldMapSize[C] and WorldMapSize[nC] and WorldMapSize[C].parentContinent == WorldMapSize[nC].parentContinent ) then
 		-- different continents, same world
 		zoneData = WorldMapSize[C];
 		local parentContinent = zoneData.parentContinent;
