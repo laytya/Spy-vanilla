@@ -1635,7 +1635,7 @@ function Spy:InitDBIcon()
 	if (LDB) then
 		local ldbSpy = LibStub("LibDataBroker-1.1"):NewDataObject("Spy", {
 			type = "launcher",
-			icon = "Interface\\AddOns\\Spy\\Textures\\spy",
+			icon = "Interface\\AddOns\\Spy-Vanilla\\Textures\\spy",
 			tocname = "Spy",
 			label = "Spy",
 			OnClick = LDBOnClick,
