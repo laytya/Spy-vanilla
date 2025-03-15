@@ -70,6 +70,7 @@ L["DisabledInZonesDescription"] = "Select locations where Spy will be disabled"
 L["Booty Bay"] = "Booty Bay"
 L["Everlook"] = "Everlook"
 L["Gadgetzan"] = "Gadgetzan"
+L["Nordanaar"] = "Nordanaar"
 L["Ratchet"] = "Ratchet"
 
 L["DisplayOptions"] = "Display"
