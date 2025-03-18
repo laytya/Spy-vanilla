@@ -9,3 +9,5 @@ Version 1.2 - Added Zone "Nordanaar" to "Disable Spy while in these locations"
 Version 1.3 - Fixed the error spam in chat when entering dungeons.
 
 Version 1.4 - Fixed minimap button not being shown properly.
+
+Version 1.5 - Spy will now only trigger and show an enemy arround if they are pvp flagged. (This is to prevent on the PvE realm for the addon to spam)
