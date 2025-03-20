@@ -12,5 +12,3 @@ Version 1.3 - Fixed the error spam in chat when entering dungeons.
 Version 1.4 - Fixed minimap button not being shown properly.
 
 Version 1.5 - Spy will now only trigger and show an enemy arround if they are pvp flagged. (This is to prevent on the PvE realm for the addon to spam)
-
-Version 1.6 - Attempt 2 to fix hunter pets being shown up in the unitframe while being in combat.
