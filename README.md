@@ -2,6 +2,7 @@
 # Spy-vanilla for TurtleWoW
 # THIS ADDON WORKS ONLY PROPERLY WITH SUPERWOW!
 https://github.com/balakethelock/SuperWoW
+
 Spy ported to vanilla WOW Spy-vanilla from: https://github.com/laytya/Spy-vanilla
 
 Version 1.1 - Fixed hunter pets being shown as enemy players in the frames.
