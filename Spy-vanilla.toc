@@ -2,7 +2,7 @@
 ## Title: Spy
 ## Notes: Detects and alerts you to the presence of nearby enemy players.
 ## Author: Immolation, ported laytya @ git
-## Version: v1.5
+## Version: 1.5
 ## OptionalDeps:  Ace3, LibSharedMedia-3.0, LibBabble-Class-3.0
 ## SavedVariables: SpyDB
 ## SavedVariablesPerCharacter: SpyPerCharDB, SpyFuDB
