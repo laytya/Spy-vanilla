@@ -35,7 +35,7 @@ if _G.ChatThrottleLib then
 		-- There's already a newer (or same) version loaded. Buh-bye.
 		return
 	elseif not _G.ChatThrottleLib.securelyHooked then
-		print("ChatThrottleLib: Warning: There's an ANCIENT ChatThrottleLib.lua (pre-wow 2.0, <v16) in an addon somewhere. Get the addon updated or copy in a newer ChatThrottleLib.lua (>=v16) in it!")
+		DEFAULT_CHAT_FRAME:AddMessage("ChatThrottleLib: Warning: There's an ANCIENT ChatThrottleLib.lua (pre-wow 2.0, <v16) in an addon somewhere. Get the addon updated or copy in a newer ChatThrottleLib.lua (>=v16) in it!")
 		-- ATTEMPT to unhook; this'll behave badly if someone else has hooked...
 		-- ... and if someone has securehooked, they can kiss that goodbye too... >.<
 		_G.SendChatMessage = _G.ChatThrottleLib.ORIG_SendChatMessage
@@ -411,17 +411,17 @@ end
 
 function ChatThrottleLib:SendChatMessage(prio, prefix,   text, chattype, language, destination, queueName, callbackFn, callbackArg)
 	if not self or not prio or not prefix or not text or not self.Prio[prio] then
-		error('Usage: ChatThrottleLib:SendChatMessage("{BULK||NORMAL||ALERT}", "prefix", "text"[, "chattype"[, "language"[, "destination"]]]', 2)
+		DEFAULT_CHAT_FRAME:AddMessage('Usage: ChatThrottleLib:SendChatMessage("{BULK||NORMAL||ALERT}", "prefix", "text"[, "chattype"[, "language"[, "destination"]]]', 2)
 	end
 	if callbackFn and type(callbackFn)~="function" then
-		--error('ChatThrottleLib:ChatMessage(): callbackFn: expected function, got '..type(callbackFn), 2) --KEEPS ERRORING SO JUST COMMENTING OUT THE ERROR MSG FOR NOW
+		--DEFAULT_CHAT_FRAME:AddMessage('ChatThrottleLib:ChatMessage(): callbackFn: expected function, got '..type(callbackFn), 2) --KEEPS ERRORING SO JUST COMMENTING OUT THE ERROR MSG FOR NOW
 	end
 
 	local nSize = strlen(text)
 
    -- Vanilla dont have limit?
 	if nSize>255 then
-		error("ChatThrottleLib:SendChatMessage(): message length cannot exceed 255 bytes", 2)
+		DEFAULT_CHAT_FRAME:AddMessage("ChatThrottleLib:SendChatMessage(): message length cannot exceed 255 bytes", 2)
 	end
 
 	nSize = nSize + self.MSG_OVERHEAD
@@ -458,10 +458,10 @@ end
 
 function ChatThrottleLib:SendAddonMessage(prio, prefix, text, chattype, target, queueName, callbackFn, callbackArg)
 	if not self or not prio or not prefix or not text or not chattype or not self.Prio[prio] then
-		error('Usage: ChatThrottleLib:SendAddonMessage("{BULK||NORMAL||ALERT}", "prefix", "text", "chattype"[, "target"])', 2)
+		DEFAULT_CHAT_FRAME:AddMessage('Usage: ChatThrottleLib:SendAddonMessage("{BULK||NORMAL||ALERT}", "prefix", "text", "chattype"[, "target"])', 2)
 	end
 	if callbackFn and type(callbackFn)~="function" then
-		--error('ChatThrottleLib:SendAddonMessage(): callbackFn: expected function, got '..type(callbackFn), 2) --KEEPS ERRORING SO JUST COMMENTING OUT THE ERROR MSG FOR NOW
+		--DEFAULT_CHAT_FRAME:AddMessage('ChatThrottleLib:SendAddonMessage(): callbackFn: expected function, got '..type(callbackFn), 2) --KEEPS ERRORING SO JUST COMMENTING OUT THE ERROR MSG FOR NOW
 	end
 
 	local nSize = strlen(text);
@@ -469,14 +469,14 @@ function ChatThrottleLib:SendAddonMessage(prio, prefix, text, chattype, target, 
 	if RegisterAddonMessagePrefix then
 		-- Vanilla dont have limit?
 		if nSize>255 then
-			error("ChatThrottleLib:SendAddonMessage(): message length cannot exceed 255 bytes", 2)
+			DEFAULT_CHAT_FRAME:AddMessage("ChatThrottleLib:SendAddonMessage(): message length cannot exceed 255 bytes", 2)
 		end
 		
 	else
 		nSize = nSize + strlen(prefix) + 1
 		-- Vanilla dont have limit?
 		if nSize>255 then
-			error("ChatThrottleLib:SendAddonMessage(): prefix + message length cannot exceed 254 bytes", 2)
+			DEFAULT_CHAT_FRAME:AddMessage("ChatThrottleLib:SendAddonMessage(): prefix + message length cannot exceed 254 bytes", 2)
 		end
 		
 	end
