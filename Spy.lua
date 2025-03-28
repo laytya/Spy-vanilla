@@ -1408,8 +1408,9 @@ local Default_Profile = {
 	}
 }
 
-SM:Register("statusbar", "blend", [[Interface\Addons\Spy-vanilla\Textures\bar-blend.tga]])
-SM:Register("statusbar", "Minimalist", [[Interface\Addons\Spy-vanilla\Textures\Minimalist.tga]])
+SM:Register("statusbar", "blend", "Interface\\Addons\\Spy-vanilla\\Textures\\bar-blend.tga")
+SM:Register("statusbar", "Minimalist", "Interface\\Addons\\Spy-vanilla\\Textures\\Minimalist.tga")
+
 
 function Spy:CheckDatabase()
 	if not SpyPerCharDB or not SpyPerCharDB.PlayerData then
