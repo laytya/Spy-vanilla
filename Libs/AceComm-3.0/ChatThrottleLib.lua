@@ -411,7 +411,7 @@ end
 
 function ChatThrottleLib:SendChatMessage(prio, prefix,   text, chattype, language, destination, queueName, callbackFn, callbackArg)
 	if not self or not prio or not prefix or not text or not self.Prio[prio] then
-		DEFAULT_CHAT_FRAME:AddMessage('Usage: ChatThrottleLib:SendChatMessage("{BULK||NORMAL||ALERT}", "prefix", "text"[, "chattype"[, "language"[, "destination"]]]', 2)
+		--DEFAULT_CHAT_FRAME:AddMessage('Usage: ChatThrottleLib:SendChatMessage("{BULK||NORMAL||ALERT}", "prefix", "text"[, "chattype"[, "language"[, "destination"]]]', 2)
 	end
 	if callbackFn and type(callbackFn)~="function" then
 		--DEFAULT_CHAT_FRAME:AddMessage('ChatThrottleLib:ChatMessage(): callbackFn: expected function, got '..type(callbackFn), 2) --KEEPS ERRORING SO JUST COMMENTING OUT THE ERROR MSG FOR NOW
@@ -458,7 +458,7 @@ end
 
 function ChatThrottleLib:SendAddonMessage(prio, prefix, text, chattype, target, queueName, callbackFn, callbackArg)
 	if not self or not prio or not prefix or not text or not chattype or not self.Prio[prio] then
-		DEFAULT_CHAT_FRAME:AddMessage('Usage: ChatThrottleLib:SendAddonMessage("{BULK||NORMAL||ALERT}", "prefix", "text", "chattype"[, "target"])', 2)
+		--DEFAULT_CHAT_FRAME:AddMessage('Usage: ChatThrottleLib:SendAddonMessage("{BULK||NORMAL||ALERT}", "prefix", "text", "chattype"[, "target"])', 2)
 	end
 	if callbackFn and type(callbackFn)~="function" then
 		--DEFAULT_CHAT_FRAME:AddMessage('ChatThrottleLib:SendAddonMessage(): callbackFn: expected function, got '..type(callbackFn), 2) --KEEPS ERRORING SO JUST COMMENTING OUT THE ERROR MSG FOR NOW
